@@ -4,8 +4,8 @@
 <!-- Primary meta -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Stochastic CPU — A field report on the cloud underneath Software 3.0</title>
-<meta name="description" content="How the cloud is being rebuilt for agents: the agent-hour, the two-level cache, snapshot provenance, and a 2030 cloud bill. A field report by Yossi Eliaz.">
+<title>The Stochastic CPU. A field report on the cloud underneath Software 3.0</title>
+<meta name="description" content="How the cloud is being rebuilt for agents: the agent hour, the cache stacked in two layers, snapshot provenance, and a 2030 cloud bill. A field report by Yossi Eliaz.">
 <meta name="author" content="Yossi Eliaz · at incredibuild and islo.dev">
 <meta name="theme-color" content="#FAF7F2">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -23,7 +23,7 @@
 <meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The Stochastic CPU — A field report on the cloud being built underneath Software 3.0, by Yossi Eliaz.">
+<meta property="og:image:alt" content="The Stochastic CPU. A field report on the cloud being built underneath Software 3.0, by Yossi Eliaz.">
 <meta property="og:locale" content="en_US">
 
 <!-- Article -->
@@ -41,7 +41,7 @@
 <meta name="twitter:title" content="The Stochastic CPU">
 <meta name="twitter:description" content="A field report on the cloud being built underneath Software 3.0. The agent-hour, the two-level cache, snapshot provenance, and a 2030 cloud bill.">
 <meta name="twitter:image" content="https://zozo123.github.io/stochastic-cpu/og-image.png">
-<meta name="twitter:image:alt" content="The Stochastic CPU — essay cover card.">
+<meta name="twitter:image:alt" content="The Stochastic CPU. Essay cover card.">
 <meta name="twitter:creator" content="">
 <meta name="twitter:site" content="">
 
@@ -52,7 +52,7 @@
   "@type": "Article",
   "headline": "The Stochastic CPU",
   "alternativeHeadline": "A field report on the cloud being built underneath Software 3.0",
-  "description": "How the cloud is being rebuilt for agents: the agent-hour, the two-level cache, snapshot provenance, the Tokio benchmark, and a 2030 cloud bill.",
+  "description": "How the cloud is being rebuilt for agents: the agent hour, the cache stacked in two layers, snapshot provenance, the Tokio benchmark, and a 2030 cloud bill.",
   "image": [
     "https://zozo123.github.io/stochastic-cpu/og-image.png"
   ],
@@ -87,7 +87,7 @@
     "@type": "WebPage",
     "@id": "https://zozo123.github.io/stochastic-cpu/"
   },
-  "keywords": "Software 3.0, agents, inference, cloud infrastructure, agent-hour, snapshots, provenance"
+  "keywords": "Software 3.0, agents, inference, cloud infrastructure, agent hour, snapshots, provenance"
 }
 </script>
 
@@ -542,7 +542,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
 <div class="hero">
   <h1>The Stochastic CPU.</h1>
-  <p class="sub">A field report on the cloud that's being built underneath Software 3.0. From the agent-hour to the prompt-keyed cache to the three signatures on every 2030 merge.</p>
+  <p class="sub">A field report on the cloud that's being built underneath Software 3.0. From the agent hour, to the cache keyed on the prompt, to the three signatures on every 2030 merge.</p>
   <p class="byline">By <a href="https://www.linkedin.com/in/yossi-eliaz/">Yossi Eliaz</a> · at incredibuild and <a href="https://islo.dev">islo.dev</a> · Tel Aviv · 2026</p>
   <p class="hero-meta" id="reading-meta"></p>
 </div>
@@ -553,7 +553,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     <div class="keynum" data-anim="count-up">
       <div class="big">&gt;1,000&times;</div>
       <div class="label">Cheaper inference</div>
-      <p class="plain">Frontier-quality answers cost a thousand times less than three years ago.</p>
+      <p class="plain">Frontier quality answers cost a thousand times less than they did three years ago.</p>
     </div>
     <div class="keynum" data-anim="count-up">
       <div class="big">14% &rarr; 95%</div>
@@ -590,11 +590,11 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   <p>The way we make software changed three times in a decade. We've only named two of them.</p>
 
-  <p>Software 1.0 was the code a human typed for a machine. Software 2.0 was the weights a dataset taught a machine to hold. Karpathy named those in 2017.<sup class="fn"><a href="#fn1">1</a></sup> Software 3.0 is the prompt — a program written in English, running on a model, running on a fleet. He named it in 2025. The eight-year gap is the tell.</p>
+  <p>Software 1.0 was the code a human typed for a machine. Software 2.0 was the weights a dataset taught a machine to hold. Karpathy named those in 2017.<sup class="fn"><a href="#fn1">1</a></sup> Software 3.0 is the prompt. A program written in English, running on a model, running on a fleet. He named it in 2025. The eight year gap is the tell.</p>
 
-  <p>1.0 reshaped how code got written. 2.0 reshaped how programs got learned. 3.0 reshapes where they run, and the wiring underneath always arrives after the workload that needs it. The workload is here. Coding agents that scored under 14% on SWE-bench Verified in early 2024 are clearing 95% by June 2026.<sup class="fn"><a href="#fn2">2</a></sup> Inference cost at equivalent quality has fallen more than a thousand-fold across the same window.<sup class="fn"><a href="#fn3">3</a></sup> Two curves moving in opposite directions at comparable speed, and where they cross is where the substrate sits.</p>
+  <p>1.0 reshaped how code got written. 2.0 reshaped how programs got learned. 3.0 reshapes where they run. The wiring underneath always arrives after the workload that needs it. The workload is here. Coding agents that scored under 14% on SWE-bench Verified in early 2024 are clearing 95% by June 2026.<sup class="fn"><a href="#fn2">2</a></sup> Inference cost at equivalent quality has fallen more than a thousandfold across the same window.<sup class="fn"><a href="#fn3">3</a></sup> Two curves moving in opposite directions at comparable speed, and where they cross is where the substrate sits.</p>
 
-  <p>We are about to stop deploying programs and start deploying invocations. The cloud — every layer of it, from the load balancer to the line item — was not designed for that.</p>
+  <p>We are about to stop deploying programs and start deploying invocations. The cloud, every layer of it, from the load balancer to the line item, was not designed for that.</p>
 
   <p>This essay is the substrate, looked at from underneath.</p>
 </section>
@@ -605,15 +605,15 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   <p>If the substrate is the unnamed shift, the first job is to name what's sitting on top of it. Three sentences carry the whole idea.</p>
 
-  <p><em>Your prompts are programs.</em> They have inputs and outputs, side effects, version drift, and a runtime cost per call. They get checked into repos, reviewed, A/B tested. The English surface is a UX choice. Underneath, the semantics are program semantics, and the runtime treats them that way.</p>
+  <p><em>Your prompts are programs.</em> They have inputs and outputs, side effects, version drift, a runtime cost per call. They get checked into repos, reviewed, A/B tested. The English surface is a UX choice. Underneath, the semantics are program semantics, and the runtime treats them that way.</p>
 
-  <p><em>The LLM is a computer.</em><sup class="fn"><a href="#fn4">4</a></sup> Karpathy's sense of the word: an instruction stream (the prompt), a memory hierarchy (context, KV cache, retrieval), a clock that ticks in tokens. Kind of like a CPU, except this one will insist that 9.11 is greater than 9.9. Every architectural property of the old computer needs a new answer on this one: scheduling, caching, isolation, billing, even what it means for a program to terminate.</p>
+  <p><em>The LLM is a computer.</em><sup class="fn"><a href="#fn4">4</a></sup> Karpathy's sense of the word. An instruction stream (the prompt), a memory hierarchy (context, KV cache, retrieval), a clock that ticks in tokens. Kind of like a CPU, except this one will insist that 9.11 is greater than 9.9. Every architectural property of the old computer needs a new answer on this one. Scheduling, caching, isolation, billing, even what it means for a program to terminate.</p>
 
-  <p><em>The autonomy slider exists.</em> The same model can be a tab-complete, a copilot, a background agent, or a fleet. The slider is continuous. The cost curve is not. A keystroke is cents; an agent-hour is dollars; a thousand parallel agents is the bill.</p>
+  <p><em>The autonomy slider exists.</em> The same model can be a tab complete, a copilot, a background agent, or a fleet. The slider is continuous. The cost curve is not. A keystroke is cents. An agent hour is dollars. A thousand parallel agents is the bill.</p>
 
-  <p>A working test for whether you're in 3.0: did you author a prompt, did a model execute it, did the output land as code or a ticket or a refund? Three yeses and you're in.</p>
+  <p>A working test for whether you're in 3.0. Did you author a prompt, did a model execute it, did the output land as code or a ticket or a refund? Three yeses and you're in.</p>
 
-  <p>All of this sits on top of a training curve that has run about five times per year since 2020 and is on track to cross 10²⁷ FLOPs between 2027 and 2028.<sup class="fn"><a href="#fn5">5</a></sup> Four orders of magnitude in six years on the training side. A thousand-fold drop on the inference side. The substrate is the place those two curves land.</p>
+  <p>All of this sits on top of a training curve that has run about five times per year since 2020, and is on track to cross 10²⁷ FLOPs between 2027 and 2028.<sup class="fn"><a href="#fn5">5</a></sup> Four orders of magnitude in six years on the training side. A thousandfold drop on the inference side. The substrate is the place those two curves land.</p>
 
   <figure class="chart" id="chart-training-compute" data-anim="chart-C">
     <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Training compute for frontier AI models grew from 10^21 FLOPs for GPT-2 in 2019 to ~10^26 FLOPs by 2025-26, with Epoch AI forecasting 10^27 by 2027" class="sw3-chart sw3-chart-c" data-anim="chart-C" xmlns="http://www.w3.org/2000/svg">
@@ -673,7 +673,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
       <text class="annot-muted" x="614" y="48" text-anchor="end">2027 · 10²⁷  FORECAST</text>
       <text class="annot-muted" x="320" y="252" text-anchor="middle">Epoch AI: ~5× per year since 2020</text>
     </svg>
-    <figcaption><strong>Training compute, 5× a year.</strong> A million-fold jump from GPT-2 in 2019 to today, with no plateau in sight (Epoch AI<sup class="fn"><a href="#fn5">5</a></sup>).</figcaption>
+    <figcaption><strong>Training compute, 5× a year.</strong> A millionfold jump from GPT-2 in 2019 to today, with no plateau in sight (Epoch AI<sup class="fn"><a href="#fn5">5</a></sup>).</figcaption>
   </figure>
 
   <p>Read the three sentences again. Each names the model and then spends the rest of its breath on the plumbing.</p>
@@ -683,19 +683,19 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 <section id="stochastic-cpu">
   <h2><span class="num">02b</span> The Stochastic CPU <a class="copy" href="#stochastic-cpu" aria-label="Link to this section">¶</a></h2>
 
-  <p>So if the LLM is a computer, what kind? The honest answer is the one nobody puts on a slide: it's the first computer in production that isn't deterministic.</p>
+  <p>So if the LLM is a computer, what kind? The honest answer is the one nobody puts on a slide. It's the first computer in production that isn't deterministic.</p>
 
-  <p>A classical CPU is a deterministic function. Same input bytes, same instruction stream, same output bytes — yesterday, today, on the rack next to it, on the one in Dublin. Cache hits because the hash of the input maps to the hash of the output. Tests pass or fail because the answer is fixed. Reproducible builds reproduce. Blame walks cleanly from a stack trace back to a line. Contracts hold because both sides compute the same thing from the same bytes. Sixty years of systems engineering — virtual memory, distributed consensus, exactly-once delivery, Merkle trees, the whole shape of <em>git</em> — is scaffolding on top of <code>f(x) = y, always</code>.</p>
+  <p>A classical CPU is a deterministic function. Same input bytes, same instruction stream, same output bytes. Yesterday, today, on the rack next to it, on the one in Dublin. Cache hits because the hash of the input maps to the hash of the output. Tests pass or fail because the answer is fixed. Reproducible builds reproduce. Blame walks cleanly from a stack trace back to a line. Contracts hold because both sides compute the same thing from the same bytes. Sixty years of systems engineering (virtual memory, distributed consensus, exactly once delivery, Merkle trees, the whole shape of <em>git</em>) is scaffolding on top of <code>f(x) = y, always</code>.</p>
 
-  <p>The LLM is a computer in Karpathy's sense.<sup class="fn"><a href="#fn16">16</a></sup> It is also a computer that does not satisfy that guarantee. Ask the same question twice. You get two answers. Sometimes a synonym, sometimes a renamed variable, sometimes the control flow inverts and the tests still pass. Temperature is the knob you see; batched-matmul reductions over non-associative floating point are the ones you don't. Even at <code>temperature=0</code> the output drifts because greedy decoding over a batched GPU kernel is not bit-exact when the batch composition changes.<sup class="fn"><a href="#fn17">17</a></sup></p>
+  <p>The LLM is a computer in Karpathy's sense.<sup class="fn"><a href="#fn16">16</a></sup> It is also a computer that does not satisfy that guarantee. Ask the same question twice. You get two answers. Sometimes a synonym, sometimes a renamed variable, sometimes the control flow inverts and the tests still pass. Temperature is the knob you see. Batched matmul reductions over nonassociative floating point are the ones you don't. Even at <code>temperature=0</code> the output drifts, because greedy decoding over a batched GPU kernel is not bit exact when the batch composition changes.<sup class="fn"><a href="#fn17">17</a></sup></p>
 
-  <p>Then the model itself moves underneath you. A snapshot rolls. A safety fine-tune lands on Tuesday. The provider rotates a server-side seed you were never told existed. The function you were calling last week is, literally, not the function you are calling now.</p>
+  <p>Then the model itself moves underneath you. A snapshot rolls. A safety fine tune lands on Tuesday. The provider rotates a server side seed you were never told existed. The function you were calling last week is, literally, not the function you are calling now.</p>
 
-  <p>Regenerate a 40-line Python file twice and diff the bytes. (I tried.) The first version writes <code>for i, row in enumerate(rows):</code>, the second writes <code>for idx, row in enumerate(rows):</code>. Same behavior, different SHA. Your content-addressed cache, your code review tooling, your "did anything change" check — all of them think work happened. None did.</p>
+  <p>Regenerate a 40 line Python file twice and diff the bytes. (I tried.) The first version writes <code>for i, row in enumerate(rows):</code>, the second writes <code>for idx, row in enumerate(rows):</code>. Same behavior, different SHA. Your content addressed cache, your code review tooling, your "did anything change" check, all of them think work happened. None did.</p>
 
   <div class="callout">For sixty years, <code>f(x) = y, always</code>. The new CPU answers the same question twice and returns two answers.</div>
 
-  <p>A faster CPU would have fit on the old substrate. A stochastic one doesn't, because every layer above the CPU was built on the property the new one no longer provides. This is the most important architectural shift since the move from single machine to distributed compute, and it is happening underneath teams that still think they are shipping software.</p>
+  <p>A faster CPU would have fit on the old substrate. A stochastic one doesn't, because every layer above the CPU was built on the property the new one no longer provides. I think this is the most important architectural shift since the move from a single machine to distributed compute, and it is happening underneath teams that still think they are shipping software.</p>
 </section>
 
 <!-- §03 the-break -->
@@ -708,7 +708,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   <p>A container is a frozen filesystem with a process boundary. It was designed for a workload that boots, serves a request, scales out, and dies. Agents are the opposite shape. They wake up, think for ninety seconds, write a file, sleep, wake up again with a different prompt and a different model. Five things break.</p>
 
-  <p><em>Cold start.</em> A Python image pulls in seconds; a CUDA image with a 70B model pulls in minutes. On a web server, cold start is the p99. On an agent fleet, every wake-up is a cold start, so the p99 becomes the p50.</p>
+  <p><em>Cold start.</em> A Python image pulls in seconds. A CUDA image with a 70B model pulls in minutes. On a web server, cold start is the p99. On an agent fleet, every wakeup is a cold start, so the p99 becomes the p50.</p>
 
   <figure class="svg-fig" data-anim="fade-up">
     <svg viewBox="0 0 720 200" width="100%" role="img"
@@ -759,18 +759,18 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
         <text x="26" y="34" class="legend">state lost</text>
       </g>
     </svg>
-    <figcaption><strong>Containers forget. MicroVMs remember.</strong> A container restarts every request and loses state; a microVM holds one agent's full thirty-minute working memory in a single continuous run.</figcaption>
+    <figcaption><strong>Containers forget. MicroVMs remember.</strong> A container restarts every request and loses state. A microVM holds one agent's full thirty minute working memory in a single continuous run.</figcaption>
   </figure>
 
-  <p><em>State.</em> A container is stateless by convention. An agent has a scratchpad, a working tree, a tool history, and a context window worth keeping. Snapshotting that across a fleet of ephemeral runners is a new primitive — one that Modal, E2B, and a half-dozen startups now charge for at a documented 3× premium over their own serverless tier.<sup class="fn"><a href="#fn6">6</a></sup></p>
+  <p><em>State.</em> A container is stateless by convention. An agent has a scratchpad, a working tree, a tool history, and a context window worth keeping. Snapshotting that across a fleet of ephemeral runners is a new primitive. Modal, E2B, and a half dozen startups now charge for it at a documented 3× premium over their own serverless tier.<sup class="fn"><a href="#fn6">6</a></sup></p>
 
-  <p><em>Pricing.</em> A container bills CPU-seconds. An agent bills tokens, and tokens are 95% of the line. A 2 vCPU sandbox costs about ten cents an hour on Modal or E2B. The same hour of inference, in a heavy loop, runs roughly $5 at Haiku rates, $30 at Sonnet, $130 at Opus. Two to three orders of magnitude over the box, on the same invoice.</p>
+  <p><em>Pricing.</em> A container bills CPU seconds. An agent bills tokens, and tokens are 95% of the line. A 2 vCPU sandbox costs about ten cents an hour on Modal or E2B. The same hour of inference, in a heavy loop, runs roughly $5 at Haiku rates, $30 at Sonnet, $130 at Opus. Two to three orders of magnitude over the box, on the same invoice.</p>
 
-  <p><em>CI.</em> A boolean assertion over a stochastic function is a coin flip dressed as CI. The gate becomes an eval — a statistical regression with a budget and a confidence interval, run on its own pool. Green and red give way to a distribution.</p>
+  <p><em>CI.</em> A boolean assertion over a stochastic function is a coin flip dressed as CI. The gate becomes an eval. A statistical regression with a budget and a confidence interval, run on its own pool. Green and red give way to a distribution.</p>
 
-  <p><em>Cache.</em> Content-hash caches assume same input means same output bytes. Agents regenerate semantically equivalent files with different bytes constantly, so Bazel, Buck, and Nix all miss when they shouldn't. A smarter hash doesn't help; the bytes really are different. The fix is a second cache layer that keys on the prompt prefix above the byte layer. §5.</p>
+  <p><em>Cache.</em> Content hash caches assume same input means same output bytes. Agents regenerate semantically equivalent files with different bytes constantly, so Bazel, Buck, and Nix all miss when they shouldn't. A smarter hash doesn't help. The bytes really are different. The fix is a second cache layer that keys on the prompt prefix, sitting above the byte layer. §5.</p>
 
-  <p>None of this is hypothetical. Shopify reports one in eight merged PRs is coauthored by its agent, River — 3,536 merged in a 30-day window.<sup class="fn"><a href="#fn8">8</a></sup> Sundar Pichai walked the number up the curve on four consecutive earnings calls: 25% in Q3 2024, 30% in Q1 2025, ~50% by fall 2025, around 75% by Q1 2026.<sup class="fn"><a href="#fn9">9</a></sup> The Shopify number is the more honest one because it counts what got <em>merged</em>, not what got typed.</p>
+  <p>None of this is hypothetical. Shopify reports one in eight merged PRs is coauthored by its agent, River. 3,536 merged in a 30 day window.<sup class="fn"><a href="#fn8">8</a></sup> Sundar Pichai walked the number up the curve on four consecutive earnings calls. 25% in Q3 2024, 30% in Q1 2025, around 50% by fall 2025, around 75% by Q1 2026.<sup class="fn"><a href="#fn9">9</a></sup> The Shopify number is the more honest one, because it counts what got <em>merged</em>, not what got typed.</p>
 
   <figure class="chart" id="chart-agent-adoption" data-anim="chart-D">
     <svg viewBox="0 0 640 200" width="100%" role="img" aria-label="Agent-authored code adoption: Shopify 12.5% of merged PRs in 2026, Google 30%-plus AI-assisted code in 2025, and a forecast of 50%-plus by 2027" class="sw3-chart sw3-chart-d" data-anim="chart-D" xmlns="http://www.w3.org/2000/svg">
@@ -824,7 +824,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
       <text class="value" x="506" y="143" text-anchor="start">~75%</text>
       <text class="annot-muted" x="195" y="149" text-anchor="end">Apr 2026 · Pichai Q1 call</text>
     </svg>
-    <figcaption><strong>Machines are writing the code.</strong> Share of code authored by AI agents at major engineering orgs, rising from a Shopify sliver to a Google majority in two years (company disclosures<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup>).</figcaption>
+    <figcaption><strong>Machines are writing the code.</strong> Share of code authored by AI agents at major engineering orgs, rising from a sliver at Shopify to a majority at Google in two years (company disclosures<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup>).</figcaption>
   </figure>
 
   <p>The workload that broke the container is already the dominant workload at the largest engineering orgs in the world. The infrastructure has not caught up.</p>
@@ -832,17 +832,17 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
 <!-- §04 agent-hour -->
 <section id="agent-hour">
-  <h2><span class="num">04</span> The agent-hour <a class="copy" href="#agent-hour" aria-label="Link to this section">¶</a></h2>
+  <h2><span class="num">04</span> The agent hour <a class="copy" href="#agent-hour" aria-label="Link to this section">¶</a></h2>
 
   <p>If containers don't fit and agents are real workloads, the billing unit has to move. It's moving now. Read the billing pages.</p>
 
-  <div class="callout">The agent-hour is the new CPU-hour.</div>
+  <div class="callout">The agent hour is the new CPU hour.</div>
 
-  <p>Keynotes sell models; SKUs reveal which abstractions a provider has committed compute, finance, and on-call to. Anthropic announced a billing split on May 14 2026 that would have broken out agent calls as a separate SKU from raw inference, then paused the change on June 15 after subscriber pushback. The pause matters less than the announcement: the SKU was drafted, priced, and put on the calendar. Modal added a sandbox tier at $0.1419 per physical core-hour, roughly 3× its standard serverless rate, and called it the sandbox tax in the docs.<sup class="fn"><a href="#fn6">6</a></sup> Cursor's background agent has its own SKU. E2B sandboxes meter at about $0.05 per vCPU-hour. The pattern is the same in every case: a unit of billing that did not exist in 2023 now has a price.</p>
+  <p>Keynotes sell models. SKUs reveal which abstractions a provider has committed compute, finance, and oncall to. Anthropic announced a billing split on May 14 2026 that would have broken out agent calls as a separate SKU from raw inference, then paused the change on June 15 after subscriber pushback. The pause matters less than the announcement. The SKU was drafted, priced, and put on the calendar. Modal added a sandbox tier at $0.1419 per physical core hour, roughly 3× its standard serverless rate, and called it the sandbox tax in the docs.<sup class="fn"><a href="#fn6">6</a></sup> Cursor's background agent has its own SKU. E2B sandboxes meter at about $0.05 per vCPU hour. The pattern is the same in every case. A unit of billing that did not exist in 2023 now has a price.</p>
 
-  <p>The unit is the agent-hour. By 2027 all three hyperscalers will have an agent-hour SKU, and the one that doesn't will be reselling someone else's.</p>
+  <p>The unit is the agent hour. By 2027 all three hyperscalers will have an agent hour SKU, and the one that doesn't will be reselling someone else's.</p>
 
-  <p>The economics work because the substrate underneath is finally cheap enough. The agent loop that issues hundreds of LLM round-trips per task only closes because inference at equivalent quality has fallen more than a thousand-fold since 2023.<sup class="fn"><a href="#fn3">3</a></sup> Frontier prices stay flat around $15 per million output tokens. The equivalent-quality floor has collapsed underneath it.</p>
+  <p>The economics work because the substrate underneath is finally cheap enough. The agent loop that issues hundreds of LLM round trips per task only closes because inference at equivalent quality has fallen more than a thousandfold since 2023.<sup class="fn"><a href="#fn3">3</a></sup> Frontier prices stay flat around $15 per million output tokens. The floor at equivalent quality has collapsed underneath it.</p>
 
   <figure class="chart" id="chart-inference-cost" data-anim="chart-B">
     <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Inference cost per million output tokens fell from $60 for GPT-4 in 2023 to under $1 for equivalent quality by 2026, more than a 1000× decline on a log scale" class="sw3-chart sw3-chart-b" data-anim="chart-B" xmlns="http://www.w3.org/2000/svg">
@@ -897,12 +897,12 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
       <text class="annot-muted" x="311" y="183">Llama 3.2 3B · $0.06 (equiv quality)</text>
       <circle class="dot" cx="585" cy="68.11" r="3.5"/>
       <text class="annot" x="579" y="64" text-anchor="end">Opus 4.8 · $15</text>
-      <text class="caption annot-muted" x="320" y="252" text-anchor="middle">&gt;1000× decline at equivalent quality (a16z &amp; Epoch AI, 2024–2026)</text>
+      <text class="caption annot-muted" x="320" y="252" text-anchor="middle">&gt;1000× decline at equivalent quality (a16z and Epoch AI, 2024 to 2026)</text>
     </svg>
-    <figcaption><strong>Same quality, a thousand times cheaper.</strong> Price per million output tokens at fixed capability collapsed from sixty dollars in 2023 to cents today, while frontier prices stay flat (a16z LLMflation<sup class="fn"><a href="#fn3">3</a></sup>).</figcaption>
+    <figcaption><strong>Same quality, a thousand times cheaper.</strong> The price per million output tokens at a fixed capability collapsed from sixty dollars in 2023 to cents today, while frontier prices stay flat (a16z LLMflation<sup class="fn"><a href="#fn3">3</a></sup>).</figcaption>
   </figure>
 
-  <p>The other half of solvency is that the work is worth doing. Devin 1.0 cleared 13.86% on SWE-bench Verified in March 2024.<sup class="fn"><a href="#fn10">10</a></sup> Claude Sonnet 3.5 (new) reached 49% in Q4 2024.<sup class="fn"><a href="#fn12">12</a></sup> Sonnet 3.7 hit 63% in Q1 2025, Opus 4 hit 72% in Q2 2025, Sonnet 4.5 reached 77.2% in September 2025, Opus 4.5 became the first model over 80% in November 2025, Opus 4.7 hit 87.6% in April 2026, and Fable 5 sits at 95.0% as of June 2026.<sup class="fn"><a href="#fn2">2</a></sup> Sometime in Q1 2026 the line crossed the human baseline of ~85%. That crossing is what turned SW 3.0 from a research problem into a deployment problem.</p>
+  <p>The other half of solvency is that the work is worth doing. Devin 1.0 cleared 13.86% on SWE-bench Verified in March 2024.<sup class="fn"><a href="#fn10">10</a></sup> Claude 3.5 Sonnet (new) reached 49% in Q4 2024.<sup class="fn"><a href="#fn12">12</a></sup> Sonnet 3.7 hit 63% in Q1 2025, Opus 4 hit 72% in Q2 2025, Sonnet 4.5 reached 77.2% in September 2025, Opus 4.5 became the first model over 80% in November 2025, Opus 4.7 hit 87.6% in April 2026, and Fable 5 sits at 95.0% as of June 2026.<sup class="fn"><a href="#fn2">2</a></sup> Sometime in Q1 2026 the line crossed the human baseline of about 85%. That crossing is what turned SW 3.0 from a research problem into a deployment problem.</p>
 
   <figure class="chart" id="chart-swebench" data-anim="chart-A">
     <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="SWE-bench Verified progression from Devin 1.0 at 14% in Q1 2024 to Claude Fable 5 at 95% in Q2 2026, crossing the 85% human baseline in early 2026" class="sw3-chart" data-anim="chart-A" xmlns="http://www.w3.org/2000/svg">
@@ -966,10 +966,10 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
       <circle class="dot-ring" cx="585" cy="39.5" r="4.5"/>
       <text class="annot" x="615" y="36" text-anchor="end">Fable 5 · 95%</text>
     </svg>
-    <figcaption><strong>Agents passed the human bar.</strong> Scores on SWE-bench Verified climbed from 14% to 95% in twenty-seven months and now exceed the 85% human baseline (Anthropic<sup class="fn"><a href="#fn2">2</a></sup>).</figcaption>
+    <figcaption><strong>Agents passed the human bar.</strong> Scores on SWE-bench Verified climbed from 14% to 95% in twenty seven months, and now sit above the 85% human baseline (Anthropic<sup class="fn"><a href="#fn2">2</a></sup>).</figcaption>
   </figure>
 
-  <p>Walk the math for one agent-hour at mid-2026 prices. A background loop issues 200–600 round-trips per hour, with 30K–150K-token contexts (80–95% cached) and 2K–8K output per call. At Haiku 4.5 rates that lands between $1 and $5 per hour. At Sonnet 4.5, between $15 and $130. At Opus, $30 to $300. A fully-loaded engineer is $80–$150 an hour. The widget below lets you move the sliders; the dollars are real Anthropic pricing.</p>
+  <p>Walk the math for one agent hour at mid 2026 prices. A background loop issues 200 to 600 round trips per hour, with contexts of 30K to 150K tokens (80% to 95% cached) and 2K to 8K output per call. At Haiku 4.5 rates that lands between $1 and $5 per hour. At Sonnet 4.5, between $15 and $130. At Opus, $30 to $300. A fully loaded engineer is $80 to $150 an hour. The widget below lets you move the sliders. The dollars are real Anthropic pricing.</p>
 
   <p>The agent is cheap now. The expensive part is making a hundred of them agree on a working tree, a test suite, and a deploy without stepping on each other. The bottleneck moved up the stack, which is, I think, where every interesting infrastructure problem now lives.</p>
 </section>
@@ -977,7 +977,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 <!-- §05 two-level-cache -->
 <!-- §04b sandbox-fleet simulator -->
 <section id="sandbox-fleet" class="sfs-wrap">
-<p class="sfs-intro">Move the sliders. The dollars are real Anthropic pricing; the dots are sampled; the rest is your imagination.</p>
+<p class="sfs-intro">Move the sliders. The dollars are real Anthropic pricing. The dots are sampled. The rest is your imagination.</p>
 
 <style>
 .sfs-wrap{font-family:"Source Serif 4",Georgia,serif;color:#1A1A1A;max-width:780px;margin:24px auto}
@@ -1200,7 +1200,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
   </div>
 </figure>
 
-<p class="sfs-foot">Workload tiers (light/medium/heavy) are user-chosen modeling assumptions, not measurements; prices and the 730-hour month are public anchors.</p>
+<p class="sfs-foot">Workload tiers (light, medium, heavy) are modeling assumptions you choose, not measurements. Prices and the 730 hour month are public anchors.</p>
 
 <script>
 (function(){
@@ -1651,7 +1651,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
   <div class="explainer-grid">
     <div class="explainer-col">
       <h4>The math</h4>
-      <p>Cost per agent-hour decomposes into four terms. Uncached input tokens pay the full input rate. Cached input tokens pay the cache-read rate. Output tokens pay the output rate. The sandbox is a flat add.</p>
+      <p>Cost per agent hour decomposes into four terms. Uncached input tokens pay the full input rate. Cached input tokens pay the cache read rate. Output tokens pay the output rate. The sandbox is a flat add.</p>
 
 <pre><code>cost_per_agent_hour =
     input_tokens * (1 - C) * tier.in_rate
@@ -1661,30 +1661,30 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
 <p>Work an example. One medium agent on Sonnet at C = 0.60. Medium is 400 calls/hr, 80k input/call, 4k output/call. So input_tokens = 400 * 80,000 = 32,000,000 per hour. Output_tokens = 400 * 4,000 = 1,600,000 per hour.</p>
 
-<p>Sonnet rates are $3 / $15 / $0.30 per million. Plug in:</p>
+<p>Sonnet rates are $3 / $15 / $0.30 per million. Plug in.</p>
 
 <p>Uncached input: 32M * 0.40 * $3 / 1M = 12.8 * $3 = $38.40.<br>
 Cached input: 32M * 0.60 * $0.30 / 1M = 19.2 * $0.30 = $5.76.<br>
 Output: 1.6M * $15 / 1M = $24.00.<br>
 Sandbox: $0.10.</p>
 
-<p>Sum: 38.40 + 5.76 + 24.00 + 0.10 = <strong>$68.26 per agent-hour</strong>.</p>
+<p>Sum: 38.40 + 5.76 + 24.00 + 0.10 = <strong>$68.26 per agent hour</strong>.</p>
 
-<p>Now drop the cache. Same agent at C = 0. Input collapses to one term: 32M * $3 / 1M = $96.00. Output and sandbox unchanged at $24.10. Total <strong>$120.10 per agent-hour</strong>. The 60% prefix cache saves $51.84 per agent-hour, about 43%.</p>
+<p>Now drop the cache. Same agent at C = 0. Input collapses to one term: 32M * $3 / 1M = $96.00. Output and sandbox unchanged at $24.10. Total <strong>$120.10 per agent hour</strong>. The 60% prefix cache saves $51.84 per agent hour, about 43%.</p>
 
 <p>The widget scales linearly. A fleet of 100,000 such agents costs 100,000 * $68.26 = <strong>$6,826,000 per hour</strong>, which is what the top number reports.</p>
     </div>
     <div class="explainer-col">
       <h4>Why the cache works</h4>
-      <p>Content-hash caches key on bytes. The LLM regenerates a file with a renamed local variable, the SHA shifts, Bazel recomputes the world. Nothing about the file's meaning changed; the hash sat too low in the stack to notice.</p>
+      <p>Content hash caches key on bytes. The LLM regenerates a file with a renamed local variable, the SHA shifts, Bazel recomputes the world. Nothing about the file's meaning changed. The hash sat too low in the stack to notice.</p>
 
-<p>Prompt-prefix caches key higher. The expensive object inside a transformer is the <code>KV cache</code>: the key and value tensors produced by attending over every token in the prompt. Recomputing that state on each call is most of what you pay for.</p>
+<p>Prompt prefix caches key higher. The expensive object inside a transformer is the <code>KV cache</code>. The key and value tensors produced by attending over every token in the prompt. Recomputing that state on each call is most of what you pay for.</p>
 
-<p>Anthropic stores it. The key is the byte-identical prefix of your request, typically the <code>system prompt</code>, tool definitions, and the unchanged file contents you pass in. A second call with the same prefix reuses the tensors and skips the attention pass over those tokens. The skip is the discount.</p>
+<p>Anthropic stores it. The key is the prefix of your request as identical bytes, typically the <code>system prompt</code>, tool definitions, and the unchanged file contents you pass in. A second call with the same prefix reuses the tensors and skips the attention pass over those tokens. The skip is the discount.</p>
 
 <p>The 0.1x rate is a cost ratio, not a promotion. A cached read is RAM access with no matmul behind it. The 10 percent charge amortizes the write and the eviction bookkeeping. The read itself is close to free, and the price reflects that.</p>
 
-<p>Two constraints fall out of this for your harness. First, the prefix must stay byte-identical across calls: pin the <code>system prompt</code>, hash and freeze the tool schema, reuse file contents verbatim rather than asking the model to regenerate them. Second, calls must land inside the <code>TTL</code>: five minutes for the cheap write, one hour for the expensive one.</p>
+<p>Two constraints fall out of this for your harness. First, the prefix must stay identical byte for byte across calls. Pin the <code>system prompt</code>, hash and freeze the tool schema, reuse file contents verbatim rather than asking the model to regenerate them. Second, calls must land inside the <code>TTL</code>. Five minutes for the cheap write, one hour for the expensive one.</p>
 
 <p>Drift on either and the discount evaporates. The 43 percent on the widget above is engineering work, not a config flag.</p>
     </div>
@@ -1693,15 +1693,15 @@ Sandbox: $0.10.</p>
 
 
 <section id="two-level-cache">
-  <h2><span class="num">05</span> The two-level cache <a class="copy" href="#two-level-cache" aria-label="Link to this section">¶</a></h2>
+  <h2><span class="num">05</span> The two level cache <a class="copy" href="#two-level-cache" aria-label="Link to this section">¶</a></h2>
 
-  <p>If the agent-hour is the unit, the cache is the first thing that has to be rebuilt around it. Caches mirror the workload they serve.</p>
+  <p>If the agent hour is the unit, the cache is the first thing that has to be rebuilt around it. Caches mirror the workload they serve.</p>
 
-  <p>Bazel hashes inputs and reuses outputs. Buck hashes inputs and reuses outputs. Nix hashes inputs and reuses outputs. The entire build-system tradition of the last fifteen years is a content-addressed cache that assumes <code>f(x) = y, always</code>. An LLM regenerating a file is the workload that breaks the assumption. Variable renames, reordered imports, equivalent control flow — bytes change while meaning doesn't. The hash misses. The cache rebuilds. The bill arrives.</p>
+  <p>Bazel hashes inputs and reuses outputs. Buck hashes inputs and reuses outputs. Nix hashes inputs and reuses outputs. The entire build system tradition of the last fifteen years is a content addressed cache that assumes <code>f(x) = y, always</code>. An LLM regenerating a file is the workload that breaks the assumption. Variable renames, reordered imports, equivalent control flow. Bytes change while meaning doesn't. The hash misses. The cache rebuilds. The bill arrives.</p>
 
   <div class="callout">When the workload's notion of equivalence moves from bytes to meaning, the cache key has to move with it.</div>
 
-  <p>The fix is two caches stacked. The bottom layer is the old content-hash cache. It still works for most of the build graph, because most of the build graph is still deterministic compilers chewing on deterministic inputs. The top layer is a prompt-prefix cache. It keys on the prompt the agent issued, normalized. On a hit, you reuse the agent's last output without recomputing the bytes.</p>
+  <p>The fix is two caches stacked. The bottom layer is the old content hash cache. It still works for most of the build graph, because most of the build graph is still deterministic compilers chewing on deterministic inputs. The top layer is a prompt prefix cache. It keys on the prompt the agent issued, normalized. On a hit, you reuse the agent's last output without recomputing the bytes.</p>
 
   <figure class="svg-fig" data-anim="none">
     <svg viewBox="0 0 720 360" width="100%" role="img"
@@ -1760,21 +1760,21 @@ Sandbox: $0.10.</p>
         <text class="pct-tick" x="180" y="248" text-anchor="end">edit 1000</text>
       </g>
     </svg>
-    <figcaption><strong>Two caches, two decay curves.</strong> Reused prompt prefixes hit ninety percent of the time; file-level caches degrade from seventy to thirty percent as an agent edits its way through a codebase.</figcaption>
+    <figcaption><strong>Two caches, two decay curves.</strong> Reused prompt prefixes hit about ninety percent of the time. File level caches drift from seventy down to thirty as an agent edits its way through a codebase.</figcaption>
   </figure>
 
-  <p>Anthropic already does the prompt-prefix layer at inference. Cache reads are billed at 0.1× the input rate — a 90% discount — and writes at 1.25× (5-minute TTL) or 2× (1-hour TTL). For Opus 4.x that's $5 per million input tokens dropping to $0.50 on a cache hit, with $6.25 cache writes at 5 minutes and $10 at one hour.<sup class="fn"><a href="#fn7">7</a></sup> The catch is byte-identical prefix. The agent harness has to be disciplined about prefix stability or the discount evaporates. (Don't ask how I learned this.)</p>
+  <p>Anthropic already does the prompt prefix layer at inference. Cache reads are billed at 0.1× the input rate (a 90% discount), and writes at 1.25× (5 minute TTL) or 2× (1 hour TTL). For Opus 4.x that's $5 per million input tokens dropping to $0.50 on a cache hit, with $6.25 cache writes at 5 minutes and $10 at one hour.<sup class="fn"><a href="#fn7">7</a></sup> The catch is a prefix with identical bytes. The agent harness has to be disciplined about prefix stability or the discount evaporates. (Don't ask how I learned this.)</p>
 
-  <p>That discipline propagates down the build system. Prompts get versioned. System prompts get pinned. Tool schemas get hashed. The "what does this build depend on" question grows a new column: not just source files and compiler version, but model snapshot, prompt prefix, and the seed if you bothered to set one.</p>
+  <p>That discipline propagates down the build system. Prompts get versioned. System prompts get pinned. Tool schemas get hashed. The "what does this build depend on" question grows a new column. Not just source files and compiler version, but model snapshot, prompt prefix, and the seed if you bothered to set one.</p>
 </section>
 
 <!-- §06 tokio -->
 <section id="tokio">
   <h2><span class="num">06</span> The Tokio benchmark <a class="copy" href="#tokio" aria-label="Link to this section">¶</a></h2>
 
-  <p>Given the two-level cache works in principle, here is one number. We ran <code>cargo test --workspace</code> on Tokio three ways. Cold: 46.0 seconds. Warm content-hash cache: 12.0 seconds. Hot two-level cache, prompt-prefix layer included: 3.0 seconds.<sup class="fn"><a href="#fn13">13</a></sup></p>
+  <p>Given the two level cache works in principle, here is one number. We ran <code>cargo test --workspace</code> on Tokio three ways. Cold, 46.0 seconds. Warm content hash cache, 12.0 seconds. Hot two level cache with the prompt prefix layer included, 3.0 seconds.<sup class="fn"><a href="#fn13">13</a></sup></p>
 
-  <p>The 46 is project-specific. Tokio is a particular workspace; a different repo gives you a different cold build. The number to watch is 3, because 3 is what an agent sees when it edits one crate out of fifty and re-runs the workspace. Agents iterate like this constantly: edit, run tests, edit, run tests.</p>
+  <p>The 46 is specific to the project. Tokio is a particular workspace. A different repo gives you a different cold build. The number to watch is 3, because 3 is what an agent sees when it edits one crate out of fifty and reruns the workspace. Agents iterate like this constantly. Edit, run tests, edit, run tests.</p>
 
   <figure class="svg-fig" data-anim="tokio-bars">
     <svg viewBox="0 0 720 220" width="100%" role="img"
@@ -1810,27 +1810,27 @@ Sandbox: $0.10.</p>
       </g>
       <text class="caption" x="0" y="208">Incredibuild internal measurement, 2025 · cargo test --workspace on Tokio</text>
     </svg>
-    <figcaption><strong>Warm starts are fifteen times faster.</strong> Time for an agent's edit-test loop: cold boot 46 seconds, cached image 12 seconds, hot snapshot 3 seconds (Incredibuild benchmark<sup class="fn"><a href="#fn13">13</a></sup>).</figcaption>
+    <figcaption><strong>Warm starts are fifteen times faster.</strong> Time for an agent's edit then test loop. Cold boot 46 seconds, cached image 12 seconds, hot snapshot 3 seconds (Incredibuild benchmark<sup class="fn"><a href="#fn13">13</a></sup>).</figcaption>
   </figure>
 
-  <p>At 3 seconds the agent stays in the call frame. At 46 seconds the agent harness, the human watching, and the CI runner all context-switch out, and once you have context-switched out, the next iteration costs more than just the build delta. The wall-clock difference is fifteen times; the behavioral difference is larger than that.</p>
+  <p>At 3 seconds the agent stays in the call frame. At 46 seconds the agent harness, the human watching, and the CI runner all context switch out, and once you have context switched out, the next iteration costs more than just the build delta. The wall clock difference is fifteen times. The behavioral difference is larger than that.</p>
 
-  <p>The mechanism is the two layers doing their separate jobs. The bottom (content-addressed) cache catches the 47 unchanged crates. The top (prompt-prefix) cache catches the one regenerated file as semantically equivalent to the previous call. The work left over is the actual delta, which is roughly what 3 seconds buys.</p>
+  <p>The mechanism is the two layers doing their separate jobs. The bottom (content addressed) cache catches the 47 unchanged crates. The top (prompt prefix) cache catches the one regenerated file as semantically equivalent to the previous call. The work left over is the actual delta, which is roughly what 3 seconds buys.</p>
 
-  <p>This is one repo. The same shape recurs on any monorepo where an agent is the dominant editor. The break-even point, where the prompt-prefix cache pays back the cost of running it, comes around the third or fourth iteration on the same codebase. After that, every loop is on the 3-second side.</p>
+  <p>This is one repo. The same shape recurs on any monorepo where an agent is the dominant editor. The break even point, where the prompt prefix cache pays back the cost of running it, comes around the third or fourth iteration on the same codebase. After that, every loop is on the 3 second side.</p>
 
-  <p>Three seconds is what makes the agent loop a loop. Forty-six seconds is what makes it a coffee break.</p>
+  <p>Three seconds is what makes the agent loop a loop. Forty six seconds is what makes it a coffee break.</p>
 </section>
 
 <!-- §07 provenance -->
 <section id="provenance">
   <h2><span class="num">07</span> Provenance <a class="copy" href="#provenance" aria-label="Link to this section">¶</a></h2>
 
-  <p>If agents stay in the call frame at 3 seconds, the volume of agent-authored code keeps climbing. Pichai's 75% and Shopify's 12.5% are the leading edge.<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup> Which means the next question is the one auditors ask: who signed this?</p>
+  <p>If agents stay in the call frame at 3 seconds, the volume of agent authored code keeps climbing. Pichai's 75% and Shopify's 12.5% are the leading edge.<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup> Which means the next question is the one auditors ask. Who signed this?</p>
 
-  <p>A commit used to carry one signature. By 2030, in any regulated industry, it will carry three. The human who asked. The agent identity — model, version, prompt hash, tool schema, seed. The platform attestation — which snapshot ran, on which cluster, against which evals. SLSA v1.1 already specifies the build-provenance shape. Sigstore already signs the artifacts. The EU Cyber Resilience Act already requires it for software placed on the European market.<sup class="fn"><a href="#fn14">14</a></sup> The primitives exist; they just haven't been composed into a default yet.</p>
+  <p>A commit used to carry one signature. By 2030, in any regulated industry, it will carry three. The human who asked. The agent identity (model, version, prompt hash, tool schema, seed). The platform attestation (which snapshot ran, on which cluster, against which evals). SLSA v1.1 already specifies the build provenance shape. Sigstore already signs the artifacts. The EU Cyber Resilience Act already requires it for software placed on the European market.<sup class="fn"><a href="#fn14">14</a></sup> The primitives exist. They just haven't been composed into a default yet.</p>
 
-  <p>The reason this becomes mandatory isn't regulatory. It's IP. When 75% of Google's new code is AI-coauthored and Shopify is merging 3,500+ agent PRs a month, "who wrote this" stops being a credit-line question and starts being an indemnity question. A signature you can't trace is a liability you can't bound. The triple signature is what makes the merge reviewable, the audit defensible, and the IP transferable.</p>
+  <p>The reason this becomes mandatory isn't regulatory. It's IP. When 75% of Google's new code is AI coauthored and Shopify is merging more than 3,500 agent PRs a month, "who wrote this" stops being a credit line question and starts being an indemnity question. A signature you can't trace is a liability you can't bound. The triple signature is what makes the merge reviewable, the audit defensible, and the IP transferable.</p>
 
   <p>It also closes the loop on the stochastic CPU. The output drifts every run. The invocation that produced it is still a fixed tuple you can write down on one line. <code>f(x) = y</code> is gone. The pinning moves up one level, to <code>(human, agent, platform, prompt, snapshot) → artifact</code>, and that tuple is what the next decade's compliance regime will be written against.</p>
 
@@ -1843,26 +1843,96 @@ Sandbox: $0.10.</p>
 
   <p>The sections above name the pieces. Here are the dates, written down so they can be checked later.</p>
 
-  <p><em>2025.</em> Coding agents cross 75% on SWE-bench Verified. Sonnet 4.5 lands at 77.2% in September; Opus 4.5 becomes the first model over 80% in November.<sup class="fn"><a href="#fn2">2</a></sup> The autonomy slider becomes a product surface, not a research demo.</p>
+  <figure class="chart" id="chart-timeline" data-anim="chart-T">
+    <svg viewBox="0 0 640 300" width="100%" role="img"
+         aria-label="Timeline 2025 to 2030. 2025: agents cross 75 percent on SWE-bench. 2026: human baseline crossed. Agent hour SKU debuts. Shopify reports 12.5 percent of merged PRs are agent coauthored. 2027: hyperscalers ship agent hour SKUs. Training compute crosses 10^27 FLOPs in the aggressive case. 2028: power binds, not silicon. 2029: triple signature provenance ships as default. 2030: data center electricity reaches about 945 TWh. The dotted vertical line marks mid 2026, where the essay is dated."
+         class="sw3-chart sw3-chart-t" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .sw3-chart-t text { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: #1A1A1A; }
+        .sw3-chart-t .yr { font: 500 12px 'JetBrains Mono', monospace; fill: #1A1A1A; letter-spacing: 0.04em; }
+        .sw3-chart-t .hd { font: italic 12.5px 'Source Serif 4', Georgia, serif; fill: #1A1A1A; }
+        .sw3-chart-t .sub { font: 10.5px 'Source Serif 4', Georgia, serif; fill: #6B6259; font-style: italic; }
+        .sw3-chart-t .axis { stroke: #1A1A1A; stroke-width: 1; }
+        .sw3-chart-t .lp { stroke: #B8430F; stroke-width: 1; }
+        .sw3-chart-t .lp-fc { stroke: #D86A36; stroke-width: 1; stroke-dasharray: 3 2; }
+        .sw3-chart-t .dot { fill: #B8430F; }
+        .sw3-chart-t .dot-fc { fill: #FAF7F2; stroke: #B8430F; stroke-width: 1.5; }
+        .sw3-chart-t .nowline { stroke: #B8430F; stroke-width: 1; stroke-dasharray: 4 3; opacity: 0.6; }
+        .sw3-chart-t .nowtxt { font: 10px 'JetBrains Mono', monospace; fill: #B8430F; letter-spacing: 0.06em; text-transform: uppercase; }
+        @media (prefers-reduced-motion: no-preference) {
+          .sw3-chart-t[data-anim] .lp, .sw3-chart-t[data-anim] .lp-fc, .sw3-chart-t[data-anim] .dot, .sw3-chart-t[data-anim] .dot-fc, .sw3-chart-t[data-anim] .hd, .sw3-chart-t[data-anim] .sub, .sw3-chart-t[data-anim] .yr, .sw3-chart-t[data-anim] .nowline, .sw3-chart-t[data-anim] .nowtxt { opacity: 0; }
+          .sw3-chart-t.anim-on .lp, .sw3-chart-t.anim-on .lp-fc, .sw3-chart-t.anim-on .dot, .sw3-chart-t.anim-on .dot-fc, .sw3-chart-t.anim-on .hd, .sw3-chart-t.anim-on .sub, .sw3-chart-t.anim-on .yr, .sw3-chart-t.anim-on .nowline, .sw3-chart-t.anim-on .nowtxt { animation: tlfade 0.6s ease-out forwards; }
+          @keyframes tlfade { to { opacity: 1; } }
+        }
+      </style>
 
-  <p><em>2026.</em> Agents cross the ~85% human baseline in Q1; Fable 5 hits 95% in June. The agent-hour ships as a discrete SKU on at least one major provider (Anthropic's split was drafted and on the calendar). Shopify reports one in eight merged PRs are agent-coauthored.<sup class="fn"><a href="#fn8">8</a></sup></p>
+      <line class="axis" x1="40" y1="150" x2="620" y2="150"/>
 
-  <p><em>2027.</em> All three hyperscalers have an agent-hour SKU. Frontier training compute crosses 10²⁷ FLOPs in the aggressive case; Epoch AI's median forecast puts the crossing closer to 2028.<sup class="fn"><a href="#fn5">5</a></sup> Large engineering orgs cross the 50% coauthored-code threshold.</p>
+      <line class="nowline" x1="230" y1="40" x2="230" y2="260"/>
+      <text class="nowtxt" x="234" y="48">now · jun 2026</text>
+
+      <text class="hd" x="60" y="92">Agents cross 75% on SWE-bench</text>
+      <text class="sub" x="60" y="106">Sonnet 4.5 at 77.2%; Opus 4.5 first over 80%</text>
+      <line class="lp" x1="60" y1="110" x2="60" y2="150"/>
+      <circle class="dot" cx="60" cy="150" r="4"/>
+      <text class="yr" x="60" y="172" text-anchor="middle">2025</text>
+
+      <text class="yr" x="170" y="172" text-anchor="middle">2026</text>
+      <circle class="dot" cx="170" cy="150" r="4"/>
+      <line class="lp" x1="170" y1="150" x2="170" y2="186"/>
+      <text class="hd" x="170" y="200" text-anchor="middle">Human baseline crossed</text>
+      <text class="sub" x="170" y="214" text-anchor="middle">Fable 5 at 95%. Agent hour SKU drafted.</text>
+      <text class="sub" x="170" y="228" text-anchor="middle">Shopify River at 12.5% of merged PRs.</text>
+
+      <text class="hd" x="280" y="92" text-anchor="middle">Agent hour at all three hyperscalers</text>
+      <text class="sub" x="280" y="106" text-anchor="middle">10²⁷ FLOPs in the aggressive case</text>
+      <line class="lp-fc" x1="280" y1="110" x2="280" y2="150"/>
+      <circle class="dot-fc" cx="280" cy="150" r="4"/>
+      <text class="yr" x="280" y="172" text-anchor="middle">2027</text>
+
+      <text class="yr" x="390" y="172" text-anchor="middle">2028</text>
+      <circle class="dot-fc" cx="390" cy="150" r="4"/>
+      <line class="lp-fc" x1="390" y1="150" x2="390" y2="186"/>
+      <text class="hd" x="390" y="200" text-anchor="middle">Power binds, not silicon</text>
+      <text class="sub" x="390" y="214" text-anchor="middle">First clusters sited next to a generator</text>
+
+      <text class="hd" x="500" y="92" text-anchor="middle">Triple signature provenance default</text>
+      <text class="sub" x="500" y="106" text-anchor="middle">SLSA + Sigstore + EU CRA in production</text>
+      <line class="lp-fc" x1="500" y1="110" x2="500" y2="150"/>
+      <circle class="dot-fc" cx="500" cy="150" r="4"/>
+      <text class="yr" x="500" y="172" text-anchor="middle">2029</text>
+
+      <text class="yr" x="610" y="172" text-anchor="middle">2030</text>
+      <circle class="dot-fc" cx="610" cy="150" r="4"/>
+      <line class="lp-fc" x1="610" y1="150" x2="610" y2="186"/>
+      <text class="hd" x="610" y="200" text-anchor="end">945 TWh. K8s demoted.</text>
+      <text class="sub" x="610" y="214" text-anchor="end">Bill flips: inference 40, agent hours 25</text>
+
+      <text x="40" y="282" font-family="'Source Serif 4', Georgia, serif" font-style="italic" font-size="10.5" fill="#6B6259">Solid dot = known. Open ring = forecast. Dotted vertical = today.</text>
+    </svg>
+    <figcaption><strong>The next five years, dated.</strong> Each year names one milestone the essay's argument predicts. The dotted vertical marks where we are; the open rings are the forecasts.</figcaption>
+  </figure>
+
+  <p><em>2025.</em> Coding agents cross 75% on SWE-bench Verified. Sonnet 4.5 lands at 77.2% in September. Opus 4.5 becomes the first model over 80% in November.<sup class="fn"><a href="#fn2">2</a></sup> The autonomy slider becomes a product surface, not a research demo.</p>
+
+  <p><em>2026.</em> Agents cross the roughly 85% human baseline in Q1. Fable 5 hits 95% in June. The agent hour ships as a discrete SKU on at least one major provider (Anthropic's split was drafted and on the calendar). Shopify reports one in eight merged PRs are agent coauthored.<sup class="fn"><a href="#fn8">8</a></sup></p>
+
+  <p><em>2027.</em> All three hyperscalers have an agent hour SKU. Frontier training compute crosses 10²⁷ FLOPs in the aggressive case. Epoch AI's median forecast puts the crossing closer to 2028.<sup class="fn"><a href="#fn5">5</a></sup> Large engineering orgs cross the 50% coauthored code threshold.</p>
 
   <p><em>2028.</em> Power binds, not silicon. The IEA energy curve dominates the procurement conversation, and at least one frontier cluster is sited next to a dedicated generator.<sup class="fn"><a href="#fn15">15</a></sup></p>
 
-  <p><em>2029.</em> Triple-signature provenance ships as a default in at least one major CI provider. EU CRA enforcement does the rest.<sup class="fn"><a href="#fn14">14</a></sup></p>
+  <p><em>2029.</em> Triple signature provenance ships as a default in at least one major CI provider. EU CRA enforcement does the rest.<sup class="fn"><a href="#fn14">14</a></sup></p>
 
-  <p><em>2030.</em> Global data-center electricity consumption hits ~945 TWh, roughly double 2024's 415, with the US and China taking ~80% of the growth.<sup class="fn"><a href="#fn15">15</a></sup> Kubernetes still runs, but it has been demoted from the platform to the scheduler for the agent fleet underneath.</p>
+  <p><em>2030.</em> Global data center electricity consumption hits about 945 TWh, roughly double 2024's 415, with the US and China taking about 80% of the growth.<sup class="fn"><a href="#fn15">15</a></sup> Kubernetes still runs, but it has been demoted from the platform to the scheduler for the agent fleet underneath.</p>
 </section>
 
 <!-- §09 bill-2030 -->
 <section id="bill-2030">
   <h2><span class="num">09</span> The 2030 bill <a class="copy" href="#bill-2030" aria-label="Link to this section">¶</a></h2>
 
-  <p>Given the timeline, the invoice flips. The shape of a cloud bill is the most honest forward indicator we have — money goes where the workload is, and the workload moved.</p>
+  <p>Given the timeline, the invoice flips. The shape of a cloud bill is the most honest forward indicator we have. Money goes where the workload is, and the workload moved.</p>
 
-  <p>The 2030 split, for a large engineering org running agent-heavy workflows, lands roughly here. Inference: 40%. Agent-hours, billed separately from raw inference because the coordination surface is its own product: 25%. Snapshot and cache infrastructure, including the two-level cache: 15%. Eval compute, which has eaten the role CI used to play: 10%. Egress: 5%. Legacy stateless compute — the EC2 instances, the RDS, the old shape: 5%.</p>
+  <p>The 2030 split, for a large engineering org running agent heavy workflows, lands roughly here. Inference, 40%. Agent hours, billed separately from raw inference because the coordination surface is its own product, 25%. Snapshot and cache infrastructure, including the two level cache, 15%. Eval compute, which has eaten the role CI used to play, 10%. Egress, 5%. Legacy stateless compute, the EC2 instances, the RDS, the old shape, 5%.</p>
 
   <figure class="svg-fig" data-anim="none">
     <svg viewBox="0 0 720 220" width="100%" role="img"
@@ -1923,14 +1993,14 @@ Sandbox: $0.10.</p>
         </g>
       </g>
     </svg>
-    <figcaption><strong>Where the 2030 cloud bill goes.</strong> Inference and agent runtime together swallow nearly two-thirds of spend; traditional servers shrink to a rounding error.</figcaption>
+    <figcaption><strong>Where the 2030 cloud bill goes.</strong> Inference and agent runtime together swallow nearly two thirds of spend. Traditional servers shrink to a rounding error.</figcaption>
   </figure>
 
-  <p>Compare that to 2023, when roughly 70% of a comparable bill was the legacy shape and inference barely cleared single digits. Reallocations this large happen once a workload crosses a threshold. The agent workload crossed in 2026; the bill is following on a two-year lag.</p>
+  <p>Compare that to 2023, when roughly 70% of a comparable bill was the legacy shape and inference barely cleared single digits. Reallocations this large happen once a workload crosses a threshold. The agent workload crossed in 2026. The bill is following on a two year lag.</p>
 
-  <p>Kubernetes survives. It just gets demoted. The control plane that schedules pods becomes the control plane that schedules agent runtimes — and the things it schedules aren't stateless. They have warm KV caches, prompt-prefix locality, model affinity to specific GPU pools, snapshot warmth. The scheduler that wins this round will look more like a database query planner than the round-robin we have today.</p>
+  <p>Kubernetes survives. It just gets demoted. The control plane that schedules pods becomes the control plane that schedules agent runtimes. And the things it schedules aren't stateless. They have warm KV caches, prompt prefix locality, model affinity to specific GPU pools, snapshot warmth. The scheduler that wins this round will look more like a database query planner than the round robin we have today.</p>
 
-  <p>Power is the binding constraint. The IEA projects global data-center consumption rising from 415 TWh in 2024 to ~945 TWh by 2030, with AI taking the dominant share of the growth and the US plus China responsible for ~80% of it.<sup class="fn"><a href="#fn15">15</a></sup> Frontier inference clusters in 2028 will be sited around the megawatt, not the rack.</p>
+  <p>Power is the binding constraint. The IEA projects global data center consumption rising from 415 TWh in 2024 to about 945 TWh by 2030, with AI taking the dominant share of the growth and the US plus China responsible for about 80% of it.<sup class="fn"><a href="#fn15">15</a></sup> Frontier inference clusters in 2028 will be sited around the megawatt, not the rack.</p>
 
   <p>This is the most consequential infrastructure shift since virtualization, and most of the people building it have never written a CUDA kernel.</p>
 </section>
@@ -1943,7 +2013,7 @@ Sandbox: $0.10.</p>
 
   <p>The model in the middle is a stochastic CPU, and every layer above it was built on a guarantee the new CPU doesn't provide. The cache misses. The test flakes. The build's reproducibility moves from the binary up to the invocation. The commit grows from one signature to three. The invoice grows a line item with a unit nobody priced in 2023. A smarter model would have left the substrate alone. A stochastic one rewrites it.</p>
 
-  <p>What you are watching is the rewriting of a sixty-year stack against a property change in its lowest layer. The container, the cache, the test runner, the build system, the scheduler, the bill: each one is being reformed around the same observation, and most teams are still writing CI files as if the answer were a boolean.</p>
+  <p>What you are watching is the rewriting of a sixty year stack against a property change in its lowest layer. The container, the cache, the test runner, the build system, the scheduler, the bill. Each one is being reformed around the same observation, and most teams are still writing CI files as if the answer were a boolean.</p>
 
   <p>The substrate is shifting. It's already shifted. You're standing on it.</p>
 </section>
@@ -1973,9 +2043,9 @@ Sandbox: $0.10.</p>
     <li><a href="#software-three">Software 3.0</a></li>
     <li><a href="#stochastic-cpu">Stochastic CPU</a></li>
     <li><a href="#the-break">What broke</a></li>
-    <li><a href="#agent-hour">Agent-hour</a></li>
+    <li><a href="#agent-hour">Agent hour</a></li>
     <li><a href="#sandbox-fleet">Sandbox fleet · live</a></li>
-    <li><a href="#two-level-cache">Two-level cache</a></li>
+    <li><a href="#two-level-cache">Two level cache</a></li>
     <li><a href="#tokio">Tokio benchmark</a></li>
     <li><a href="#provenance">Provenance</a></li>
     <li><a href="#timeline">Timeline</a></li>
@@ -1994,7 +2064,7 @@ Sandbox: $0.10.</p>
     <dl class="rail-glossary-list" id="rail-glossary-list" hidden>
       <dt>Software 1.0 / 2.0 / 3.0</dt>
       <dd>Hand-written code; learned weights; prompted agents that compose tools at runtime.</dd>
-      <dt>Agent-hour</dt>
+      <dt>Agent hour</dt>
       <dd>The metered unit of an autonomous worker's wall-clock time, including idle thinking.</dd>
       <dt>MicroVM</dt>
       <dd>A hardware-isolated VM that boots in milliseconds; the unit of agent sandboxing.</dd>
@@ -2039,12 +2109,12 @@ Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/sto
   // ---- Footnotes ----
   const footnotes = [
     {id:"fn1", text:"Karpathy, \"Software 2.0,\" Medium, Nov 2017", url:"https://karpathy.medium.com/software-2-0-a64152b37c35"},
-    {id:"fn2", text:"SWE-bench Verified leaderboard — Anthropic Claude Fable 5 / Mythos 5 announcement (95.0%, Jun 2026); Claude Opus 4.5 first model over 80% (Nov 2025); see also Steel.dev SWE-bench leaderboard", url:"https://www.anthropic.com/news/claude-fable-5-mythos-5"},
-    {id:"fn3", text:"a16z, \"Welcome to LLMflation\" — inference cost decline", url:"https://a16z.com/llmflation-llm-inference-cost/"},
+    {id:"fn2", text:"SWE-bench Verified leaderboard, Anthropic Claude Fable 5 / Mythos 5 announcement (95.0%, Jun 2026); Claude Opus 4.5 first model over 80% (Nov 2025); see also Steel.dev SWE-bench leaderboard", url:"https://www.anthropic.com/news/claude-fable-5-mythos-5"},
+    {id:"fn3", text:"a16z, \"Welcome to LLMflation\", inference cost decline", url:"https://a16z.com/llmflation-llm-inference-cost/"},
     {id:"fn4", text:"Karpathy, \"Software Is Changing (Again),\" YC AI Startup School, Jun 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
     {id:"fn5", text:"Epoch AI, frontier training-compute trends (~5x/yr since 2020, doubling ~5.2 months; first 10²⁷ FLOP model expected 2027 aggressive / 2028 median)", url:"https://epoch.ai/blog/training-compute-of-frontier-ai-models-grows-by-4-5x-per-year"},
     {id:"fn6", text:"AI Code Sandbox Benchmark 2026 (Modal / E2B sandbox pricing)", url:"https://www.superagent.sh/blog/ai-code-sandbox-benchmark-2026"},
-    {id:"fn7", text:"Anthropic prompt caching docs — Opus 4.x: $5/MTok base input, $0.50/MTok cache read (0.1×), $6.25 cache write 5-min, $10 cache write 1-hour", url:"https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching"},
+    {id:"fn7", text:"Anthropic prompt caching docs, Opus 4.x: $5/MTok base input, $0.50/MTok cache read (0.1×), $6.25 cache write 5-min, $10 cache write 1-hour", url:"https://platform.claude.com/docs/en/docs/build-with-claude/prompt-caching"},
     {id:"fn8", text:"Shopify Engineering, \"Under the River\"", url:"https://shopify.engineering/under-the-river"},
     {id:"fn9", text:"Pichai on AI-generated code at Google: 25% Q3 2024 (Fortune), 30% Q1 2025 (Alphabet 8-K), ~50% fall 2025, 75% Q1 2026 (Semafor)", url:"https://www.semafor.com/article/04/24/2026/google-ceo-says-75-of-companys-new-code-is-ai-generated"},
     {id:"fn10", text:"Cognition, \"SWE-bench technical report\" (Devin 13.86%)", url:"https://cognition.ai/blog/swe-bench-technical-report"},
@@ -2052,9 +2122,9 @@ Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/sto
     {id:"fn12", text:"Anthropic, \"Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet\"", url:"https://www.anthropic.com/news/swe-bench-sonnet"},
     {id:"fn13", text:"Incredibuild, \"AI Platform\" press release, Sep 2025", url:"https://www.prnewswire.com/news-releases/incredibuild-unveils-state-of-the-art-ai-platform-to-accelerate-the-entire-software-development-lifecycle-302560614.html"},
     {id:"fn14", text:"Legit Security, \"SLSA Provenance Series\"", url:"https://www.legitsecurity.com/blog/slsa-provenance-blog-series-part-1-what-is-software-attestation"},
-    {id:"fn15", text:"IEA, \"Energy and AI\" — data-center power to 2030, ~945 TWh", url:"https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai"},
-    {id:"fn16", text:"Karpathy, \"LLM OS\" / \"LLMs are stochastic simulations of people\" — YC AI Startup School, 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
-    {id:"fn17", text:"He et al., \"Non-determinism in LLM inference at temperature 0\" — floating-point non-associativity in batched GPU reductions", url:"https://152334h.github.io/blog/non-determinism-in-gpt-4/"}
+    {id:"fn15", text:"IEA, \"Energy and AI\", data center power to 2030, ~945 TWh", url:"https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai"},
+    {id:"fn16", text:"Karpathy, \"LLM OS\" / \"LLMs are stochastic simulations of people\", YC AI Startup School, 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
+    {id:"fn17", text:"He et al., \"Nondeterminism in LLM inference at temperature 0\", floating point non-associativity in batched GPU reductions", url:"https://152334h.github.io/blog/nondeterminism-in-gpt-4/"}
   ];
   const fnList = document.getElementById('footnotes');
   footnotes.forEach(fn => {
@@ -2229,7 +2299,7 @@ Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/sto
   // --- Share buttons ---
   (function initShare() {
     const url = window.location.href.split('#')[0];
-    const text = 'The Stochastic CPU — by Yossi Eliaz. The cloud built underneath Software 3.0. ';
+    const text = 'The Stochastic CPU. By Yossi Eliaz. The cloud built underneath Software 3.0. ';
     const xBtn = document.getElementById('share-x');
     const liBtn = document.getElementById('share-li');
     const copyBtn = document.getElementById('share-copy');
