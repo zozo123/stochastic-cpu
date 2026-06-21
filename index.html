@@ -1143,12 +1143,14 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
           <fieldset class="sfs__seg">
             <legend class="sfs__legendtxt">Sandbox</legend>
             <div class="sfs__segwrap" role="radiogroup" aria-label="Sandbox tier">
-              <input type="radio" name="sfs-sb" id="sfs-sb-prem" value="premium" />
-              <label for="sfs-sb-prem">Premium</label>
-              <input type="radio" name="sfs-sb" id="sfs-sb-std" value="standard" checked />
-              <label for="sfs-sb-std">Standard</label>
-              <input type="radio" name="sfs-sb" id="sfs-sb-spot" value="spot" />
-              <label for="sfs-sb-spot">Spot</label>
+              <input type="radio" name="sfs-sb" id="sfs-sb-modal" value="modal" checked />
+              <label for="sfs-sb-modal">Modal</label>
+              <input type="radio" name="sfs-sb" id="sfs-sb-daytona" value="daytona" />
+              <label for="sfs-sb-daytona">Daytona</label>
+              <input type="radio" name="sfs-sb" id="sfs-sb-tensorlake" value="tensorlake" />
+              <label for="sfs-sb-tensorlake">Tensorlake</label>
+              <input type="radio" name="sfs-sb" id="sfs-sb-islo" value="islo" />
+              <label for="sfs-sb-islo">islo.dev</label>
             </div>
           </fieldset>
 
@@ -1226,7 +1228,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     heavy:  {calls_per_hour:600, in_per_call:120000, out_per_call:6000, loadFactor:1.6}
   };
   var SANDBOX_PER_HR = 0.10;
-  var SANDBOX_RATES = { premium: 0.14, standard: 0.10, spot: 0.02 };
+  var SANDBOX_RATES = { modal: 0.10, daytona: 0.167, tensorlake: 0.10, islo: 0.31 };
   var BATCH_MULT = { off: 1.0, on: 0.5 };
   var ENG_PER_HR = 100.00;
   var HOURS_PER_MONTH = 730;
@@ -1241,9 +1243,10 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     {k:"Opus input", v:"$5.00 / Mtok", n:"Anthropic public pricing, Claude Opus 4.x, mid-2026."},
     {k:"Opus output", v:"$25.00 / Mtok", n:"Anthropic public pricing, Claude Opus 4.x, mid-2026."},
     {k:"Opus cache-read", v:"$0.50 / Mtok", n:"Anthropic prompt caching: 90% discount vs input price."},
-    {k:"Sandbox · Premium", v:"$0.14/hr", n:"Modal physical-core-hr (~$0.1419), on-demand."},
-    {k:"Sandbox · Standard", v:"$0.10/hr", n:"Midpoint of Modal and E2B for a 2 vCPU agent."},
-    {k:"Sandbox · Spot", v:"$0.02/hr", n:"Preemptible / spot tier on bare-metal or community cloud."},
+    {k:"Sandbox · Modal", v:"$0.10/hr", n:"Modal physical-core-hr $0.1419; widget midpoint for a typical 2 vCPU + 4 GB sandbox."},
+    {k:"Sandbox · Daytona", v:"$0.167/hr", n:"Daytona public pricing: 2 vCPU x $0.0504/hr + 4 GB x $0.0162/hr + 5 GB free disk."},
+    {k:"Sandbox · Tensorlake", v:"$0.10/hr", n:"Tensorlake Pro: 2 vCPU x $0.03/hr + 4 GB x $0.009/hr (plus $250/mo Pro base, not modeled)."},
+    {k:"Sandbox · islo.dev", v:"$0.31/hr", n:"islo.dev public pricing: 2 vCPU x $0.07/hr + 4 GB x $0.04/hr + 10 GB x $0.0007/hr disk."},
     {k:"Batch API discount", v:"-50%", n:"Anthropic Batch API processes async within 24h at half the input + output rate. Cache rates still apply."},
     {k:"Engineer baseline", v:"$100/hr", n:"Fully-loaded cost: salary + benefits + overhead. Comparison anchor only."},
     {k:"Hours per month", v:"730", n:"Cloud-billing convention: 365.25 days / 12 * 24 hours."},
@@ -1254,7 +1257,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   function computeAgent(C, T, W, S, B){
     var p = PRICING[T], w = WORKLOAD[W];
-    var sandbox = SANDBOX_RATES[S || "standard"];
+    var sandbox = SANDBOX_RATES[S || "modal"];
     var bMult = BATCH_MULT[B || "off"];
     var inputTph = w.calls_per_hour * w.in_per_call;
     var outputTph = w.calls_per_hour * w.out_per_call;
@@ -1319,7 +1322,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   function tierVal(){ var t = root.querySelector('input[name="sfs-tier"]:checked'); return t ? t.value : "sonnet"; }
   function loadVal(){ var w = root.querySelector('input[name="sfs-load"]:checked'); return w ? w.value : "medium"; }
-  function sbVal(){ var s = root.querySelector('input[name="sfs-sb"]:checked'); return s ? s.value : "standard"; }
+  function sbVal(){ var s = root.querySelector('input[name="sfs-sb"]:checked'); return s ? s.value : "modal"; }
   function batchVal(){ var b = root.querySelector('input[name="sfs-batch"]:checked'); return b ? b.value : "off"; }
 
   (function renderRail(){
@@ -1530,7 +1533,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     binds.humans.setAttribute("title", fmtMoney(fleetHr)+"/hr / $100/hr = "+(humans<1?humans.toFixed(3):fmtInt(humans))+" engineers");
 
     var tierName = T.charAt(0).toUpperCase()+T.slice(1);
-    var sbName = S.charAt(0).toUpperCase()+S.slice(1);
+    var sbName = (S === "islo") ? "islo.dev" : (S.charAt(0).toUpperCase()+S.slice(1));
     var batchTxt = B === "on" ? " \u00b7 Batch API (-50%)" : "";
     binds.assume.textContent = "Assumptions: "+W+" workload \u00b7 "+tierName+" \u00b7 "
       + w.calls_per_hour+" calls/hr \u00b7 "+(w.in_per_call/1000)+"k in / "+(w.out_per_call/1000)+"k out per call \u00b7 sandbox $"+m.sandbox.toFixed(2)+"/hr ("+sbName+")"+batchTxt+".";
@@ -1834,10 +1837,12 @@ Sandbox: $0.10.</p>
 
   <p>Three seconds at the build layer is the floor. Above the build, the rest of the SDLC has to change too. If the inner loop is a stochastic CPU answering in seconds, the four boxes around it (dev, test, eval, prod) stop looking like the four boxes a 2018 platform team would have drawn. The shapes change. The unit of work changes. The line items on the invoice change.</p>
 
-  <div class="callout">Dev is a sandbox. Test is a sample. Eval is the budget. Prod is a fleet.</div>
+  <div class="callout">Same primitive, four counts. Dev is one. Test is a flight. Eval is a pool. Prod is a fleet.</div>
 
   <h3>Dev.</h3>
   <p>A developer no longer spins up a laptop and a docker compose file. They request a sandbox. E2B boots a Firecracker microVM in approximately 80ms same region and resumes a paused one in 5 to 30ms (per E2B docs, 2026). Daytona advertises sub 90ms code to execution, as low as 27ms from a pre warmed pool (per Daytona docs, 2026). Modal restores a memory snapshot in about 1.05s for a PyTorch process and 3.5s for Stable Diffusion, roughly 2.5x faster than a cold container (per Modal blog, 2026). The legacy primitive was a long lived workstation. The neo primitive is a snapshot that gets paged in.</p>
+
+  <p>The vendor landscape splits along a price spread that reads as positioning, not markup. Modal and E2B sell raw compute, about $0.10 per hour for a typical 2 vCPU sandbox. Daytona pitches sub 90ms code to execution at about $0.17 per hour all in. Tensorlake leans on sandbox native pause and resume for agents, with a Pro tier around $0.10 per hour plus a $250 a month base. islo.dev packages the box plus persistence plus secrets plus multi cloud as one product, about $0.31 per hour, which works out to $1.23 for a 4 hour run on 2 vCPU and 4 GB. (I run islo.dev, so weight that accordingly.) The 3x spread across this row is positioning, not markup. The lower end sells the box. The higher end sells the agent computer.</p>
 
   <p>State lives in two places: the filesystem snapshot that captures the OS, deps, and configured base, and the memory snapshot that captures the running process. E2B paused sandboxes persist for up to 30 days. Daytona auto stops at 15 minutes idle and auto archives at 7 days. Billing is per second, not per box. Modal sandbox CPU runs at about $0.142 per physical core hour and RAM at $0.024 per GiB hour (per Modal pricing, 2026). E2B sits in roughly the same band. A dev environment that costs cents per hour while running and zero while paused is a different economic object than a laptop, and the agent loop from section 06 is the thing that actually exercises it.<sup class="fn"><a href="#fn6">6</a></sup></p>
 
@@ -1863,9 +1868,9 @@ Sandbox: $0.10.</p>
         .bg { fill: #FAF7F2; }
         .col-label { font: 600 12px ui-sans-serif, system-ui, sans-serif; fill: #1A1A1A; letter-spacing: 0.04em; text-transform: uppercase; }
         .row-label { font: 500 11px ui-sans-serif, system-ui, sans-serif; fill: #6B6259; letter-spacing: 0.08em; text-transform: uppercase; }
-        .legacy-cell { fill: #FAF7F2; stroke: #D9D2C7; stroke-width: 1; }
-        .legacy-title { font: 600 12px ui-sans-serif, system-ui, sans-serif; fill: #6B6259; }
-        .legacy-text { font: 400 10.5px ui-sans-serif, system-ui, sans-serif; fill: #6B6259; }
+        .legacy-cell { fill: #FAF7F2; stroke: #D9D2C7; stroke-width: 1; opacity: 0.75; }
+        .legacy-title { font: 600 12px ui-sans-serif, system-ui, sans-serif; fill: #9A9087; }
+        .legacy-text { font: 400 10.5px ui-sans-serif, system-ui, sans-serif; fill: #9A9087; }
         .neo-cell { fill: #FAF7F2; stroke: #B8430F; stroke-width: 1.4; }
         .neo-cell-accent { fill: #FAF7F2; stroke: #B8430F; stroke-width: 2; }
         .neo-title { font: 600 12.5px ui-sans-serif, system-ui, sans-serif; fill: #1A1A1A; }
@@ -1910,30 +1915,89 @@ Sandbox: $0.10.</p>
 
       <line class="rule" x1="100" y1="172" x2="740" y2="172"/>
 
-      <rect class="neo-cell" x="100" y="188" width="120" height="100" rx="2"/>
-      <text class="neo-title" x="112" y="208">Sandbox</text>
-      <text class="neo-text" x="112" y="226">Firecracker, 5 to 30ms</text>
-      <text class="neo-text" x="112" y="242">snapshot resume</text>
-      <text class="neo-text rust-text" x="112" y="262">per second billing</text>
+      <!-- Neo Dev: one sandbox -->
+      <g>
+        <rect x="148" y="208" width="24" height="24" rx="2" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.4"/>
+        <text class="neo-title" x="160" y="258" text-anchor="middle">one</text>
+        <text class="neo-text rust-text" x="160" y="276" text-anchor="middle">snapshot resume</text>
+      </g>
 
-      <rect class="neo-cell" x="240" y="188" width="120" height="100" rx="2"/>
-      <text class="neo-title" x="252" y="208">Sample</text>
-      <text class="neo-text" x="252" y="226">k equals 8 rollouts</text>
-      <text class="neo-text" x="252" y="242">mean above T</text>
-      <text class="neo-text rust-text" x="252" y="262">distribution, not bool</text>
+      <!-- Neo Test: a flight (7 sandboxes in a row) -->
+      <g>
+        <rect x="248" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="262" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="276" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="290" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="304" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="318" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="332" y="215" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <text class="neo-title" x="300" y="258" text-anchor="middle">flight</text>
+        <text class="neo-text rust-text" x="300" y="276" text-anchor="middle">k equals 8 rollouts</text>
+      </g>
 
-      <rect class="neo-cell-accent" x="380" y="178" width="160" height="120" rx="2"/>
-      <text class="neo-title" x="392" y="200" style="font-size:13.5px">Eval</text>
-      <text class="neo-text" x="392" y="220">online plus offline</text>
-      <text class="neo-text" x="392" y="238">1 to 10% shadow</text>
-      <text class="neo-text" x="392" y="256">drift gates, PSI 0.2</text>
-      <text class="neo-text rust-text" x="392" y="276">first class line item</text>
+      <!-- Neo Eval: a pool (5x3 = 12 sandboxes) -->
+      <g>
+        <rect x="408" y="196" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="422" y="196" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="436" y="196" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="450" y="196" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="464" y="196" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="408" y="210" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="422" y="210" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="436" y="210" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="450" y="210" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="464" y="210" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="408" y="224" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <rect x="422" y="224" width="10" height="10" rx="1.5" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.2"/>
+        <text class="neo-title" x="437" y="258" text-anchor="middle">pool</text>
+        <text class="neo-text rust-text" x="437" y="276" text-anchor="middle">budget gated</text>
+      </g>
 
-      <rect class="neo-cell" x="560" y="188" width="160" height="100" rx="2"/>
-      <text class="neo-title" x="572" y="208">Fleet</text>
-      <text class="neo-text" x="572" y="226">60k sessions / 30d</text>
-      <text class="neo-text" x="572" y="242">KV cache affinity</text>
-      <text class="neo-text rust-text" x="572" y="262">k8s as substrate</text>
+      <!-- Neo Prod: a fleet (10x4 = 40 dense sandboxes) -->
+      <g>
+        <rect x="560" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="570" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="580" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="590" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="600" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="610" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="620" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="630" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="640" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="650" y="190" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="560" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="570" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="580" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="590" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="600" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="610" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="620" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="630" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="640" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="650" y="200" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="560" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="570" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="580" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="590" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="600" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="610" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="620" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="630" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="640" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="650" y="210" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="560" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="570" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="580" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="590" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="600" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="610" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="620" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="630" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="640" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <rect x="650" y="220" width="7" height="7" rx="1" fill="#FAF7F2" stroke="#B8430F" stroke-width="1"/>
+        <text class="neo-title" x="608" y="258" text-anchor="middle">fleet</text>
+        <text class="neo-text rust-text" x="608" y="276" text-anchor="middle">KV cache affinity</text>
+      </g>
 
       <g>
         <text class="now" x="460" y="170" text-anchor="middle">now</text>
