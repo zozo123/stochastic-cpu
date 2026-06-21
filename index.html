@@ -1,0 +1,602 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Inference Substrate</title>
+<meta name="description" content="A field report on the cloud that's being built underneath Software 3.0. From the agent-hour to the prompt-keyed cache to the three signatures on every 2030 merge.">
+<meta name="author" content="Yossi Eliaz">
+<meta property="og:title" content="The Inference Substrate">
+<meta property="og:description" content="A field report on the cloud being built underneath Software 3.0.">
+<meta property="og:type" content="article">
+<link rel="icon" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' fill='%23FAF7F2'/&gt;&lt;circle cx='16' cy='16' r='8' fill='%23B8430F'/&gt;&lt;/svg&gt;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,400i;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FAF7F2;
+  --ink:#1A1A1A;
+  --accent:#B8430F;
+  --muted:#6B6259;
+  --rule:#D9D2C7;
+  --panel-bg:#1A1A1A;
+  --panel-ink:#FAF7F2;
+  --serif:'Source Serif 4','Source Serif Pro',Charter,Georgia,serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:var(--serif);
+  font-size:19px;
+  line-height:1.55;
+  color:var(--ink);
+  background:var(--bg);
+  font-feature-settings:"liga","kern","onum";
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+::selection{background:var(--accent);color:var(--bg)}
+
+/* progress bar */
+#progress{
+  position:fixed;top:0;left:0;height:2px;width:0;
+  background:var(--accent);z-index:50;
+  transition:width 80ms linear;
+}
+
+/* header */
+header{
+  position:sticky;top:2px;z-index:30;
+  background:var(--bg);
+  border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 32px;
+  font-size:14px;
+}
+header .nameplate{font-style:italic;color:var(--ink)}
+header nav a{
+  color:var(--muted);text-decoration:none;margin-left:18px;
+}
+header nav a:hover{color:var(--accent)}
+
+/* layout */
+.grid{
+  display:grid;
+  grid-template-columns:1fr min(68ch,720px) 260px 1fr;
+  column-gap:48px;
+  padding:64px 24px 80px;
+}
+.content{grid-column:2}
+.rail{grid-column:3;position:sticky;top:80px;align-self:start;font-size:13px;color:var(--muted)}
+.rail h4{
+  font-family:var(--mono);font-size:11px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  margin:0 0 10px;border-bottom:1px solid var(--rule);padding-bottom:8px;
+}
+.rail ol{list-style:none;padding:0;margin:0 0 28px}
+.rail ol li{padding:4px 0;line-height:1.35}
+.rail ol li a{color:var(--muted);text-decoration:none}
+.rail ol li a:hover{color:var(--accent)}
+.rail ol li.active a{color:var(--accent)}
+.rail .jumptop{color:var(--muted);text-decoration:none;font-style:italic}
+.rail .jumptop:hover{color:var(--accent)}
+
+/* mobile pill */
+#mobile-pill{
+  display:none;
+  position:fixed;bottom:16px;left:50%;transform:translateX(-50%);
+  background:var(--panel-bg);color:var(--panel-ink);
+  font-family:var(--mono);font-size:12px;
+  padding:8px 14px;border-radius:999px;
+  z-index:40;opacity:.95;
+}
+
+/* hero */
+.hero{margin:24px 0 56px}
+.hero h1{
+  font-family:var(--serif);font-weight:400;
+  font-size:64px;line-height:1.05;letter-spacing:-.01em;
+  margin:0 0 18px;
+}
+.hero .sub{
+  font-size:21px;line-height:1.5;color:var(--ink);
+  margin:0 0 28px;font-style:italic;max-width:60ch;
+}
+.hero .byline{
+  font-size:14px;color:var(--muted);
+  font-family:var(--mono);
+  border-top:1px solid var(--rule);padding-top:14px;
+}
+
+/* sections */
+section{margin-bottom:64px;scroll-margin-top:80px}
+h2{
+  font-family:var(--serif);font-weight:400;
+  font-size:32px;line-height:1.15;letter-spacing:-.005em;
+  margin:0 0 8px;position:relative;
+}
+h2 .copy{
+  position:absolute;left:-28px;top:7px;opacity:0;
+  color:var(--muted);font-size:18px;text-decoration:none;
+  font-family:var(--mono);transition:opacity .15s,color .15s;
+}
+h2:hover .copy{opacity:1}
+h2 .copy:hover{color:var(--accent)}
+h2 .num{
+  font-family:var(--mono);font-size:13px;color:var(--muted);
+  display:block;margin-bottom:4px;letter-spacing:.05em;
+}
+h3{
+  font-family:var(--serif);font-weight:400;font-style:italic;
+  font-size:22px;margin:28px 0 6px;color:var(--ink);
+}
+p{margin:0 0 18px}
+em{font-style:italic}
+strong{font-weight:600;font-family:var(--serif)}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid transparent}
+a:hover{border-bottom-color:var(--accent)}
+hr.rule{
+  border:0;border-top:1px solid var(--rule);margin:36px 0;
+}
+
+/* callout panels */
+.callout{
+  background:var(--panel-bg);color:var(--panel-ink);
+  padding:24px 28px;margin:36px 0;
+  font-family:var(--serif);font-size:22px;line-height:1.4;font-weight:600;
+  letter-spacing:-.005em;
+}
+.callout::before{
+  content:"";display:inline-block;width:10px;height:10px;
+  background:var(--accent);margin-right:14px;vertical-align:middle;
+}
+
+/* footnote markers */
+sup.fn{
+  font-family:var(--serif);font-size:.7em;color:var(--accent);
+  cursor:pointer;padding:0 2px;
+}
+sup.fn a{color:var(--accent);text-decoration:none;border-bottom:none}
+.fn-card{
+  position:absolute;display:none;
+  background:var(--bg);border:1px solid var(--accent);
+  padding:14px 16px;font-size:14px;line-height:1.45;color:var(--ink);
+  max-width:300px;z-index:60;
+  box-shadow:0 6px 18px rgba(0,0,0,.08);
+  font-style:normal;
+}
+.fn-card.show{display:block}
+.fn-card a{color:var(--accent);word-break:break-all;font-family:var(--mono);font-size:12px}
+
+/* timeline */
+.timeline{list-style:none;padding:0;margin:24px 0 0;border-left:1px solid var(--rule)}
+.timeline li{
+  position:relative;padding:0 0 32px 28px;
+}
+.timeline li::before{
+  content:"";position:absolute;left:-7px;top:6px;
+  width:12px;height:12px;border-radius:50%;
+  background:var(--accent);box-shadow:0 0 0 3px var(--bg);
+}
+.timeline .year{
+  font-family:var(--mono);font-size:13px;letter-spacing:.06em;
+  color:var(--muted);margin-bottom:4px;
+}
+.timeline .head{
+  font-family:var(--serif);font-size:21px;font-weight:400;
+  font-style:italic;margin-bottom:8px;color:var(--ink);
+}
+.timeline .body{font-size:17px;color:var(--ink)}
+
+/* tokio table */
+.tokio{
+  font-family:var(--mono);font-size:14px;
+  border:1px solid var(--rule);padding:14px 18px;margin:20px 0;
+  background:#FFF;
+}
+.tokio div{display:flex;justify-content:space-between;padding:4px 0}
+.tokio div span:last-child{color:var(--accent);font-weight:500}
+.tokio .label{font-family:var(--serif);font-size:13px;color:var(--muted);font-style:italic;margin-top:6px}
+
+/* the cloud-bill 2030 list */
+.bill{
+  font-family:var(--mono);font-size:14px;border:1px solid var(--rule);
+  padding:14px 18px;background:#FFF;margin:20px 0;
+}
+.bill div{display:flex;justify-content:space-between;padding:3px 0}
+.bill div span:last-child{color:var(--accent)}
+
+/* footer */
+footer{
+  border-top:1px solid var(--rule);
+  padding:36px 24px 48px;font-size:13px;color:var(--muted);
+}
+footer .wrap{max-width:68ch;margin:0 auto}
+footer a{color:var(--muted);border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
+footer ol{font-family:var(--mono);font-size:12px;line-height:1.7;padding-left:28px;margin-top:14px}
+footer ol li{padding:2px 0}
+
+/* responsive */
+@media (max-width:1023px){
+  .grid{grid-template-columns:1fr min(68ch,720px) 1fr;column-gap:0;padding:48px 20px 64px}
+  .content{grid-column:2}
+  .rail{display:none}
+  #mobile-pill{display:block}
+}
+@media (max-width:767px){
+  body{font-size:17px}
+  .hero h1{font-size:44px}
+  .hero .sub{font-size:18px}
+  h2{font-size:26px}
+  .grid{padding:36px 16px 56px}
+  header{padding:12px 16px}
+  header nav a{margin-left:12px}
+  .callout{font-size:18px;padding:18px 20px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<header>
+  <span class="nameplate">The Inference Substrate</span>
+  <nav>
+    <a href="#prelude">Read</a>
+    <a href="#timeline">Timeline</a>
+    <a href="#sources">Sources</a>
+    <a href="https://github.com/zozo123/inference-substrate" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<div class="grid">
+
+<main class="content">
+
+<div class="hero">
+  <h1>The Inference Substrate.</h1>
+  <p class="sub">A field report on the cloud that's being built underneath Software 3.0. From the agent-hour to the prompt-keyed cache to the three signatures on every 2030 merge.</p>
+  <p class="byline">by Yossi Eliaz · Principal Engineer at Incredibuild &amp; Founder, islo.dev · Tel Aviv · 2026</p>
+</div>
+
+<section id="prelude">
+<h2><a href="#prelude" class="copy" aria-label="Copy link">#</a><span class="num">§ 01 · Prelude</span>The software we used to write.</h2>
+<p>The way we make software changed three times in a decade. We've only named two of them.</p>
+<p>In <em>2017</em>, Andrej Karpathy called the first shift Software 2.0<sup class="fn"><a href="#fn1">1</a></sup>. The code stopped being typed by humans. It became weights, learned from data, compiled by gradient descent. We argued about whether to call it programming. The argument lost. The weights kept shipping.</p>
+<p>In <em>2025</em>, he gave the rest of it a name. Software 3.0<sup class="fn"><a href="#fn2">2</a></sup>. Your prompts are programs. English is the language. The compiler is a GPU cluster, and the runtime is an LLM. The Iron Man suit and the autonomy slider were the same sentence.</p>
+<p>That's two paradigms changing in eight years. Production. Consumption. Both renamed.</p>
+<p>The third change is the one nobody named yet. The cloud underneath. The substrate.</p>
+<p>That's what this essay is about.</p>
+</section>
+
+<section id="software-three">
+<h2><a href="#software-three" class="copy" aria-label="Copy link">#</a><span class="num">§ 02 · Software 3.0, plainly</span>Three sentences.</h2>
+<p>Karpathy said it plainly. Your prompts are programs.</p>
+<p>That's one. Here are the other two.</p>
+<p>The LLM is a computer. Not a model. A computer. The same way a CPU is a computer — a substrate that runs instructions and returns results. Except the instructions are English, and the results are sometimes wrong, and the memory is the context window.</p>
+<p>The autonomy slider exists. You can keep the human in the loop, or you can hand the keys over. There's no right answer. There's an axis.</p>
+<p>That's it. Three sentences.</p>
+<p>Everyone else has been saying the same thing in worse words. <em>Agentic.</em> <em>Copilot.</em> <em>Workflow automation.</em> <em>Vibe coding</em><sup class="fn"><a href="#fn4">4</a></sup>. They're all reaching for one of Karpathy's three sentences and missing.</p>
+<p>The reason this matters here — in a cloud essay, not an AI essay — is that all three sentences land on the infrastructure. Prompts are programs, which means somebody has to host them. The LLM is a computer, which means somebody has to bill for its cycles. The autonomy slider exists, which means the cloud has to know whether the workload is a human typing or an agent running for nine hours.</p>
+<p>None of which the current cloud knows. None of which the current cloud was asked.</p>
+</section>
+
+<section id="the-break">
+<h2><a href="#the-break" class="copy" aria-label="Copy link">#</a><span class="num">§ 03 · What broke</span>What containers got wrong about agents.</h2>
+
+<div class="callout">Containers were built for humans. Agents broke them in eighteen months.</div>
+
+<p>Containers assume a request. Agents run a loop. That's the whole problem.</p>
+<p>A SWE-bench Verified trajectory<sup class="fn"><a href="#fn6">6</a></sup> is not a request. It is a thirty-minute conversation with two hundred tool calls — read a file, run a test, edit a file, run a test, install a dep, recompile, edit again. Two hundred small mutations across one long arc. Kill the container halfway through and the work dies with it. Restart cold and the model spends ten thousand tokens re-learning where it left off.</p>
+<p>Stateless 12-factor was the right answer for a request/response web. It is the wrong answer for an agent.</p>
+<h3>What breaks, in order:</h3>
+<p><em>Cold start.</em> A 400ms cold start is invisible when a human waits. It is unbearable when an agent fires two hundred sandboxes in a row to test two hundred edits. The aggregate cold-start tax becomes the biggest single line item on the bill.</p>
+<p><em>State.</em> A container is a fresh slate every time. An agent is a slate with thirty minutes of marks on it. Throw the marks away between turns and you've thrown away the work.</p>
+<p><em>Pricing.</em> Containers are billed per second of compute. Agents are billed — should be billed — per agent-hour, snapshot-GB-month, eval token. The shapes don't overlap.</p>
+<p><em>CI.</em> CI queues built for ten PRs a day collapse at a thousand. Cursor's background agents<sup class="fn"><a href="#fn14">14</a></sup>, Shopify's River<sup class="fn"><a href="#fn9">9</a></sup>, Devin's autonomous pool — each of them is now opening hundreds of PRs a week. The bottleneck is no longer the human reviewer. It's the build farm.</p>
+<p><em>Cache.</em> Bazel hashes the bytes. Agents change the bytes without changing the meaning. The cache misses every time.</p>
+<p>The container era isn't ending because containers are bad. It's ending because the workload changed and the workload doesn't fit anymore.</p>
+</section>
+
+<section id="agent-hour">
+<h2><a href="#agent-hour" class="copy" aria-label="Copy link">#</a><span class="num">§ 04 · The new unit</span>The agent-hour.</h2>
+
+<div class="callout">The agent-hour is the new CPU-hour. Bill accordingly.</div>
+
+<p>Anthropic split the bill in June. That was the leading indicator<sup class="fn"><a href="#fn7">7</a></sup>.</p>
+<p>One SKU for human-seat usage — chat, copilot, the thing a person sits in front of. Another SKU for headless agent usage — the API pool that runs unattended, mutates files, opens PRs, sleeps until the next webhook. Different rates. Different rate limits. Different telemetry.</p>
+<p>Once one vendor splits the bill, the rest follow. Modal already prices its sandboxes at roughly three times the rate of its general serverless tier — same hardware, different SKU, different expectation. E2B sells snapshot-resume as a tier above raw container minutes. Replit's Agent runtime quotes minutes, not requests<sup class="fn"><a href="#fn5">5</a></sup>. Cursor's background agent has its own line item<sup class="fn"><a href="#fn14">14</a></sup>.</p>
+<p>They're all reaching for the same SKU under different names. The shape is: a long-running, stateful, autonomous workload, billed by wall-clock time, with surcharges for snapshot storage and accelerator access. Call it the <em>agent-hour</em>.</p>
+<p>By 2027 the agent-hour is a published line item at all three hyperscalers. Not a private SKU. Not a special-deal contract term. A page on the pricing site, next to <code>m7i.large</code>.</p>
+<p>The follow-on effect is what changes the architecture. If the agent-hour is a billable unit, then everything else in the stack — scheduling, autoscaling, snapshotting, eviction — gets rebuilt around it. Kubernetes wasn't built for nine-hour pods that mutate their disk. Something else gets built. Something else is being built right now.</p>
+<p>And the FinOps team finally has the right number to optimize against. Not <em>requests per second</em>. <em>Agent-hours per merged PR</em>. That's the cost ratio that matters.</p>
+</section>
+
+<section id="two-level-cache">
+<h2><a href="#two-level-cache" class="copy" aria-label="Copy link">#</a><span class="num">§ 05 · The opinionated flag</span>The two-level cache.</h2>
+
+<div class="callout">Content-addressed caches lose to prompts. Add a second key.</div>
+
+<p>Content-addressed caches were built for humans typing. Humans typing are no longer the bottleneck.</p>
+<p>Bazel, Buck, Nix, sccache — all of them hash the input bytes and look up the output. A heroic engineering achievement. The reason your CI doesn't take six hours. The reason the monorepo works.</p>
+<p>Here's what changes. An LLM, asked to fix a bug, will produce a hunk of code that is semantically equivalent to a previous hunk but byte-different. A trailing newline. A renamed local variable. A whitespace-collapsed import. The content hash flips. The cache misses. The whole subtree recompiles.</p>
+<p>You can fix it by canonicalizing — sort imports, normalize whitespace, run a formatter before hashing. That helps. It doesn't solve it. Two prompts asking the model to "refactor for clarity" will produce different code with the same intent. There's no formatter that catches that.</p>
+<p>The fix is two layers.</p>
+<p><em>Bottom layer:</em> content-addressed, exactly as today. Hash the bytes, look up the artifact. Keep Bazel. Keep Nix. Don't rebuild what works.</p>
+<p><em>Top layer:</em> prompt-prefix-keyed. The cache key is the model's input prefix — the system prompt, the tool definitions, the file contents that didn't change. Anthropic's prompt cache already does this at the inference layer<sup class="fn"><a href="#fn7">7</a></sup>. Ninety percent off the cached prefix. The trick is to extend the same idea up into the build cache, the test-runner cache, the CI artifact cache.</p>
+<p>Two keys on every cache lookup. Content at the bottom. Prompt at the top.</p>
+<p>No product ships this end-to-end yet. The first one that does becomes the BuildKit of the agent era. We're building toward it at Incredibuild<sup class="fn"><a href="#fn12">12</a></sup>. We're not the only ones.</p>
+<p>This is the part of the essay that's a flag, not a forecast. By the time you're reading this, somebody has the cache. By 2027, three vendors have the cache. By 2030, the cache is part of the substrate the way Docker layers are part of the substrate today — invisible, assumed, infrastructure.</p>
+</section>
+
+<section id="tokio">
+<h2><a href="#tokio" class="copy" aria-label="Copy link">#</a><span class="num">§ 06 · A number, carefully</span>The Tokio benchmark.</h2>
+
+<div class="callout">At Incredibuild we measured forty-six seconds. Cached, twelve. Hot, three.</div>
+
+<p>I'll show you one benchmark. We ran it at Incredibuild<sup class="fn"><a href="#fn12">12</a></sup>.</p>
+<p>The workload is <code>cargo test --workspace</code> on Tokio — a Rust async runtime with a well-known dependency graph. Eight hundred crates. Three minutes of compile work on a clean machine. The kind of project where caching matters because the project is large enough to feel it.</p>
+
+<div class="tokio">
+<div><span>Cold (no cache)</span><span>46.0 s</span></div>
+<div><span>Cached (warm, deps stable)</span><span>12.0 s</span></div>
+<div><span>Hot (cache + warm runner)</span><span>3.0 s</span></div>
+<div class="label">Incredibuild internal measurement, 2025. Repro: github.com/Incredibuild-RND/buildrunner-on-islo</div>
+</div>
+
+<p>The interesting number is not <em>46</em>. It's <em>3</em>.</p>
+<p>Three seconds is the number an agent gets when it edits one file in a large codebase and reruns the suite. Nothing else moved. The cache has the dependency graph, the test binaries, the build artifacts. Forty-seven of the fifty test crates are untouched. They don't recompile. They don't relink. They don't rerun.</p>
+<p>This is the cache hit rate you get when humans edit code at a normal cadence — a commit every fifteen minutes, a PR every two hours, a merge every day. The numbers don't change much under that load.</p>
+<p>The numbers change when the cadence changes. An autonomous agent making fifty file edits in an hour, running the tests after each one, looks <em>nothing</em> like a human committer. It looks like a stress test of the cache. Forty-seven hits and three misses per edit. That's the cache shape that decides whether the agent-hour costs four dollars or forty.</p>
+<p>The bill in 2030 is not won at the rate card. It is won at the cache hit rate.</p>
+</section>
+
+<section id="provenance">
+<h2><a href="#provenance" class="copy" aria-label="Copy link">#</a><span class="num">§ 07 · Who signed the code</span>Three signatures on every merge.</h2>
+
+<div class="callout">By 2030, three signatures on every merge. The human. The agent. The platform.</div>
+
+<p>By 2030 you won't merge without three signatures. Not in finance. Not in healthcare. Not anywhere it matters.</p>
+<p>Sundar said three quarters of Google's code was already AI-generated by late 2025<sup class="fn"><a href="#fn11">11</a></sup>. The number sounded uncomfortable. It also sounded like an under-count. Once you include the small refactors and the test boilerplate and the migration patches and the README updates, three quarters is conservative.</p>
+<p>The compliance question stops being <em>"did this build reproduce?"</em>. It becomes <em>"which model wrote which hunk, and which prompt produced it?"</em>.</p>
+<p>The three signatures are:</p>
+<p><em>The human.</em> Same as today. The reviewer who clicked approve. A real person with a real GPG key. Optional in many shops. Required in regulated ones.</p>
+<p><em>The agent.</em> Model name, model version, prompt hash, trajectory ID. Not the agent's personality. Its identity. Cosign + Sigstore<sup class="fn"><a href="#fn15">15</a></sup> already has the primitives. SLSA v1.1 extends them to AI-generated artifacts. The standards are written. The deployment is partial.</p>
+<p><em>The platform.</em> The cloud signs the runtime — which container image, which CPU vendor, which TEE, which key in which HSM. AWS Nitro, Azure CC, GCP Confidential Space already sign builds. By 2028 the signature extends to the agent runtime: <em>"this code was emitted by Claude 4.7 running in an islo.dev microVM with attested hardware and prompt-cache hit ratio 0.92."</em> That's the provenance line item.</p>
+<p>This is the part of the essay that isn't speculative. It's already happening in the shops that ship to FedRAMP and the EU CRA. By 2028 it is table stakes. By 2030 it is invisible — every merge has it, nobody talks about it, the same way TLS is in every URL bar.</p>
+<p>The corollary: <em>code without provenance</em> becomes the new <em>code without tests</em>. Allowed. Tolerated. Quietly distrusted.</p>
+</section>
+
+<section id="timeline">
+<h2><a href="#timeline" class="copy" aria-label="Copy link">#</a><span class="num">§ 08 · The shape</span>Six years. Six milestones.</h2>
+<p>Here's the shape, year by year. The leading indicators are dated. The forecasts are reasoned. None of this is fiction — every milestone has a real public artifact to point at, or it isn't on the list.</p>
+
+<ol class="timeline">
+<li>
+<div class="year">2025</div>
+<div class="head">The naming.</div>
+<div class="body">Karpathy gives the YC keynote on June 17. <em>"Your prompts are now programs that program the LLM."</em><sup class="fn"><a href="#fn2">2</a></sup> Devin 2.0 reports 45.8% on SWE-bench Verified<sup class="fn"><a href="#fn6">6</a></sup>. Cursor and Replit Agent become the default tool surfaces for AI-assisted work.</div>
+</li>
+<li>
+<div class="year">2026</div>
+<div class="head">The billing split.</div>
+<div class="body">Anthropic separates human-seat usage from headless agent usage on June 15. Modal prices sandboxes at 3× the serverless rate<sup class="fn"><a href="#fn5">5</a></sup>. Shopify's "Under the River" agent merges 12.5% of all PRs in one month<sup class="fn"><a href="#fn9">9</a></sup>.</div>
+</li>
+<li>
+<div class="year">2027</div>
+<div class="head">The agent-hour ships.</div>
+<div class="body">AWS publishes a Bedrock + Fargate agent-hour SKU. More than half of merged PRs at the top-ten AI-native companies are agent-authored. Prompt-keyed build caches ship as a category for the first time.</div>
+</li>
+<li>
+<div class="year">2028</div>
+<div class="head">The provenance year.</div>
+<div class="body">The EU CRA forces signed agent attestations on regulated deploys. Sigstore + SLSA v1.1 become table stakes<sup class="fn"><a href="#fn15">15</a></sup>. Every merge in finance and healthcare names the model that wrote it.</div>
+</li>
+<li>
+<div class="year">2029</div>
+<div class="head">The fleet replaces the container.</div>
+<div class="body">Persistent agent fleets — three to ten agents per active repo, each in a hot microVM — become the default deployment shape. Cursor-style background agents<sup class="fn"><a href="#fn14">14</a></sup> generalize across every major vendor.</div>
+</li>
+<li>
+<div class="year">2030</div>
+<div class="head">The bill flips.</div>
+<div class="body">Legacy stateless compute drops to under 10% of the AI-native cloud bill. Agent-hours and snapshot storage dominate. Kubernetes survives as an agent-fleet orchestrator, not a request-router.</div>
+</li>
+</ol>
+</section>
+
+<section id="bill-2030">
+<h2><a href="#bill-2030" class="copy" aria-label="Copy link">#</a><span class="num">§ 09 · The destination</span>The cloud bill, 2030 edition.</h2>
+
+<div class="callout">The container era is not over. It just got demoted.</div>
+
+<p>The cloud bill in 2030 doesn't look like the cloud bill in 2024. Not even close.</p>
+<p>The top of the invoice — the line that was once <em>EC2 / Compute</em> at 60% of the total — drops to a fifth of what it was. Stateless compute didn't disappear. It got demoted. It runs the request paths. It runs the gateways. It does not run the agents.</p>
+<p>Here's the shape, by share of total bill, for an AI-native company in 2030:</p>
+
+<div class="bill">
+<div><span>Inference tokens (model API)</span><span>40 %</span></div>
+<div><span>Agent-hours (persistent fleets)</span><span>25 %</span></div>
+<div><span>Snapshot &amp; cache storage (GB-mo)</span><span>15 %</span></div>
+<div><span>Eval compute (offline + online)</span><span>10 %</span></div>
+<div><span>Egress &amp; networking</span><span>5 %</span></div>
+<div><span>Legacy stateless compute</span><span>5 %</span></div>
+</div>
+
+<p>Two things to notice.</p>
+<p>First, the bill is no longer dominated by what the cloud does for you. It is dominated by what the agents <em>cost to keep running</em>. Inference is the labor cost. Agent-hours are the rent. Cache and snapshot are the warehouse. The proportions look more like a manufacturing P&amp;L than a SaaS one.</p>
+<p>Second, eval compute is a published line item. By 2030, eval-time spending is on the same page as serve-time spending. You don't get to ship the model without the evals running every hour, and the evals run on your bill.</p>
+<p>Kubernetes is still there. It survived. It just stopped being the load-bearing wall. It became the agent-fleet scheduler — the layer that decides which microVM holds which agent's snapshot, which evals run when, which background tasks defer until off-peak. That's a real job. It's a smaller job than running the whole internet.</p>
+<p>The container era isn't over. It just got demoted.</p>
+</section>
+
+<section id="closing">
+<h2><a href="#closing" class="copy" aria-label="Copy link">#</a><span class="num">§ 10 · One more thing</span>The substrate.</h2>
+<p>Software 1.0 was written by humans for machines.</p>
+<p>Software 2.0 was written by data for weights.</p>
+<p>Software 3.0 is written by humans for models that write for machines.</p>
+<p>The thing underneath has to change. The substrate has to change.</p>
+<p>It already is.</p>
+<p>The agent-hour is being named. The bill is being split. The cache is being rebuilt with two keys. The microVM is replacing the container for the workloads that mutate. The signatures are being attached. The eval line item is appearing on the invoice. Each of these is happening in a different shop, on a different timeline, with a different vendor pitching a different SKU.</p>
+<p>None of them are the whole answer. All of them are the same answer, told from different sides of the same room.</p>
+<p>If you're building anything where an agent is the producer and the cloud is the substrate — and that's an expanding set, not a shrinking one — the next eighteen months decide whether you're early or late.</p>
+<p>The substrate is shifting. It's already shifted. You're standing on it.</p>
+<p style="margin-top:36px;font-size:14px;color:var(--muted);font-style:italic">— Yossi · Tel Aviv · 2026 · <a href="https://islo.dev">islo.dev</a></p>
+</section>
+
+</main>
+
+<aside class="rail" aria-hidden="true">
+  <h4>In this essay</h4>
+  <ol id="toc">
+    <li><a href="#prelude">Prelude</a></li>
+    <li><a href="#software-three">Software 3.0, plainly</a></li>
+    <li><a href="#the-break">What broke</a></li>
+    <li><a href="#agent-hour">The agent-hour</a></li>
+    <li><a href="#two-level-cache">Two-level cache</a></li>
+    <li><a href="#tokio">A number, carefully</a></li>
+    <li><a href="#provenance">Who signed the code</a></li>
+    <li><a href="#timeline">Six milestones</a></li>
+    <li><a href="#bill-2030">2030 bill</a></li>
+    <li><a href="#closing">One more thing</a></li>
+  </ol>
+  <h4>Reference</h4>
+  <a href="#sources" class="jumptop">Sources →</a><br>
+  <a href="#" class="jumptop" id="top">Back to top ↑</a>
+</aside>
+
+</div>
+
+<div id="mobile-pill">§ · Prelude</div>
+
+<footer>
+<div class="wrap">
+<p id="sources"><strong>Sources &amp; footnotes</strong></p>
+<ol id="footnotes"></ol>
+<p style="margin-top:24px">Written by Yossi Eliaz · Principal Engineer at Incredibuild · Founder, <a href="https://islo.dev">islo.dev</a> · Tel Aviv, 2026.<br>
+Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo123/inference-substrate</a> · CC BY 4.0.</p>
+</div>
+</footer>
+
+<script>
+(function(){
+  // ---- Scroll progress ----
+  const bar = document.getElementById('progress');
+  function onScroll(){
+    const h = document.documentElement;
+    const max = h.scrollHeight - h.clientHeight;
+    const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+    bar.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  // ---- Footnotes ----
+  const footnotes = [
+    {id:"fn1", text:"Karpathy, \"Software 2.0,\" Medium, Nov 11 2017", url:"https://karpathy.medium.com/software-2-0-a64152b37c35"},
+    {id:"fn2", text:"Karpathy, \"Software Is Changing (Again),\" YC AI Startup School, June 17 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
+    {id:"fn3", text:"Latent Space, \"Andrej Karpathy on Software 3.0\" — slides + transcript, June 2025", url:"https://www.latent.space/p/s3"},
+    {id:"fn4", text:"Karpathy, \"vibe coding\" tweet, February 2025", url:"https://x.com/karpathy/status/1886192184808149383"},
+    {id:"fn5", text:"AgentMarketCap, \"AI Agent Sandbox Infrastructure 2026,\" April 7 2026", url:"https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution"},
+    {id:"fn6", text:"Cognition, \"SWE-bench Verified technical report,\" 2024", url:"https://cognition.ai/blog/swe-bench-technical-report"},
+    {id:"fn7", text:"Anthropic, \"Prompt caching with Claude,\" 2024", url:"https://www.anthropic.com/news/prompt-caching"},
+    {id:"fn8", text:"OpenAI, \"Introducing Operator,\" Jan 23 2025", url:"https://openai.com/index/introducing-operator/"},
+    {id:"fn9", text:"Shopify Engineering, \"Under the River,\" 2026", url:"https://shopify.engineering/under-the-river"},
+    {id:"fn10", text:"Latent Space, \"Shopify's AI Phase Transition with Mikhail Parakhin,\" 2026", url:"https://www.latent.space/p/shopify"},
+    {id:"fn11", text:"Fast Company, \"Sundar Pichai: 75% of Google's code is AI-generated,\" late 2025", url:"https://www.fastcompany.com/91531519/google-ceo-says-75-of-the-companys-code-is-ai-generated"},
+    {id:"fn12", text:"Incredibuild, \"AI Platform\" press release, September 2025", url:"https://www.prnewswire.com/news-releases/incredibuild-unveils-state-of-the-art-ai-platform-to-accelerate-the-entire-software-development-lifecycle-302560614.html"},
+    {id:"fn13", text:"IEA, data-center energy projection to 2030", url:"https://www.datacenterfrontier.com/energy/article/33038469/iea-study-sees-ai-cryptocurrency-doubling-data-center-energy-consumption-by-2026"},
+    {id:"fn14", text:"Cursor Docs, \"Background Agent,\" 2026", url:"https://docs.cursor.com/background-agent"},
+    {id:"fn15", text:"Legit Security, \"SLSA Provenance Series,\" 2025–26", url:"https://www.legitsecurity.com/blog/slsa-provenance-blog-series-part-1-what-is-software-attestation"}
+  ];
+  const fnList = document.getElementById('footnotes');
+  footnotes.forEach(fn => {
+    const li = document.createElement('li');
+    li.id = fn.id;
+    li.innerHTML = `${fn.text} · <a href="${fn.url}" rel="noopener">${fn.url}</a>`;
+    fnList.appendChild(li);
+  });
+
+  // Footnote hover/click reveal
+  let activeCard = null;
+  document.querySelectorAll('sup.fn').forEach(sup => {
+    sup.addEventListener('mouseenter', e => showFn(sup));
+    sup.addEventListener('mouseleave', e => setTimeout(hideFn, 150));
+    sup.addEventListener('click', e => { /* allow default jump to footnotes */ });
+  });
+  function showFn(sup){
+    hideFn();
+    const id = sup.querySelector('a').getAttribute('href').slice(1);
+    const fn = footnotes.find(f => f.id === id);
+    if(!fn) return;
+    const card = document.createElement('div');
+    card.className = 'fn-card show';
+    card.innerHTML = `${fn.text}<br><a href="${fn.url}" rel="noopener">${fn.url}</a>`;
+    document.body.appendChild(card);
+    const r = sup.getBoundingClientRect();
+    card.style.top = (window.scrollY + r.bottom + 6) + 'px';
+    card.style.left = Math.min(window.innerWidth - 320, Math.max(12, r.left - 60)) + 'px';
+    card.addEventListener('mouseenter', () => clearTimeout(card._hide));
+    card.addEventListener('mouseleave', hideFn);
+    activeCard = card;
+  }
+  function hideFn(){
+    if(activeCard){ activeCard.remove(); activeCard = null; }
+  }
+
+  // ---- Section indicator (rail + mobile pill) ----
+  const sections = Array.from(document.querySelectorAll('main section'));
+  const tocLinks = Array.from(document.querySelectorAll('#toc a'));
+  const pill = document.getElementById('mobile-pill');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if(e.isIntersecting){
+        const id = e.target.id;
+        const idx = sections.findIndex(s => s.id === id);
+        tocLinks.forEach(a => a.parentElement.classList.remove('active'));
+        const link = tocLinks.find(a => a.getAttribute('href') === '#' + id);
+        if(link) link.parentElement.classList.add('active');
+        if(pill){
+          const h = e.target.querySelector('h2');
+          if(h){
+            const num = h.querySelector('.num');
+            const numText = num ? num.textContent.split('·')[0].trim() : '§';
+            const title = h.childNodes[h.childNodes.length-1].textContent.trim();
+            pill.textContent = `${numText} · ${title}`;
+          }
+        }
+      }
+    });
+  }, {rootMargin:'-30% 0px -55% 0px', threshold:0});
+  sections.forEach(s => observer.observe(s));
+
+  // ---- Copy heading anchor ----
+  document.querySelectorAll('h2 .copy').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const id = a.parentElement.parentElement.id;
+      const url = location.origin + location.pathname + '#' + id;
+      navigator.clipboard?.writeText(url);
+      const orig = a.textContent;
+      a.textContent = '✓';
+      setTimeout(() => { a.textContent = orig; }, 1000);
+      history.replaceState(null, '', '#' + id);
+    });
+  });
+
+  // ---- Back to top ----
+  document.getElementById('top')?.addEventListener('click', e => {
+    e.preventDefault();
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+</body>
+</html>
