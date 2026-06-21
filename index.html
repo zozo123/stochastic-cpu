@@ -764,7 +764,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
   <p><em>State.</em> A container is stateless by convention. An agent has a scratchpad, a working tree, a tool history, and a context window worth keeping. Snapshotting that across a fleet of ephemeral runners is a new primitive — one that Modal, E2B, and a half-dozen startups now charge for at a documented 3× premium over their own serverless tier.<sup class="fn"><a href="#fn6">6</a></sup></p>
 
-  <p><em>Pricing.</em> A container bills CPU-seconds. An agent bills tokens, and tokens are 95% of the line. A 2 vCPU sandbox costs about ten cents an hour on Modal or E2B. The same hour of Sonnet-tier inference, in a heavy loop, runs $6 to $8.50. Sixty to eighty-five times the box, on the same invoice.</p>
+  <p><em>Pricing.</em> A container bills CPU-seconds. An agent bills tokens, and tokens are 95% of the line. A 2 vCPU sandbox costs about ten cents an hour on Modal or E2B. The same hour of inference, in a heavy loop, runs roughly $5 at Haiku rates, $30 at Sonnet, $130 at Opus. Two to three orders of magnitude over the box, on the same invoice.</p>
 
   <p><em>CI.</em> A boolean assertion over a stochastic function is a coin flip dressed as CI. The gate becomes an eval — a statistical regression with a budget and a confidence interval, run on its own pool. Green and red give way to a distribution.</p>
 
@@ -969,7 +969,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     <figcaption><strong>Agents passed the human bar.</strong> Scores on SWE-bench Verified climbed from 14% to 95% in twenty-seven months and now exceed the 85% human baseline (Anthropic<sup class="fn"><a href="#fn2">2</a></sup>).</figcaption>
   </figure>
 
-  <p>Walk the math for a single agent-hour at mid-2026 prices. A Sonnet-tier background loop issuing 200–600 round-trips, 30K–150K-token contexts (80–95% cached), 2K–8K output per call, lands between $1.20 and $8.50 per hour all-in. A fully-loaded software engineer is $80–$150 an hour. The ratio is 10× to 100× before you count parallelism.</p>
+  <p>Walk the math for one agent-hour at mid-2026 prices. A background loop issues 200–600 round-trips per hour, with 30K–150K-token contexts (80–95% cached) and 2K–8K output per call. At Haiku 4.5 rates that lands between $1 and $5 per hour. At Sonnet 4.5, between $15 and $130. At Opus, $30 to $300. A fully-loaded engineer is $80–$150 an hour. The widget below lets you move the sliders; the dollars are real Anthropic pricing.</p>
 
   <p>The agent is cheap now. The expensive part is making a hundred of them agree on a working tree, a test suite, and a deploy without stepping on each other. The bottleneck moved up the stack, which is, I think, where every interesting infrastructure problem now lives.</p>
 </section>
@@ -1123,6 +1123,8 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
           <fieldset class="sfs__seg">
             <legend class="sfs__legendtxt">Tier</legend>
             <div class="sfs__segwrap" role="radiogroup" aria-label="Model tier">
+              <input type="radio" name="sfs-tier" id="sfs-tier-haiku" value="haiku" />
+              <label for="sfs-tier-haiku">Haiku</label>
               <input type="radio" name="sfs-tier" id="sfs-tier-sonnet" value="sonnet" checked />
               <label for="sfs-tier-sonnet">Sonnet</label>
               <input type="radio" name="sfs-tier" id="sfs-tier-opus" value="opus" />
@@ -1184,6 +1186,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
   // case c (N=100000,C=0.9,opus,heavy): cost/agent-hr=$158.50, fleet/hr=$15,850,000, fleet/mo=$11.57B, eng-equiv=158,500
 
   var PRICING = {
+    haiku: {input:1.00, output:5.00,  cache_read:0.10},
     sonnet:{input:3.00, output:15.00, cache_read:0.30},
     opus:  {input:5.00, output:25.00, cache_read:0.50}
   };
@@ -1197,6 +1200,9 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
   var HOURS_PER_MONTH = 730;
 
   var ANCHORS = [
+    {k:"Haiku input", v:"$1.00 / Mtok", n:"Anthropic public pricing, Claude Haiku 4.5, mid-2026."},
+    {k:"Haiku output", v:"$5.00 / Mtok", n:"Anthropic public pricing, Claude Haiku 4.5, mid-2026."},
+    {k:"Haiku cache-read", v:"$0.10 / Mtok", n:"Anthropic prompt caching: 90% discount vs input price."},
     {k:"Sonnet input", v:"$3.00 / Mtok", n:"Anthropic public pricing, Claude Sonnet 4.x, mid-2026."},
     {k:"Sonnet output", v:"$15.00 / Mtok", n:"Anthropic public pricing, Claude Sonnet 4.x, mid-2026."},
     {k:"Sonnet cache-read", v:"$0.30 / Mtok", n:"Anthropic prompt caching: 90% discount vs input price."},
