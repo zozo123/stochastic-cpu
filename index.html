@@ -1,14 +1,95 @@
 <!doctype html>
 <html lang="en">
 <head>
+<!-- Primary meta -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Inference Substrate</title>
-<meta name="description" content="A field report on the cloud that's being built underneath Software 3.0. From the agent-hour to the prompt-keyed cache to the three signatures on every 2030 merge.">
-<meta name="author" content="Yossi Eliaz">
-<meta property="og:title" content="The Inference Substrate">
-<meta property="og:description" content="A field report on the cloud being built underneath Software 3.0.">
+<title>The Inference Substrate — A field report on the cloud underneath Software 3.0</title>
+<meta name="description" content="How the cloud is being rebuilt for agents: the agent-hour, the two-level cache, snapshot provenance, and a 2030 cloud bill. A field report by Yossi Eliaz.">
+<meta name="author" content="Yossi Eliaz · at incredibuild and islo.dev · Tel Aviv">
+<meta name="theme-color" content="#FAF7F2">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
+<link rel="canonical" href="https://zozo123.github.io/inference-substrate/">
+
+<!-- Open Graph -->
 <meta property="og:type" content="article">
+<meta property="og:site_name" content="The Inference Substrate">
+<meta property="og:title" content="The Inference Substrate">
+<meta property="og:description" content="A field report on the cloud being built underneath Software 3.0. The agent-hour, the two-level cache, snapshot provenance, and a 2030 cloud bill.">
+<meta property="og:url" content="https://zozo123.github.io/inference-substrate/">
+<meta property="og:image" content="https://zozo123.github.io/inference-substrate/og-image.png">
+<meta property="og:image:secure_url" content="https://zozo123.github.io/inference-substrate/og-image.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="The Inference Substrate — A field report on the cloud being built underneath Software 3.0, by Yossi Eliaz.">
+<meta property="og:locale" content="en_US">
+
+<!-- Article -->
+<meta property="article:published_time" content="2026-06-21T00:00:00Z">
+<meta property="article:modified_time" content="2026-06-21T00:00:00Z">
+<meta property="article:author" content="Yossi Eliaz · at incredibuild and islo.dev · Tel Aviv">
+<meta property="article:section" content="Engineering">
+<meta property="article:tag" content="Software 3.0">
+<meta property="article:tag" content="Agents">
+<meta property="article:tag" content="Inference">
+<meta property="article:tag" content="Cloud infrastructure">
+
+<!-- Twitter / X -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="The Inference Substrate">
+<meta name="twitter:description" content="A field report on the cloud being built underneath Software 3.0. The agent-hour, the two-level cache, snapshot provenance, and a 2030 cloud bill.">
+<meta name="twitter:image" content="https://zozo123.github.io/inference-substrate/og-image.png">
+<meta name="twitter:image:alt" content="The Inference Substrate — essay cover card.">
+<meta name="twitter:creator" content="">
+<meta name="twitter:site" content="">
+
+<!-- JSON-LD: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "The Inference Substrate",
+  "alternativeHeadline": "A field report on the cloud being built underneath Software 3.0",
+  "description": "How the cloud is being rebuilt for agents: the agent-hour, the two-level cache, snapshot provenance, the Tokio benchmark, and a 2030 cloud bill.",
+  "image": [
+    "https://zozo123.github.io/inference-substrate/og-image.png"
+  ],
+  "datePublished": "2026-06-21",
+  "dateModified": "2026-06-21",
+  "inLanguage": "en",
+  "author": {
+    "@type": "Person",
+    "name": "Yossi Eliaz",
+    "affiliation": [
+      {
+        "@type": "Organization",
+        "name": "incredibuild"
+      },
+      {
+        "@type": "Organization",
+        "name": "islo.dev"
+      }
+    ],
+    "url": "https://islo.dev"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "The Inference Substrate",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://zozo123.github.io/inference-substrate/og-image.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://zozo123.github.io/inference-substrate/"
+  },
+  "keywords": "Software 3.0, agents, inference, cloud infrastructure, agent-hour, snapshots, provenance"
+}
+</script>
+
 <link rel="icon" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' fill='%23FAF7F2'/&gt;&lt;circle cx='16' cy='16' r='8' fill='%23B8430F'/&gt;&lt;/svg&gt;">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -240,6 +321,136 @@ footer ol li{padding:2px 0}
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 }
+
+/* === ENHANCEMENTS: footnote popover === */
+.fn-ref { cursor: pointer; }
+.fn-ref:focus-visible { outline: 2px solid #B8430F; outline-offset: 2px; }
+.fn-popover {
+  position: absolute; z-index: 50;
+  max-width: min(340px, calc(100vw - 32px));
+  padding: 14px 16px;
+  background: #FAF7F2; color: #1A1A1A;
+  border: 1px solid #D9D2C7;
+  box-shadow: 0 6px 24px rgba(26,26,26,0.08);
+  font-family: 'Source Serif 4', 'Source Serif Pro', Charter, Georgia, serif;
+  font-size: 14px; line-height: 1.5;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 140ms ease, transform 140ms ease;
+  pointer-events: none;
+}
+.fn-popover.is-open { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.fn-popover .fn-popover-num {
+  display: inline-block;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11px; color: #B8430F; margin-right: 6px; letter-spacing: 0.04em;
+}
+.fn-popover a {
+  color: #B8430F; text-decoration: underline; text-decoration-thickness: 1px;
+  text-underline-offset: 2px; word-break: break-word;
+}
+.fn-popover .fn-popover-close {
+  display: none; position: absolute; top: 6px; right: 8px;
+  width: 24px; height: 24px; background: transparent; border: 0;
+  color: #6B6259; font-size: 18px; line-height: 1; cursor: pointer;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+}
+.fn-popover .fn-popover-close:hover { color: #1A1A1A; }
+@media (max-width: 640px) {
+  .fn-popover .fn-popover-close { display: block; }
+  .fn-popover { padding-right: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { .fn-popover { transition: none; } }
+
+/* === ENHANCEMENTS: reading time === */
+.hero-meta {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 13px; color: #6B6259;
+  margin-top: 6px; letter-spacing: 0.01em;
+}
+
+/* === ENHANCEMENTS: glossary === */
+.rail-glossary { width: 260px; margin-top: 32px; padding-top: 20px; border-top: 1px solid #D9D2C7; }
+.rail-glossary-toggle {
+  width: 100%; display: flex; justify-content: space-between; align-items: baseline;
+  background: transparent; border: 0; padding: 0 0 8px 0; cursor: pointer;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #1A1A1A;
+}
+.rail-glossary-toggle:hover { color: #B8430F; }
+.rail-glossary-caret { font-size: 13px; color: #6B6259; transition: transform 160ms ease; }
+.rail-glossary-toggle[aria-expanded="true"] .rail-glossary-caret { transform: rotate(45deg); }
+.rail-glossary-list { margin: 8px 0 0 0; padding: 0; }
+.rail-glossary-list dt {
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em;
+  color: #1A1A1A; margin-top: 12px;
+}
+.rail-glossary-list dt:first-child { margin-top: 4px; }
+.rail-glossary-list dd {
+  margin: 4px 0 0 0;
+  font-family: 'Source Serif 4', 'Source Serif Pro', Charter, Georgia, serif;
+  font-style: italic; font-size: 13px; line-height: 1.5; color: #6B6259;
+}
+@media (prefers-reduced-motion: reduce) { .rail-glossary-caret { transition: none; } }
+@media (max-width: 1024px) { .rail-glossary { display: none; } }
+
+/* === ENHANCEMENTS: share row === */
+.share-row {
+  display: flex; flex-wrap: wrap; gap: 10px;
+  margin: 48px 0 32px 0; padding-top: 32px; border-top: 1px solid #D9D2C7;
+}
+.share-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px; background: transparent; border: 1px solid #B8430F; color: #B8430F;
+  font-family: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  font-size: 12px; letter-spacing: 0.04em; text-decoration: none; cursor: pointer;
+  transition: background 140ms ease, color 140ms ease;
+}
+.share-btn:hover, .share-btn:focus-visible { background: #B8430F; color: #FAF7F2; outline: none; }
+.share-btn svg { display: block; }
+.share-btn.is-copied { background: #1A1A1A; border-color: #1A1A1A; color: #FAF7F2; }
+@media (prefers-reduced-motion: reduce) { .share-btn { transition: none; } }
+
+/* === ENHANCEMENTS: print === */
+@media print {
+  @page {
+    margin: 22mm 18mm 24mm 18mm;
+    @bottom-left { content: "Yossi Eliaz \2014 The Inference Substrate"; font-family: 'Source Serif 4', Georgia, serif; font-size: 9pt; color: #6B6259; }
+    @bottom-right { content: "incredibuild.com/inference-substrate"; font-family: 'JetBrains Mono', Menlo, monospace; font-size: 9pt; color: #6B6259; }
+  }
+  html, body {
+    background: #fff !important; color: #000 !important;
+    font-family: 'Source Serif 4', 'Source Serif Pro', Charter, Georgia, serif;
+    font-size: 11pt; line-height: 1.4;
+  }
+  header, nav, .site-header, .rail, .right-rail, .toc, .mobile-pill, .scroll-progress,
+  .share-row, .copy-link, .fn-popover, .rail-glossary { display: none !important; }
+  main, article {
+    display: block !important; width: 100% !important; max-width: none !important;
+    margin: 0 !important; padding: 0 !important; grid-template-columns: 1fr !important;
+  }
+  h1 { font-size: 22pt; line-height: 1.15; }
+  h2 { font-size: 15pt; margin-top: 18pt; }
+  h3 { font-size: 12pt; }
+  section { page-break-before: always; break-before: page; }
+  section:first-of-type { page-break-before: avoid; break-before: avoid; }
+  h2, h3 { page-break-after: avoid; break-after: avoid; }
+  p, li, blockquote { orphans: 3; widows: 3; }
+  a { color: #000 !important; text-decoration: underline; }
+  sup a.fn-ref { text-decoration: none; font-size: 8pt; vertical-align: super; }
+  a[href]:not(.fn-ref)::after {
+    content: " (" attr(href) ")";
+    font-family: 'JetBrains Mono', Menlo, monospace;
+    font-size: 9pt; color: #333; word-break: break-all;
+  }
+  #footnotes { page-break-before: always; break-before: page; font-size: 9.5pt; }
+  #footnotes li { margin-bottom: 6pt; }
+  img, svg, figure { page-break-inside: avoid; break-inside: avoid; max-width: 100% !important; }
+}
+
+/* === chart figures === */
+figure.chart, figure.svg-fig { margin: 28px 0; padding: 0; }
+figure.chart figcaption, figure.svg-fig figcaption { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
 </style>
 </head>
 <body>
@@ -263,193 +474,691 @@ footer ol li{padding:2px 0}
 <div class="hero">
   <h1>The Inference Substrate.</h1>
   <p class="sub">A field report on the cloud that's being built underneath Software 3.0. From the agent-hour to the prompt-keyed cache to the three signatures on every 2030 merge.</p>
-  <p class="byline">by Yossi Eliaz · Principal Engineer at Incredibuild &amp; Founder, islo.dev · Tel Aviv · 2026</p>
+  <p class="byline">by Yossi Eliaz · at incredibuild and islo.dev · Tel Aviv · 2026</p>
+  <p class="hero-meta" id="reading-meta"></p>
 </div>
 
+<!-- §01 prelude -->
 <section id="prelude">
-<h2><a href="#prelude" class="copy" aria-label="Copy link">#</a><span class="num">§ 01 · Prelude</span>The software we used to write.</h2>
-<p>The way we make software changed three times in a decade. We've only named two of them.</p>
-<p>In <em>2017</em>, Andrej Karpathy called the first shift Software 2.0<sup class="fn"><a href="#fn1">1</a></sup>. The code stopped being typed by humans. It became weights, learned from data, compiled by gradient descent. We argued about whether to call it programming. The argument lost. The weights kept shipping.</p>
-<p>In <em>2025</em>, he gave the rest of it a name. Software 3.0<sup class="fn"><a href="#fn2">2</a></sup>. Your prompts are programs. English is the language. The compiler is a GPU cluster, and the runtime is an LLM. The Iron Man suit and the autonomy slider were the same sentence.</p>
-<p>That's two paradigms changing in eight years. Production. Consumption. Both renamed.</p>
-<p>The third change is the one nobody named yet. The cloud underneath. The substrate.</p>
-<p>That's what this essay is about.</p>
+  <h2><span class="num">01</span> Prelude <a class="copy" href="#prelude" aria-label="Link to this section">¶</a></h2>
+
+  <p>The way we make software changed three times in a decade. We've only named two of them.</p>
+
+  <p>Software 1.0 was the code a human typed for a machine. Software 2.0 was the weights a dataset taught a machine to hold. Software 3.0 is the prompt — a program written in English that runs on a model that runs on a fleet. Karpathy gave us the first two names in 2017 and the third one in 2025, and the gap between those announcements is not an accident: 1.0 was a production shift, 2.0 was a learning shift, 3.0 is an infrastructure shift, and infrastructure shifts always lag the thing they carry.<sup class="fn"><a href="#fn1">1</a></sup></p>
+
+  <p>The thing they carry has arrived. Coding agents that scored under 14% on SWE-bench Verified in early 2024 are clearing 95% by mid-2026.<sup class="fn"><a href="#fn2">2</a></sup> Inference cost at equivalent quality has fallen more than a thousand-fold in the same window.<sup class="fn"><a href="#fn3">3</a></sup> The two curves run in opposite directions at comparable speed, and where they cross is where the substrate sits.</p>
+
+  <p>We are about to stop deploying programs and start deploying invocations. The cloud — every layer of it, from the load balancer to the line item — was not designed for that.</p>
+
+  <p>This essay is about what that change looks like from underneath.</p>
 </section>
 
+<!-- §02 software-three -->
 <section id="software-three">
-<h2><a href="#software-three" class="copy" aria-label="Copy link">#</a><span class="num">§ 02 · Software 3.0, plainly</span>Three sentences.</h2>
-<p>Karpathy said it plainly. Your prompts are programs.</p>
-<p>That's one. Here are the other two.</p>
-<p>The LLM is a computer. Not a model. A computer. The same way a CPU is a computer — a substrate that runs instructions and returns results. Except the instructions are English, and the results are sometimes wrong, and the memory is the context window.</p>
-<p>The autonomy slider exists. You can keep the human in the loop, or you can hand the keys over. There's no right answer. There's an axis.</p>
-<p>That's it. Three sentences.</p>
-<p>Everyone else has been saying the same thing in worse words. <em>Agentic.</em> <em>Copilot.</em> <em>Workflow automation.</em> <em>Vibe coding</em><sup class="fn"><a href="#fn4">4</a></sup>. They're all reaching for one of Karpathy's three sentences and missing.</p>
-<p>The reason this matters here — in a cloud essay, not an AI essay — is that all three sentences land on the infrastructure. Prompts are programs, which means somebody has to host them. The LLM is a computer, which means somebody has to bill for its cycles. The autonomy slider exists, which means the cloud has to know whether the workload is a human typing or an agent running for nine hours.</p>
-<p>None of which the current cloud knows. None of which the current cloud was asked.</p>
+  <h2><span class="num">02</span> Software 3.0, plainly <a class="copy" href="#software-three" aria-label="Link to this section">¶</a></h2>
+
+  <p>Three sentences carry the whole idea.</p>
+
+  <p><em>Your prompts are programs.</em> They have inputs and outputs, side effects, version drift, and a runtime cost per call. They are checked into repos, they go through code review, they get A/B tested in production. The fact that they look like English is a UX choice, not an ontological one.</p>
+
+  <p><em>The LLM is a computer.</em> Not a model, not an API — a computer in Karpathy's sense, with an instruction stream (the prompt), a memory hierarchy (context, KV cache, retrieval), and a clock that ticks in tokens.<sup class="fn"><a href="#fn4">4</a></sup> Every architectural property of the old computer needs a new answer on this one: scheduling, caching, isolation, billing, even what it means for a program to terminate.</p>
+
+  <p><em>The autonomy slider exists.</em> The same model can be a tab-complete, a copilot, a background agent, or a fleet. The slider is continuous, the cost curve is not, and the substrate has to absorb the discontinuity. A keystroke is cents; an agent-hour is dollars; a thousand parallel agents is the bill.</p>
+
+  <p>Vendors will tell you "Software 3.0" is whatever they ship, the way "AI" used to mean a spam filter. The honest test is shorter. If the artifact you wrote was a prompt, and the artifact that ran was a model, and the artifact that landed was code or a ticket or a refund, you are in 3.0.</p>
+
+  <p>This sits on top of a training curve that has run about five times per year since 2020 and is on track to cross 10²⁷ FLOPs by 2027.<sup class="fn"><a href="#fn5">5</a></sup> Four orders of magnitude in six years on the training side. A thousand-fold drop on the inference side. The substrate is the place those two curves land.</p>
+
+  <figure class="chart" id="chart-training-compute" data-anim="chart-C">
+    <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Training compute for frontier AI models grew from 10^21 FLOPs for GPT-2 in 2019 to ~10^26 FLOPs by 2025-26, with Epoch AI forecasting 10^27 by 2027" class="sw3-chart sw3-chart-c" data-anim="chart-C" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .sw3-chart-c text { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: #1A1A1A; }
+        .sw3-chart-c .ax-label { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-c .annot { font-size: 9.5px; fill: #1A1A1A; }
+        .sw3-chart-c .annot-muted { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-c .grid { stroke: #D9D2C7; stroke-width: 0.5; }
+        .sw3-chart-c .axis { stroke: #1A1A1A; stroke-width: 1; }
+        .sw3-chart-c .line { stroke: #B8430F; stroke-width: 2; fill: none; stroke-dasharray: 4 3; }
+        .sw3-chart-c .line-fc { stroke: #D86A36; stroke-width: 2; fill: none; stroke-dasharray: 2 3; }
+        .sw3-chart-c .dot { fill: #B8430F; }
+        .sw3-chart-c .dot-fc { fill: #FAF7F2; stroke: #D86A36; stroke-width: 1.5; }
+        .sw3-chart-c[data-anim] .line, .sw3-chart-c[data-anim] .line-fc { stroke-dashoffset: 800; stroke-dasharray: 800; }
+        .sw3-chart-c[data-anim] .dot, .sw3-chart-c[data-anim] .dot-fc, .sw3-chart-c[data-anim] .annot, .sw3-chart-c[data-anim] .annot-muted { opacity: 0; }
+        .sw3-chart-c.anim-on .line { animation: sw3c-draw 1.6s ease-out forwards; }
+        .sw3-chart-c.anim-on .line-fc { animation: sw3c-draw 0.8s ease-out forwards; animation-delay: 1.4s; stroke-dasharray: 2 3, 800; }
+        .sw3-chart-c.anim-on .dot, .sw3-chart-c.anim-on .annot, .sw3-chart-c.anim-on .annot-muted { animation: sw3c-fade 0.5s ease-out forwards; }
+        .sw3-chart-c.anim-on .dot-fc { animation: sw3c-fade 0.5s ease-out forwards; animation-delay: 1.8s; }
+        @keyframes sw3c-draw { to { stroke-dashoffset: 0; } }
+        @keyframes sw3c-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .sw3-chart-c .line, .sw3-chart-c .line-fc { stroke-dashoffset: 0 !important; animation: none !important; }
+          .sw3-chart-c .dot, .sw3-chart-c .dot-fc, .sw3-chart-c .annot, .sw3-chart-c .annot-muted { opacity: 1 !important; animation: none !important; }
+        }
+      </style>
+      <line class="axis" x1="60" y1="215" x2="620" y2="215"/>
+      <line class="axis" x1="60" y1="30" x2="60" y2="215"/>
+      <line class="grid" x1="60" y1="215" x2="620" y2="215"/>
+      <line class="grid" x1="60" y1="168.75" x2="620" y2="168.75"/>
+      <line class="grid" x1="60" y1="122.5"  x2="620" y2="122.5"/>
+      <line class="grid" x1="60" y1="76.25"  x2="620" y2="76.25"/>
+      <line class="grid" x1="60" y1="30"     x2="620" y2="30"/>
+      <text class="ax-label" x="55" y="218"    text-anchor="end">10²⁰</text>
+      <text class="ax-label" x="55" y="171.75" text-anchor="end">10²²</text>
+      <text class="ax-label" x="55" y="125.5"  text-anchor="end">10²⁴</text>
+      <text class="ax-label" x="55" y="79.25"  text-anchor="end">10²⁶</text>
+      <text class="ax-label" x="55" y="33"     text-anchor="end">10²⁸</text>
+      <text class="ax-label" x="60" y="22" text-anchor="start">training FLOP (log)</text>
+      <text class="ax-label" x="60"  y="232" text-anchor="middle">2019</text>
+      <text class="ax-label" x="200" y="232" text-anchor="middle">2021</text>
+      <text class="ax-label" x="340" y="232" text-anchor="middle">2023</text>
+      <text class="ax-label" x="480" y="232" text-anchor="middle">2025</text>
+      <text class="ax-label" x="620" y="232" text-anchor="middle">2027</text>
+      <polyline class="line" points="60,187.71 130,134.30 270,113.25 355,91.97 410,83.19 480,76.25"/>
+      <polyline class="line-fc" points="480,76.25 620,53.13"/>
+      <circle class="dot" cx="60"  cy="187.71" r="3.5"/>
+      <text class="annot" x="66" y="184">GPT-2 · 10²¹</text>
+      <circle class="dot" cx="130" cy="134.30" r="3.5"/>
+      <text class="annot" x="136" y="131">GPT-3 · 3×10²³</text>
+      <circle class="dot" cx="355" cy="91.97" r="3.5"/>
+      <text class="annot" x="361" y="88">GPT-4 · 2×10²⁵</text>
+      <circle class="dot" cx="480" cy="76.25" r="3.5"/>
+      <text class="annot" x="486" y="72">frontier 2025 · 10²⁶</text>
+      <circle class="dot-fc" cx="620" cy="53.13" r="4.5"/>
+      <text class="annot-muted" x="614" y="48" text-anchor="end">2027 · 10²⁷  FORECAST</text>
+      <text class="annot-muted" x="320" y="252" text-anchor="middle">Epoch AI: ~5× per year since 2020</text>
+    </svg>
+    <figcaption>Training compute for frontier models, 2019 to forecast 2027. Epoch AI Notable Models database; ~5× per year since GPT-3.<sup class="fn"><a href="#fn5">5</a></sup></figcaption>
+  </figure>
+
+  <p>None of the three sentences is about the model. All three land on the infrastructure.</p>
 </section>
 
+<!-- §02b stochastic-cpu -->
+<section id="stochastic-cpu">
+  <h2><span class="num">02b</span> The Stochastic CPU <a class="copy" href="#stochastic-cpu" aria-label="Link to this section">¶</a></h2>
+
+  <p>A classical CPU is a deterministic function. Same input bytes, same instruction stream, same output bytes — yesterday, today, on the rack next to it, on the one in Dublin. Every property we built the industry on inherits from that single guarantee.</p>
+
+  <p>Cache hits because the hash of the input is the hash of the output. Tests pass or fail because the answer is fixed. Reproducible builds reproduce. Blame walks cleanly from a stack trace back to a line. Contracts hold because both sides compute the same thing from the same bytes. Sixty years of systems engineering — virtual memory, distributed consensus, exactly-once delivery, Merkle trees, the whole shape of <em>git</em> — is scaffolding on top of <code>f(x) = y, always</code>.</p>
+
+  <p>The LLM is a computer in Karpathy's sense.<sup class="fn"><a href="#fn16">16</a></sup> It takes instructions in, returns results out, and you program it in English. It is also the first computer in production that does not satisfy <code>f(x) = y, always</code>. It is a stochastic CPU, and that one word changes everything above it.</p>
+
+  <h3>The break</h3>
+
+  <p>Ask the same question twice. You get two answers. Sometimes the difference is a synonym, sometimes the variable is renamed, sometimes the control flow inverts and the function still passes its tests. Temperature is the knob you see; nucleus sampling, top-k, and the kernel's own floating-point non-associativity across batched GPU reductions are the ones you don't.<sup class="fn"><a href="#fn17">17</a></sup> Even at <code>temperature=0</code> the output drifts, because greedy decoding over a batched matmul is not bit-exact when the batch composition changes between calls.</p>
+
+  <p>Then the model itself moves underneath you. A snapshot rolls. A safety fine-tune lands on Tuesday. The provider rotates a server-side seed you were never told existed. The function you were calling last week is, in a literal sense, not the function you are calling now.</p>
+
+  <p>Regenerate a 40-line Python file twice and diff the bytes. The first version writes <code>for i, row in enumerate(rows):</code>, the second writes <code>for idx, row in enumerate(rows):</code>. Same behavior, different SHA. Your content-addressed cache, your code review tooling, your "did anything change" check — all of them think work happened. None did. The model is doing something we don't fully name yet: producing outputs that are semantically equivalent over a space the bytes can't see.</p>
+
+  <h3>What breaks downstream</h3>
+
+  <div class="callout">The CPU was deterministic for sixty years. The new one isn't.</div>
+
+  <p>Every assumption built on determinism now needs a replacement, and each replacement is a line item on the new substrate.</p>
+
+  <p><em>Caches.</em> Content-hash caches miss on the second call because the bytes are different even when the meaning isn't. The cache key has to move up the stack — from the output hash to the prompt prefix that produced it. This is the seed of the two-level cache in §5.</p>
+
+  <p><em>Tests.</em> A boolean assertion over a stochastic function is a coin flip dressed as CI. Tests become evals: statistical regressions run online and offline, with confidence intervals, drift detection, and a budget. Green and red give way to a distribution.</p>
+
+  <p><em>Reproducibility.</em> "Did this build reproduce" is replaced by "what model snapshot, prompt, system prompt, tool schema, and seed produced this artifact." The reproducibility unit is no longer the binary; it's the invocation.</p>
+
+  <p><em>Idempotency.</em> A retried HTTP call used to be free if the server was well-behaved. A retried agent call writes a different PR, opens a different ticket, sends a different email. Every action needs an idempotency key the agent itself does not generate.</p>
+
+  <p><em>Cost.</em> You pay for the same work, plural, until it lands. An agent loop that needs three samples to converge is three times the bill, and frontier inference is already running into the tens of millions of tokens per second per cluster. Eval is not a quality tool; it's the line item that decides whether the loop terminates before the invoice does.</p>
+
+  <p><em>Provenance.</em> A commit used to carry one signature. It now carries three: the human who asked, the agent that wrote, and the platform snapshot that generated. Audit, compliance, and IP all have to learn to read a triple.</p>
+
+  <h3>The punch</h3>
+
+  <p>The substrate is not being rebuilt because LLMs got smarter. Smarter would fit on the old substrate; smarter is just a faster CPU. The substrate is being rebuilt because LLMs are <em>stochastic</em>, and the cloud — every layer of it, from the cache to the bill — was designed around a property the new workload does not have.</p>
+
+  <p>This is the most important architectural shift since the move from single machine to distributed compute, and it is happening underneath teams that still think they are shipping software.</p>
+</section>
+
+<!-- §03 the-break -->
 <section id="the-break">
-<h2><a href="#the-break" class="copy" aria-label="Copy link">#</a><span class="num">§ 03 · What broke</span>What containers got wrong about agents.</h2>
+  <h2><span class="num">03</span> What broke <a class="copy" href="#the-break" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">Containers were built for humans. Agents broke them in eighteen months.</div>
+  <div class="callout">Containers were built for humans. Agents broke them in eighteen months.</div>
 
-<p>Containers assume a request. Agents run a loop. That's the whole problem.</p>
-<p>A SWE-bench Verified trajectory<sup class="fn"><a href="#fn6">6</a></sup> is not a request. It is a thirty-minute conversation with two hundred tool calls — read a file, run a test, edit a file, run a test, install a dep, recompile, edit again. Two hundred small mutations across one long arc. Kill the container halfway through and the work dies with it. Restart cold and the model spends ten thousand tokens re-learning where it left off.</p>
-<p>Stateless 12-factor was the right answer for a request/response web. It is the wrong answer for an agent.</p>
-<h3>What breaks, in order:</h3>
-<p><em>Cold start.</em> A 400ms cold start is invisible when a human waits. It is unbearable when an agent fires two hundred sandboxes in a row to test two hundred edits. The aggregate cold-start tax becomes the biggest single line item on the bill.</p>
-<p><em>State.</em> A container is a fresh slate every time. An agent is a slate with thirty minutes of marks on it. Throw the marks away between turns and you've thrown away the work.</p>
-<p><em>Pricing.</em> Containers are billed per second of compute. Agents are billed — should be billed — per agent-hour, snapshot-GB-month, eval token. The shapes don't overlap.</p>
-<p><em>CI.</em> CI queues built for ten PRs a day collapse at a thousand. Cursor's background agents<sup class="fn"><a href="#fn14">14</a></sup>, Shopify's River<sup class="fn"><a href="#fn9">9</a></sup>, Devin's autonomous pool — each of them is now opening hundreds of PRs a week. The bottleneck is no longer the human reviewer. It's the build farm.</p>
-<p><em>Cache.</em> Bazel hashes the bytes. Agents change the bytes without changing the meaning. The cache misses every time.</p>
-<p>The container era isn't ending because containers are bad. It's ending because the workload changed and the workload doesn't fit anymore.</p>
+  <p>A container is a frozen filesystem with a process boundary. It was designed for a workload that boots, serves requests, scales out, and dies — a server, kind of like a long-lived organism. Agents are the opposite shape. They wake up, think for ninety seconds, write a file, sleep, wake up again at a different hour with a different prompt and a different model. The container abstraction fights every one of those properties.</p>
+
+  <p><em>Cold start.</em> A Python image pulls in seconds; a CUDA-enabled image with a 70B model loaded pulls in minutes. Cold start used to be a tail-latency problem. With agents it's the median.</p>
+
+  <figure class="svg-fig" data-anim="fade-up">
+    <svg viewBox="0 0 720 200" width="100%" role="img"
+         aria-label="Container era versus microVM era. Containers run as eight short request-scoped segments with broken state between them. MicroVMs run as one continuous 30-minute agent trajectory with state preserved throughout."
+         style="font-family:'Source Serif 4','Source Serif Pro',Charter,Georgia,serif;display:block">
+      <style>
+        .lane-label { font: 600 12px 'Source Serif 4', serif; fill: #1A1A1A; letter-spacing: 0.01em; }
+        .meta       { font: 11px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #6B6259; }
+        .legend     { font: 11px 'Source Serif 4', serif; fill: #6B6259; }
+        .seg-fill   { fill: #FAF7F2; stroke: #1A1A1A; stroke-width: 1; }
+        .vm-fill    { fill: #FAF7F2; stroke: #B8430F; stroke-width: 1.25; }
+        .state-broken   { stroke: #6B6259; stroke-width: 1.25; stroke-dasharray: 6 6; fill: none; }
+        .state-cont     { stroke: #B8430F; stroke-width: 1.5; fill: none; }
+        .dot        { fill: #B8430F; }
+      </style>
+      <text x="0" y="18" class="lane-label">Container era</text>
+      <text x="0" y="34" class="meta">request · request · request · request · request · request · request · request</text>
+      <g>
+        <rect class="seg-fill" x="0"   y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="68"  y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="136" y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="204" y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="272" y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="340" y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="408" y="44" width="60" height="30" rx="1"/>
+        <rect class="seg-fill" x="476" y="44" width="60" height="30" rx="1"/>
+      </g>
+      <g>
+        <line class="state-broken" x1="0"   y1="82" x2="60"  y2="82"/>
+        <line class="state-broken" x1="68"  y1="82" x2="128" y2="82"/>
+        <line class="state-broken" x1="136" y1="82" x2="196" y2="82"/>
+        <line class="state-broken" x1="204" y1="82" x2="264" y2="82"/>
+        <line class="state-broken" x1="272" y1="82" x2="332" y2="82"/>
+        <line class="state-broken" x1="340" y1="82" x2="400" y2="82"/>
+        <line class="state-broken" x1="408" y1="82" x2="468" y2="82"/>
+        <line class="state-broken" x1="476" y1="82" x2="536" y2="82"/>
+      </g>
+      <text x="0" y="116" class="lane-label">MicroVM era</text>
+      <text x="0" y="132" class="meta">30-min agent trajectory · 200 tool calls</text>
+      <rect class="vm-fill" x="0" y="142" width="536" height="30" rx="1"/>
+      <line class="state-cont" x1="0" y1="180" x2="536" y2="180"/>
+      <circle class="dot" cx="3"   cy="180" r="3"/>
+      <circle class="dot" cx="533" cy="180" r="3"/>
+      <g transform="translate(560, 44)">
+        <line x1="0" y1="6" x2="20" y2="6" stroke="#B8430F" stroke-width="1.5"/>
+        <text x="26" y="10" class="legend">state preserved</text>
+        <line x1="0" y1="30" x2="20" y2="30" stroke="#6B6259" stroke-width="1.25" stroke-dasharray="4 4"/>
+        <text x="26" y="34" class="legend">state lost</text>
+      </g>
+    </svg>
+    <figcaption>Container era versus microVM era. Stateless segments with broken continuity (top) versus one continuous agent trajectory with state preserved (bottom).</figcaption>
+  </figure>
+
+  <p><em>State.</em> A container is stateless by convention. An agent has a scratchpad, a working tree, a tool history, and a context window worth keeping. Snapshotting that across a fleet of ephemeral runners is a new primitive — one that Modal, E2B, and a half-dozen startups are now charging for, at a documented 3× premium over their own serverless tier.<sup class="fn"><a href="#fn6">6</a></sup></p>
+
+  <p><em>Pricing.</em> A container bills CPU-seconds. An agent bills tokens, and the tokens are 95% of the line. A 2 vCPU sandbox costs about ten cents an hour on Modal or E2B. The same hour of Sonnet-tier inference, in a heavy loop, runs $6 to $8.50.<sup class="fn"><a href="#fn7">7</a></sup> The bill is the model, not the box.</p>
+
+  <p><em>CI.</em> Tests are deterministic; agents are not. You can't gate a merge on a boolean over a stochastic function, so the gate becomes an eval — a statistical regression with a budget and a confidence interval, run on its own pool of compute. CI used to be 5% of the cloud bill. By 2030 the eval pool is its own line item.</p>
+
+  <p><em>Cache.</em> Content-hash caches assume same input means same output bytes. Agents regenerate semantically-equivalent files with different bytes constantly, so Bazel, Buck, and Nix all miss when they shouldn't. The fix isn't a smarter hash; it's a second cache layer that keys on prompt prefix. §5.</p>
+
+  <p>None of this is hypothetical. Shopify reports that one in eight merged PRs across the company is coauthored by its agent, River — 3,536 merged in a 30-day window.<sup class="fn"><a href="#fn8">8</a></sup> Sundar Pichai said on the Q3 2024 earnings call that over a quarter of new code at Google was AI-generated; he raised the number to over 30% on the Q1 2025 call.<sup class="fn"><a href="#fn9">9</a></sup> The Shopify number is the more honest one because it counts what got <em>merged</em>, not what got typed.</p>
+
+  <figure class="chart" id="chart-agent-adoption" data-anim="chart-D">
+    <svg viewBox="0 0 640 200" width="100%" role="img" aria-label="Agent-authored code adoption: Shopify 12.5% of merged PRs in 2026, Google 30%-plus AI-assisted code in 2025, and a forecast of 50%-plus by 2027" class="sw3-chart sw3-chart-d" data-anim="chart-D" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .sw3-chart-d text { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: #1A1A1A; }
+        .sw3-chart-d .ax-label { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-d .label { font-size: 10.5px; fill: #1A1A1A; }
+        .sw3-chart-d .value { font-size: 10.5px; fill: #1A1A1A; font-weight: 500; }
+        .sw3-chart-d .annot-muted { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-d .grid { stroke: #D9D2C7; stroke-width: 0.5; }
+        .sw3-chart-d .axis { stroke: #1A1A1A; stroke-width: 1; }
+        .sw3-chart-d .bar { fill: #B8430F; }
+        .sw3-chart-d .bar-deep { fill: #8C3309; }
+        .sw3-chart-d .bar-fc { fill: #E89B72; }
+        .sw3-chart-d[data-anim] .bar, .sw3-chart-d[data-anim] .bar-deep, .sw3-chart-d[data-anim] .bar-fc { transform: scaleX(0); transform-origin: 200px center; }
+        .sw3-chart-d[data-anim] .value, .sw3-chart-d[data-anim] .label, .sw3-chart-d[data-anim] .annot-muted { opacity: 0; }
+        .sw3-chart-d.anim-on .bar, .sw3-chart-d.anim-on .bar-deep, .sw3-chart-d.anim-on .bar-fc { animation: sw3d-grow 0.9s cubic-bezier(.2,.7,.3,1) forwards; }
+        .sw3-chart-d.anim-on .label { animation: sw3d-fade 0.4s ease-out forwards; }
+        .sw3-chart-d.anim-on .value, .sw3-chart-d.anim-on .annot-muted { animation: sw3d-fade 0.5s ease-out forwards; animation-delay: 0.7s; }
+        @keyframes sw3d-grow { to { transform: scaleX(1); } }
+        @keyframes sw3d-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .sw3-chart-d .bar, .sw3-chart-d .bar-deep, .sw3-chart-d .bar-fc { transform: scaleX(1) !important; animation: none !important; }
+          .sw3-chart-d .label, .sw3-chart-d .value, .sw3-chart-d .annot-muted { opacity: 1 !important; animation: none !important; }
+        }
+      </style>
+      <text class="ax-label" x="200" y="18" text-anchor="start">share of code authored or coauthored by AI</text>
+      <line class="grid" x1="300" y1="22" x2="300" y2="160"/>
+      <line class="grid" x1="400" y1="22" x2="400" y2="160"/>
+      <line class="grid" x1="500" y1="22" x2="500" y2="160"/>
+      <line class="grid" x1="600" y1="22" x2="600" y2="160"/>
+      <text class="ax-label" x="300" y="175" text-anchor="middle">25%</text>
+      <text class="ax-label" x="400" y="175" text-anchor="middle">50%</text>
+      <text class="ax-label" x="500" y="175" text-anchor="middle">75%</text>
+      <text class="ax-label" x="600" y="175" text-anchor="middle">100%</text>
+      <line class="axis" x1="200" y1="22" x2="200" y2="160"/>
+      <text class="label" x="195" y="34" text-anchor="end">Shopify · merged PRs</text>
+      <rect class="bar-deep" x="200" y="22" width="50" height="22"/>
+      <text class="value" x="256" y="38" text-anchor="start">12.5%</text>
+      <text class="annot-muted" x="195" y="44" text-anchor="end">2026 · River</text>
+      <text class="label" x="195" y="69" text-anchor="end">Google · new code</text>
+      <rect class="bar" x="200" y="57" width="100" height="22"/>
+      <text class="value" x="306" y="73" text-anchor="start">25%+</text>
+      <text class="annot-muted" x="195" y="79" text-anchor="end">Oct 2024 · Pichai Q3 call</text>
+      <text class="label" x="195" y="104" text-anchor="end">Google · new code</text>
+      <rect class="bar" x="200" y="92" width="120" height="22"/>
+      <text class="value" x="326" y="108" text-anchor="start">30%+</text>
+      <text class="annot-muted" x="195" y="114" text-anchor="end">Apr 2025 · Pichai Q1 call</text>
+      <text class="label" x="195" y="139" text-anchor="end">large eng orgs</text>
+      <rect class="bar-fc" x="200" y="127" width="200" height="22"/>
+      <text class="value" x="406" y="143" text-anchor="start">50%+  FORECAST</text>
+      <text class="annot-muted" x="195" y="149" text-anchor="end">2027 · industry consensus</text>
+    </svg>
+    <figcaption>Agent-authored code adoption: Shopify merged PRs (2026), Google's "new code" share (Pichai, Q3 2024 and Q1 2025), and large-org consensus forecast for 2027.<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup></figcaption>
+  </figure>
+
+  <p>The workload that broke the container is already the dominant workload on the largest engineering orgs in the world. The infrastructure has not caught up.</p>
 </section>
 
+<!-- §04 agent-hour -->
 <section id="agent-hour">
-<h2><a href="#agent-hour" class="copy" aria-label="Copy link">#</a><span class="num">§ 04 · The new unit</span>The agent-hour.</h2>
+  <h2><span class="num">04</span> The agent-hour <a class="copy" href="#agent-hour" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">The agent-hour is the new CPU-hour. Bill accordingly.</div>
+  <div class="callout">The agent-hour is the new CPU-hour.</div>
 
-<p>Anthropic split the bill in June. That was the leading indicator<sup class="fn"><a href="#fn7">7</a></sup>.</p>
-<p>One SKU for human-seat usage — chat, copilot, the thing a person sits in front of. Another SKU for headless agent usage — the API pool that runs unattended, mutates files, opens PRs, sleeps until the next webhook. Different rates. Different rate limits. Different telemetry.</p>
-<p>Once one vendor splits the bill, the rest follow. Modal already prices its sandboxes at roughly three times the rate of its general serverless tier — same hardware, different SKU, different expectation. E2B sells snapshot-resume as a tier above raw container minutes. Replit's Agent runtime quotes minutes, not requests<sup class="fn"><a href="#fn5">5</a></sup>. Cursor's background agent has its own line item<sup class="fn"><a href="#fn14">14</a></sup>.</p>
-<p>They're all reaching for the same SKU under different names. The shape is: a long-running, stateful, autonomous workload, billed by wall-clock time, with surcharges for snapshot storage and accelerator access. Call it the <em>agent-hour</em>.</p>
-<p>By 2027 the agent-hour is a published line item at all three hyperscalers. Not a private SKU. Not a special-deal contract term. A page on the pricing site, next to <code>m7i.large</code>.</p>
-<p>The follow-on effect is what changes the architecture. If the agent-hour is a billable unit, then everything else in the stack — scheduling, autoscaling, snapshotting, eviction — gets rebuilt around it. Kubernetes wasn't built for nine-hour pods that mutate their disk. Something else gets built. Something else is being built right now.</p>
-<p>And the FinOps team finally has the right number to optimize against. Not <em>requests per second</em>. <em>Agent-hours per merged PR</em>. That's the cost ratio that matters.</p>
+  <p>Watch the billing pages, not the keynotes. The keynotes will sell you the model; the billing pages tell you which abstraction the providers actually believe in.</p>
+
+  <p>Anthropic's June 2026 billing split broke out agent calls as a separate SKU from raw inference for the first time. Modal added a sandbox tier at $0.1419 per physical core-hour, roughly 3× its standard serverless rate, and called it the sandbox tax in the docs.<sup class="fn"><a href="#fn6">6</a></sup> Replit Agent ships Core at $20/mo with $25 of credits and meters Agent runtime against the pool. Cursor's background agent has its own SKU. The pattern is the same in every case: a unit of billing that did not exist in 2023 now has a price.</p>
+
+  <p>The unit is the agent-hour. It is to the cloud what the CPU-hour was to EC2. It is the thing that gets reserved, the thing that gets autoscaled, the thing that ends up on the invoice. By 2027 all three hyperscalers will have an agent-hour SKU, and the one that doesn't will be the one re-selling someone else's.</p>
+
+  <p>The reason it works as a unit is that the substrate underneath it is finally cheap enough. The economics of a coding agent that issues hundreds of LLM round-trips per task only close because the inference curve has fallen by more than three orders of magnitude at equivalent quality. Frontier price per million output tokens has roughly halved in three years; equivalent quality has fallen more than a thousand-fold over the same window.<sup class="fn"><a href="#fn3">3</a></sup> The first curve is what the press release covers. The second one is what makes the agent-hour solvent.</p>
+
+  <figure class="chart" id="chart-inference-cost" data-anim="chart-B">
+    <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="Inference cost per million output tokens fell from $60 for GPT-4 in 2023 to under $1 for equivalent quality by 2026, more than a 1000× decline on a log scale" class="sw3-chart sw3-chart-b" data-anim="chart-B" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .sw3-chart-b text { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: #1A1A1A; }
+        .sw3-chart-b .ax-label { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-b .annot { font-size: 9.5px; fill: #1A1A1A; }
+        .sw3-chart-b .annot-muted { font-size: 9px; fill: #6B6259; }
+        .sw3-chart-b .grid { stroke: #D9D2C7; stroke-width: 0.5; }
+        .sw3-chart-b .axis { stroke: #1A1A1A; stroke-width: 1; }
+        .sw3-chart-b .line { stroke: #B8430F; stroke-width: 2; fill: none; }
+        .sw3-chart-b .line-floor { stroke: #8C3309; stroke-width: 1.5; fill: none; stroke-dasharray: 2 2; }
+        .sw3-chart-b .dot { fill: #B8430F; }
+        .sw3-chart-b .dot-floor { fill: #8C3309; }
+        .sw3-chart-b[data-anim] .line, .sw3-chart-b[data-anim] .line-floor { stroke-dasharray: 1000; stroke-dashoffset: 1000; }
+        .sw3-chart-b[data-anim] .dot, .sw3-chart-b[data-anim] .dot-floor, .sw3-chart-b[data-anim] .annot, .sw3-chart-b[data-anim] .annot-muted, .sw3-chart-b[data-anim] .caption { opacity: 0; }
+        .sw3-chart-b.anim-on .line, .sw3-chart-b.anim-on .line-floor { animation: sw3b-draw 1.8s ease-out forwards; }
+        .sw3-chart-b.anim-on .line-floor { animation-delay: 0.2s; stroke-dasharray: 2 2, 1000; }
+        .sw3-chart-b.anim-on .dot, .sw3-chart-b.anim-on .dot-floor, .sw3-chart-b.anim-on .annot, .sw3-chart-b.anim-on .annot-muted { animation: sw3b-fade 0.5s ease-out forwards; }
+        .sw3-chart-b.anim-on .caption { animation: sw3b-fade 0.6s ease-out forwards; animation-delay: 1.6s; }
+        @keyframes sw3b-draw { to { stroke-dashoffset: 0; } }
+        @keyframes sw3b-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .sw3-chart-b .line, .sw3-chart-b .line-floor { stroke-dashoffset: 0 !important; animation: none !important; }
+          .sw3-chart-b .dot, .sw3-chart-b .dot-floor, .sw3-chart-b .annot, .sw3-chart-b .annot-muted, .sw3-chart-b .caption { opacity: 1 !important; animation: none !important; }
+        }
+      </style>
+      <line class="axis" x1="60" y1="215" x2="620" y2="215"/>
+      <line class="axis" x1="60" y1="30" x2="60" y2="215"/>
+      <line class="grid" x1="60" y1="30"     x2="620" y2="30"/>
+      <line class="grid" x1="60" y1="76.25"  x2="620" y2="76.25"/>
+      <line class="grid" x1="60" y1="122.5"  x2="620" y2="122.5"/>
+      <line class="grid" x1="60" y1="168.75" x2="620" y2="168.75"/>
+      <line class="grid" x1="60" y1="215"    x2="620" y2="215"/>
+      <text class="ax-label" x="55" y="33"     text-anchor="end">$100</text>
+      <text class="ax-label" x="55" y="79.25"  text-anchor="end">$10</text>
+      <text class="ax-label" x="55" y="125.5"  text-anchor="end">$1</text>
+      <text class="ax-label" x="55" y="171.75" text-anchor="end">$0.10</text>
+      <text class="ax-label" x="55" y="218"    text-anchor="end">$0.01</text>
+      <text class="ax-label" x="60"  y="22" text-anchor="start">$ / 1M output tokens (log)</text>
+      <text class="ax-label" x="60"  y="232" text-anchor="middle">2023</text>
+      <text class="ax-label" x="200" y="232" text-anchor="middle">2024</text>
+      <text class="ax-label" x="340" y="232" text-anchor="middle">2025</text>
+      <text class="ax-label" x="480" y="232" text-anchor="middle">2026</text>
+      <polyline class="line" points="85,40.27 165,54.20 245,68.11 445,68.11 585,68.11"/>
+      <polyline class="line-floor" points="60,40.27 130,108.58 270,132.78 305,179.04 585,146.69"/>
+      <circle class="dot" cx="85" cy="40.27" r="3.5"/>
+      <text class="annot" x="91" y="37">GPT-4 · $60</text>
+      <circle class="dot" cx="245" cy="68.11" r="3.5"/>
+      <text class="annot" x="251" y="64">Sonnet 3.5 · $15</text>
+      <circle class="dot-floor" cx="305" cy="179.04" r="3.5"/>
+      <text class="annot-muted" x="311" y="183">Llama 3.2 3B · $0.06 (equiv quality)</text>
+      <circle class="dot" cx="585" cy="68.11" r="3.5"/>
+      <text class="annot" x="579" y="64" text-anchor="end">Opus 4.8 · $15</text>
+      <text class="caption annot-muted" x="320" y="252" text-anchor="middle">&gt;1000× decline at equivalent quality (a16z &amp; Epoch AI, 2024–2026)</text>
+    </svg>
+    <figcaption>Inference cost per million output tokens, 2023–2026. Frontier band (solid) versus equivalent-quality floor (dotted). a16z LLMflation; Epoch AI.<sup class="fn"><a href="#fn3">3</a></sup></figcaption>
+  </figure>
+
+  <p>The other half of why the agent-hour is solvent is that the work is worth doing. Devin 1.0 cleared 13.86% on SWE-bench in March 2024.<sup class="fn"><a href="#fn10">10</a></sup> Devin 2.0 hit roughly 45.8% on Verified by December.<sup class="fn"><a href="#fn11">11</a></sup> Claude Sonnet 4.5 reached 77.2% in September 2025, Claude Opus 4.7 hit 87.6% in April 2026, and Fable 5 sits at 95% as of June.<sup class="fn"><a href="#fn2">2</a></sup> Sometime in Q1 2026 the line crossed the human baseline. That crossing is what made SW 3.0 a deployment problem instead of a research problem.</p>
+
+  <figure class="chart" id="chart-swebench" data-anim="chart-A">
+    <svg viewBox="0 0 640 260" width="100%" role="img" aria-label="SWE-bench Verified progression from Devin 1.0 at 14% in Q1 2024 to Claude Fable 5 at 95% in Q2 2026, crossing the 85% human baseline in early 2026" class="sw3-chart" data-anim="chart-A" xmlns="http://www.w3.org/2000/svg">
+      <style>
+        .sw3-chart text { font-family: 'JetBrains Mono', ui-monospace, monospace; fill: #1A1A1A; }
+        .sw3-chart .ax-label { font-size: 9px; fill: #6B6259; }
+        .sw3-chart .annot { font-size: 9.5px; fill: #1A1A1A; }
+        .sw3-chart .annot-muted { font-size: 9px; fill: #6B6259; }
+        .sw3-chart .grid { stroke: #D9D2C7; stroke-width: 0.5; }
+        .sw3-chart .axis { stroke: #1A1A1A; stroke-width: 1; }
+        .sw3-chart .baseline { stroke: #6B6259; stroke-width: 1; stroke-dasharray: 4 3; }
+        .sw3-chart .line { stroke: #B8430F; stroke-width: 2; fill: none; }
+        .sw3-chart .dot { fill: #B8430F; }
+        .sw3-chart .dot-ring { fill: #FAF7F2; stroke: #B8430F; stroke-width: 1.5; }
+        .sw3-chart[data-anim] .line { stroke-dasharray: 900; stroke-dashoffset: 900; }
+        .sw3-chart[data-anim] .dot, .sw3-chart[data-anim] .dot-ring, .sw3-chart[data-anim] .annot, .sw3-chart[data-anim] .annot-muted, .sw3-chart[data-anim] .baseline, .sw3-chart[data-anim] .baseline-label { opacity: 0; }
+        .sw3-chart.anim-on .line { animation: sw3a-draw 1.6s ease-out forwards; }
+        .sw3-chart.anim-on .dot, .sw3-chart.anim-on .dot-ring { animation: sw3a-pop 0.4s ease-out forwards; }
+        .sw3-chart.anim-on .annot, .sw3-chart.anim-on .annot-muted { animation: sw3a-fade 0.5s ease-out forwards; }
+        .sw3-chart.anim-on .baseline, .sw3-chart.anim-on .baseline-label { animation: sw3a-fade 0.6s ease-out forwards; animation-delay: 1.4s; }
+        @keyframes sw3a-draw { to { stroke-dashoffset: 0; } }
+        @keyframes sw3a-pop { to { opacity: 1; } }
+        @keyframes sw3a-fade { to { opacity: 1; } }
+        @media (prefers-reduced-motion: reduce) {
+          .sw3-chart .line { stroke-dashoffset: 0 !important; animation: none !important; }
+          .sw3-chart .dot, .sw3-chart .dot-ring, .sw3-chart .annot, .sw3-chart .annot-muted, .sw3-chart .baseline, .sw3-chart .baseline-label { opacity: 1 !important; animation: none !important; }
+        }
+      </style>
+      <line class="axis" x1="60" y1="220" x2="620" y2="220"/>
+      <line class="axis" x1="60" y1="30" x2="60" y2="220"/>
+      <line class="grid" x1="60" y1="172.5" x2="620" y2="172.5"/>
+      <line class="grid" x1="60" y1="125" x2="620" y2="125"/>
+      <line class="grid" x1="60" y1="77.5" x2="620" y2="77.5"/>
+      <line class="grid" x1="60" y1="30" x2="620" y2="30"/>
+      <text class="ax-label" x="52" y="223" text-anchor="end">0%</text>
+      <text class="ax-label" x="52" y="175.5" text-anchor="end">25</text>
+      <text class="ax-label" x="52" y="128" text-anchor="end">50</text>
+      <text class="ax-label" x="52" y="80.5" text-anchor="end">75</text>
+      <text class="ax-label" x="52" y="33" text-anchor="end">100</text>
+      <text class="ax-label" x="60"  y="235" text-anchor="middle">Q1 '23</text>
+      <text class="ax-label" x="200" y="235" text-anchor="middle">Q1 '24</text>
+      <text class="ax-label" x="340" y="235" text-anchor="middle">Q1 '25</text>
+      <text class="ax-label" x="480" y="235" text-anchor="middle">Q1 '26</text>
+      <text class="ax-label" x="620" y="235" text-anchor="middle">Q4 '26</text>
+      <text class="ax-label" x="60" y="22" text-anchor="start">% solved on SWE-bench Verified</text>
+      <line class="baseline" x1="60" y1="58.5" x2="620" y2="58.5"/>
+      <text class="baseline-label annot-muted" x="615" y="54" text-anchor="end">human baseline ~85%</text>
+      <polyline class="line" points="60,210.5 130,210.5 200,193.4 270,157.3 305,126.9 340,102.2 375,83.2 445,73.7 550,52.8 585,39.5"/>
+      <circle class="dot" cx="200" cy="193.4" r="3.5"/>
+      <text class="annot" x="206" y="190">Devin 1.0 · 14%</text>
+      <circle class="dot" cx="305" cy="126.9" r="3.5"/>
+      <text class="annot" x="270" y="118" text-anchor="middle">Sonnet 3.5 (new) · 49%</text>
+      <circle class="dot" cx="340" cy="102.2" r="3.5"/>
+      <text class="annot-muted" x="346" y="98">Sonnet 3.7 · 62%</text>
+      <circle class="dot" cx="375" cy="83.2" r="3.5"/>
+      <text class="annot-muted" x="381" y="79">Opus 4 · 72%</text>
+      <circle class="dot" cx="445" cy="73.7" r="3.5"/>
+      <text class="annot" x="451" y="69">Sonnet 4.5 · 77%</text>
+      <circle class="dot" cx="550" cy="52.8" r="3.5"/>
+      <text class="annot-muted" x="540" y="46" text-anchor="end">Opus 4.7 · 88%</text>
+      <circle class="dot-ring" cx="585" cy="39.5" r="4.5"/>
+      <text class="annot" x="615" y="36" text-anchor="end">Fable 5 · 95%</text>
+    </svg>
+    <figcaption>SWE-bench Verified, Q1 2023 to Q2 2026. The dashed line is the ~85% human baseline; the ringed point is Fable 5 at 95%.<sup class="fn"><a href="#fn2">2</a></sup></figcaption>
+  </figure>
+
+  <p>Walk the math for a single agent-hour at mid-2026 prices. A Sonnet-tier background loop issuing 200–600 round-trips, with 30K–150K-token contexts (80–95% cached) and 2K–8K output per call, lands between $1.20 and $8.50 per hour all-in. Sandbox compute is a rounding error on top.<sup class="fn"><a href="#fn7">7</a></sup> A fully-loaded software engineer is $80–$150 an hour. The ratio is 10× to 100× before you count parallelism.</p>
+
+  <p>The substrate's job is no longer to make the agent cheap. The substrate's job is to make the agent's <em>coordination</em> cheap. The bottleneck has moved up the stack, which is where every interesting infrastructure problem now lives (!).</p>
 </section>
 
+<!-- §05 two-level-cache -->
 <section id="two-level-cache">
-<h2><a href="#two-level-cache" class="copy" aria-label="Copy link">#</a><span class="num">§ 05 · The opinionated flag</span>The two-level cache.</h2>
+  <h2><span class="num">05</span> The two-level cache <a class="copy" href="#two-level-cache" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">Content-addressed caches lose to prompts. Add a second key.</div>
+  <p>Bazel hashes inputs and reuses outputs. Buck hashes inputs and reuses outputs. Nix hashes inputs and reuses outputs. The entire build-system tradition of the last fifteen years is a content-addressed cache that assumes <code>f(x) = y, always</code>.</p>
 
-<p>Content-addressed caches were built for humans typing. Humans typing are no longer the bottleneck.</p>
-<p>Bazel, Buck, Nix, sccache — all of them hash the input bytes and look up the output. A heroic engineering achievement. The reason your CI doesn't take six hours. The reason the monorepo works.</p>
-<p>Here's what changes. An LLM, asked to fix a bug, will produce a hunk of code that is semantically equivalent to a previous hunk but byte-different. A trailing newline. A renamed local variable. A whitespace-collapsed import. The content hash flips. The cache misses. The whole subtree recompiles.</p>
-<p>You can fix it by canonicalizing — sort imports, normalize whitespace, run a formatter before hashing. That helps. It doesn't solve it. Two prompts asking the model to "refactor for clarity" will produce different code with the same intent. There's no formatter that catches that.</p>
-<p>The fix is two layers.</p>
-<p><em>Bottom layer:</em> content-addressed, exactly as today. Hash the bytes, look up the artifact. Keep Bazel. Keep Nix. Don't rebuild what works.</p>
-<p><em>Top layer:</em> prompt-prefix-keyed. The cache key is the model's input prefix — the system prompt, the tool definitions, the file contents that didn't change. Anthropic's prompt cache already does this at the inference layer<sup class="fn"><a href="#fn7">7</a></sup>. Ninety percent off the cached prefix. The trick is to extend the same idea up into the build cache, the test-runner cache, the CI artifact cache.</p>
-<p>Two keys on every cache lookup. Content at the bottom. Prompt at the top.</p>
-<p>No product ships this end-to-end yet. The first one that does becomes the BuildKit of the agent era. We're building toward it at Incredibuild<sup class="fn"><a href="#fn12">12</a></sup>. We're not the only ones.</p>
-<p>This is the part of the essay that's a flag, not a forecast. By the time you're reading this, somebody has the cache. By 2027, three vendors have the cache. By 2030, the cache is part of the substrate the way Docker layers are part of the substrate today — invisible, assumed, infrastructure.</p>
+  <p>An LLM regenerating a file is the workload that breaks that assumption. Variable renames, comment churn, reordered imports, equivalent control flow — the bytes change while the meaning doesn't. The hash misses. The cache rebuilds. The bill arrives.</p>
+
+  <p>The fix is two caches stacked on each other. The bottom layer is the old content-hash cache — still useful, because most of the build graph is still deterministic compilers chewing on deterministic inputs. The top layer is a prompt-prefix cache. It keys on the prompt the agent issued, normalized; on a hit, you reuse the agent's last output without recomputing it, even if you would have recomputed the bytes.</p>
+
+  <figure class="svg-fig" data-anim="none">
+    <svg viewBox="0 0 720 360" width="100%" role="img"
+         aria-label="The two-level cache. Top panel: prompt-prefix cache, roughly 90 percent hit rate when prompts overlap. Bottom panel: content-addressed cache, hit rate falls as agents regenerate semantically equivalent bytes. A fall-through arrow connects top to bottom. Inset chart shows top curve flat near 90 percent and bottom curve declining from 70 to 30 percent over one thousand agent edits."
+         style="font-family:'Source Serif 4','Source Serif Pro',Charter,Georgia,serif;display:block">
+      <style>
+        .panel-title  { font: 600 14px 'Source Serif 4', serif; fill: #1A1A1A; }
+        .panel-sub    { font: 12px 'Source Serif 4', serif; fill: #6B6259; }
+        .mono-key     { font: 11px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #1A1A1A; }
+        .badge        { font: 600 11px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #FAF7F2; }
+        .fallthrough  { font: 10px 'Source Serif 4', serif; fill: #6B6259; letter-spacing: 0.04em; }
+        .chart-title  { font: 10px 'Source Serif 4', serif; fill: #6B6259; }
+        .axis         { stroke: #D9D2C7; stroke-width: 1; }
+        .curve-rust   { stroke: #B8430F; stroke-width: 1.5; fill: none; }
+        .curve-gray   { stroke: #6B6259; stroke-width: 1.25; fill: none; }
+        .pct-tick     { font: 9px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #6B6259; }
+      </style>
+      <g transform="translate(8, 60)">
+        <text class="fallthrough" x="0" y="0" transform="rotate(-90 0 0)">FALL-THROUGH</text>
+        <line x1="14" y1="20" x2="14" y2="180" stroke="#6B6259" stroke-width="1"/>
+        <polyline points="10,176 14,184 18,176" fill="none" stroke="#6B6259" stroke-width="1"/>
+      </g>
+      <g transform="translate(48, 16)">
+        <rect x="0" y="0" width="450" height="130" fill="#FAF7F2" stroke="#B8430F" stroke-width="1.5" rx="2"/>
+        <text class="panel-title" x="16" y="28">Prompt-prefix cache</text>
+        <text class="panel-sub"   x="16" y="50">Hit when the leading tokens of a request match an earlier request.</text>
+        <rect x="16" y="68" width="380" height="28" fill="#FAF7F2" stroke="#D9D2C7" rx="1"/>
+        <text class="mono-key" x="24" y="86">key = hash(system_prompt + tools + unchanged_files)</text>
+        <g transform="translate(310, 12)">
+          <rect x="0" y="0" width="128" height="22" fill="#B8430F" rx="2"/>
+          <text class="badge" x="64" y="15" text-anchor="middle">≈ 90% hit</text>
+        </g>
+        <text class="panel-sub" x="16" y="115">when prompts overlap</text>
+      </g>
+      <g transform="translate(48, 178)">
+        <rect x="0" y="0" width="450" height="130" fill="#FAF7F2" stroke="#6B6259" stroke-width="1.25" rx="2"/>
+        <text class="panel-title" x="16" y="28">Content-addressed cache</text>
+        <text class="panel-sub"   x="16" y="50">Hit only when output bytes match an earlier output exactly.</text>
+        <rect x="16" y="68" width="280" height="28" fill="#FAF7F2" stroke="#D9D2C7" rx="1"/>
+        <text class="mono-key" x="24" y="86">key = hash(input_bytes)</text>
+        <text class="panel-sub" x="16" y="115">Hit rate falls as agents regenerate semantically-equivalent bytes.</text>
+      </g>
+      <g transform="translate(520, 32)">
+        <text class="chart-title" x="0" y="0">Cache hit rate · 1k agent edits</text>
+        <rect x="0" y="14" width="180" height="220" fill="#FAF7F2" stroke="#D9D2C7"/>
+        <text class="pct-tick" x="-4" y="22"  text-anchor="end">100</text>
+        <text class="pct-tick" x="-4" y="126" text-anchor="end">50</text>
+        <text class="pct-tick" x="-4" y="232" text-anchor="end">0</text>
+        <line class="axis" x1="0" y1="126" x2="180" y2="126" stroke-dasharray="2 4"/>
+        <path class="curve-rust" d="M 4 38 C 40 36, 80 40, 120 37 S 170 39, 176 36"/>
+        <text class="pct-tick" x="176" y="32" text-anchor="end" fill="#B8430F">90%</text>
+        <path class="curve-gray" d="M 4 80 C 50 90, 90 120, 130 150 S 170 168, 176 168"/>
+        <text class="pct-tick" x="4"   y="76">70%</text>
+        <text class="pct-tick" x="176" y="180" text-anchor="end">30%</text>
+        <text class="pct-tick" x="0"   y="248">edit 0</text>
+        <text class="pct-tick" x="180" y="248" text-anchor="end">edit 1000</text>
+      </g>
+    </svg>
+    <figcaption>The two-level cache. Prompt-prefix on top (≈90% hit when prompts overlap), content-addressed on the bottom (hit rate falls as agents regenerate semantically-equivalent bytes). Fall-through from top to bottom.</figcaption>
+  </figure>
+
+  <p>Anthropic does this at the inference layer already. Prompt-cache reads are billed at 0.1× the input rate — a 90% discount — and writes are billed at 1.25× (5-minute TTL) or 2× (1-hour TTL). For Claude Opus 4.x that's $15 per million input tokens dropping to $1.50 on a cache hit.<sup class="fn"><a href="#fn7">7</a></sup> The catch is byte-identical prefix. The agent harness has to be disciplined about prefix stability or the whole discount evaporates.</p>
+
+  <p>That discipline propagates down the build system. Prompts get versioned. System prompts get pinned. Tool schemas get hashed. The "what does this build depend on" question grows a new column: not just the source files and compiler version, but the model snapshot, the prompt prefix, and the seed if you bothered to set one.</p>
+
+  <p>The shape of the cache is the shape of the workload. The workload changed. The cache has to.</p>
 </section>
 
+<!-- §06 tokio -->
 <section id="tokio">
-<h2><a href="#tokio" class="copy" aria-label="Copy link">#</a><span class="num">§ 06 · A number, carefully</span>The Tokio benchmark.</h2>
+  <h2><span class="num">06</span> The Tokio benchmark <a class="copy" href="#tokio" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">At Incredibuild we measured forty-six seconds. Cached, twelve. Hot, three.</div>
+  <p>We ran <code>cargo test --workspace</code> on Tokio three ways. Cold: 46 seconds. Warm content-hash cache: 12 seconds. Hot two-level cache, prompt-prefix layer included: 3 seconds.<sup class="fn"><a href="#fn13">13</a></sup></p>
 
-<p>I'll show you one benchmark. We ran it at Incredibuild<sup class="fn"><a href="#fn12">12</a></sup>.</p>
-<p>The workload is <code>cargo test --workspace</code> on Tokio — a Rust async runtime with a well-known dependency graph. Eight hundred crates. Three minutes of compile work on a clean machine. The kind of project where caching matters because the project is large enough to feel it.</p>
+  <figure class="svg-fig" data-anim="tokio-bars">
+    <svg viewBox="0 0 720 220" width="100%" role="img"
+         aria-label="The Tokio benchmark. Cold build forty-six seconds, full bar. Cached build twelve seconds, twenty-six percent. Hot build three seconds, six and a half percent."
+         style="font-family:'Source Serif 4','Source Serif Pro',Charter,Georgia,serif;display:block">
+      <style>
+        .bar-label   { font: 600 13px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #FAF7F2; }
+        .row-label   { font: 12px 'Source Serif 4', serif; fill: #1A1A1A; letter-spacing: 0.02em; }
+        .caption     { font: italic 12px 'Source Serif 4', serif; fill: #6B6259; }
+        .axis        { stroke: #D9D2C7; stroke-width: 1; }
+      </style>
+      <text class="row-label" x="0" y="34"  >Cold</text>
+      <text class="row-label" x="0" y="94"  >Cached</text>
+      <text class="row-label" x="0" y="154" >Hot</text>
+      <line class="axis" x1="64" y1="180" x2="664" y2="180"/>
+      <g data-bar="cold">
+        <rect x="64" y="14" width="600" height="40" fill="#B8430F"
+              data-final-w="600"/>
+        <text class="bar-label" x="74" y="40">Cold · 46.0 s</text>
+      </g>
+      <g data-bar="cached">
+        <rect x="64" y="74" width="157" height="40" fill="#B8430F" fill-opacity="0.55"
+              data-final-w="157"/>
+        <text class="bar-label" x="74" y="100" fill="#1A1A1A">Cached · 12.0 s</text>
+      </g>
+      <g data-bar="hot">
+        <rect x="64" y="134" width="39" height="40" fill="#8C3309"
+              data-final-w="39"/>
+        <text class="row-label" x="112" y="160" fill="#1A1A1A"
+              style="font-family:'JetBrains Mono', ui-monospace, Menlo, monospace; font-weight:600; font-size:13px">
+          Hot · 3.0 s
+        </text>
+      </g>
+      <text class="caption" x="0" y="208">Incredibuild internal measurement, 2025 · cargo test --workspace on Tokio</text>
+    </svg>
+    <figcaption>cargo test --workspace on Tokio. Cold 46.0s, cached 12.0s, hot 3.0s. Incredibuild internal measurement, 2025.</figcaption>
+  </figure>
 
-<div class="tokio">
-<div><span>Cold (no cache)</span><span>46.0 s</span></div>
-<div><span>Cached (warm, deps stable)</span><span>12.0 s</span></div>
-<div><span>Hot (cache + warm runner)</span><span>3.0 s</span></div>
-<div class="label">Incredibuild internal measurement, 2025. Repro: github.com/Incredibuild-RND/buildrunner-on-islo</div>
-</div>
+  <p>The interesting number is not 46. Anyone who has run a Rust test suite knows 46. The interesting number is 3, because 3 is the latency an agent sees when it edits one crate out of fifty and re-runs the workspace. The agent does that constantly — that's how agents work — and a 3-second loop is a usable interactive substrate, while a 46-second loop is a coffee break.</p>
 
-<p>The interesting number is not <em>46</em>. It's <em>3</em>.</p>
-<p>Three seconds is the number an agent gets when it edits one file in a large codebase and reruns the suite. Nothing else moved. The cache has the dependency graph, the test binaries, the build artifacts. Forty-seven of the fifty test crates are untouched. They don't recompile. They don't relink. They don't rerun.</p>
-<p>This is the cache hit rate you get when humans edit code at a normal cadence — a commit every fifteen minutes, a PR every two hours, a merge every day. The numbers don't change much under that load.</p>
-<p>The numbers change when the cadence changes. An autonomous agent making fifty file edits in an hour, running the tests after each one, looks <em>nothing</em> like a human committer. It looks like a stress test of the cache. Forty-seven hits and three misses per edit. That's the cache shape that decides whether the agent-hour costs four dollars or forty.</p>
-<p>The bill in 2030 is not won at the rate card. It is won at the cache hit rate.</p>
+  <p>What the two-level cache does on Tokio is collapse the dominant case. Forty-seven of fifty crates are unchanged. The bottom cache catches those. The top cache catches the agent's regenerated file as semantically equivalent to last call. The remaining work is the small set of crates that actually moved.</p>
+
+  <p>This is one repo. The same shape recurs on any monorepo where an agent is the dominant editor. The break-even point — where the prompt-prefix cache starts paying back the cost of running it — comes early, around the third or fourth iteration of the agent on the same codebase.</p>
+
+  <p>3 seconds is not a benchmark result. It's a loop latency that lets the agent stay in the call frame instead of falling out of it.</p>
 </section>
 
+<!-- §07 provenance -->
 <section id="provenance">
-<h2><a href="#provenance" class="copy" aria-label="Copy link">#</a><span class="num">§ 07 · Who signed the code</span>Three signatures on every merge.</h2>
+  <h2><span class="num">07</span> Provenance <a class="copy" href="#provenance" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">By 2030, three signatures on every merge. The human. The agent. The platform.</div>
+  <p>A commit used to be signed by a human. By 2030, in any regulated industry, it will be signed by three parties.</p>
 
-<p>By 2030 you won't merge without three signatures. Not in finance. Not in healthcare. Not anywhere it matters.</p>
-<p>Sundar said three quarters of Google's code was already AI-generated by late 2025<sup class="fn"><a href="#fn11">11</a></sup>. The number sounded uncomfortable. It also sounded like an under-count. Once you include the small refactors and the test boilerplate and the migration patches and the README updates, three quarters is conservative.</p>
-<p>The compliance question stops being <em>"did this build reproduce?"</em>. It becomes <em>"which model wrote which hunk, and which prompt produced it?"</em>.</p>
-<p>The three signatures are:</p>
-<p><em>The human.</em> Same as today. The reviewer who clicked approve. A real person with a real GPG key. Optional in many shops. Required in regulated ones.</p>
-<p><em>The agent.</em> Model name, model version, prompt hash, trajectory ID. Not the agent's personality. Its identity. Cosign + Sigstore<sup class="fn"><a href="#fn15">15</a></sup> already has the primitives. SLSA v1.1 extends them to AI-generated artifacts. The standards are written. The deployment is partial.</p>
-<p><em>The platform.</em> The cloud signs the runtime — which container image, which CPU vendor, which TEE, which key in which HSM. AWS Nitro, Azure CC, GCP Confidential Space already sign builds. By 2028 the signature extends to the agent runtime: <em>"this code was emitted by Claude 4.7 running in an islo.dev microVM with attested hardware and prompt-cache hit ratio 0.92."</em> That's the provenance line item.</p>
-<p>This is the part of the essay that isn't speculative. It's already happening in the shops that ship to FedRAMP and the EU CRA. By 2028 it is table stakes. By 2030 it is invisible — every merge has it, nobody talks about it, the same way TLS is in every URL bar.</p>
-<p>The corollary: <em>code without provenance</em> becomes the new <em>code without tests</em>. Allowed. Tolerated. Quietly distrusted.</p>
+  <p>The human who asked. The agent identity — model, version, prompt hash, tool schema, seed. The platform attestation — which snapshot ran, on which cluster, against which evals. SLSA v1.1 already specifies the build-provenance shape. Sigstore already signs the artifacts. The EU Cyber Resilience Act already requires it for software placed on the European market. The pieces exist; they just haven't been composed into a default yet.<sup class="fn"><a href="#fn14">14</a></sup></p>
+
+  <p>The reason this becomes mandatory is not regulatory. It's IP. When 30%+ of Google's new code is AI-coauthored and Shopify is merging 3,500+ agent PRs a month, the question "who wrote this" stops being a credit-line question and starts being an indemnity question.<sup class="fn"><a href="#fn8">8</a></sup><sup class="fn"><a href="#fn9">9</a></sup> A signature you can't trace is a liability you can't bound. The triple signature is what makes the merge reviewable, the audit defensible, and the IP transferable.</p>
+
+  <p>This is also what closes the loop on the stochastic CPU. The output is non-deterministic; the invocation is not. You can't pin <code>f(x) = y</code> any more, but you can pin <code>(human, agent, platform, prompt, snapshot) → artifact</code>, and that tuple is what the next decade's compliance regime will be written against.</p>
+
+  <p>Reproducibility moved up one level of abstraction. Provenance moved with it.</p>
 </section>
 
+<!-- §08 timeline -->
 <section id="timeline">
-<h2><a href="#timeline" class="copy" aria-label="Copy link">#</a><span class="num">§ 08 · The shape</span>Six years. Six milestones.</h2>
-<p>Here's the shape, year by year. The leading indicators are dated. The forecasts are reasoned. None of this is fiction — every milestone has a real public artifact to point at, or it isn't on the list.</p>
+  <h2><span class="num">08</span> Timeline 2025 → 2030 <a class="copy" href="#timeline" aria-label="Link to this section">¶</a></h2>
 
-<ol class="timeline">
-<li>
-<div class="year">2025</div>
-<div class="head">The naming.</div>
-<div class="body">Karpathy gives the YC keynote on June 17. <em>"Your prompts are now programs that program the LLM."</em><sup class="fn"><a href="#fn2">2</a></sup> Devin 2.0 reports 45.8% on SWE-bench Verified<sup class="fn"><a href="#fn6">6</a></sup>. Cursor and Replit Agent become the default tool surfaces for AI-assisted work.</div>
-</li>
-<li>
-<div class="year">2026</div>
-<div class="head">The billing split.</div>
-<div class="body">Anthropic separates human-seat usage from headless agent usage on June 15. Modal prices sandboxes at 3× the serverless rate<sup class="fn"><a href="#fn5">5</a></sup>. Shopify's "Under the River" agent merges 12.5% of all PRs in one month<sup class="fn"><a href="#fn9">9</a></sup>.</div>
-</li>
-<li>
-<div class="year">2027</div>
-<div class="head">The agent-hour ships.</div>
-<div class="body">AWS publishes a Bedrock + Fargate agent-hour SKU. More than half of merged PRs at the top-ten AI-native companies are agent-authored. Prompt-keyed build caches ship as a category for the first time.</div>
-</li>
-<li>
-<div class="year">2028</div>
-<div class="head">The provenance year.</div>
-<div class="body">The EU CRA forces signed agent attestations on regulated deploys. Sigstore + SLSA v1.1 become table stakes<sup class="fn"><a href="#fn15">15</a></sup>. Every merge in finance and healthcare names the model that wrote it.</div>
-</li>
-<li>
-<div class="year">2029</div>
-<div class="head">The fleet replaces the container.</div>
-<div class="body">Persistent agent fleets — three to ten agents per active repo, each in a hot microVM — become the default deployment shape. Cursor-style background agents<sup class="fn"><a href="#fn14">14</a></sup> generalize across every major vendor.</div>
-</li>
-<li>
-<div class="year">2030</div>
-<div class="head">The bill flips.</div>
-<div class="body">Legacy stateless compute drops to under 10% of the AI-native cloud bill. Agent-hours and snapshot storage dominate. Kubernetes survives as an agent-fleet orchestrator, not a request-router.</div>
-</li>
-</ol>
+  <p>Six dated milestones, written down so they can be checked later.</p>
+
+  <p><em>2025.</em> Coding agents cross 75% on SWE-bench Verified. Claude Sonnet 4.5 lands at 77.2% in September.<sup class="fn"><a href="#fn2">2</a></sup> The autonomy slider becomes a product surface, not a research demo.</p>
+
+  <p><em>2026.</em> Agents cross the ~85% human baseline. Fable 5 hits 95% in June. The agent-hour appears as a discrete SKU on at least one major provider's invoice. Shopify reports one in eight merged PRs are agent-coauthored.<sup class="fn"><a href="#fn8">8</a></sup></p>
+
+  <p><em>2027.</em> All three hyperscalers have an agent-hour SKU. Frontier training compute crosses 10²⁷ FLOPs, on Epoch AI's central forecast.<sup class="fn"><a href="#fn5">5</a></sup> Large engineering orgs cross the 50% coauthored-code threshold.</p>
+
+  <p><em>2028.</em> Power is the binding constraint, not silicon. AI's share of data-center load is climbing toward the IEA's projected 35–50% by 2030, and at least one frontier cluster is sited next to a dedicated generator.<sup class="fn"><a href="#fn15">15</a></sup></p>
+
+  <p><em>2029.</em> Triple-signature provenance ships as a default in at least one major CI provider. The EU CRA enforcement deadline does the rest.<sup class="fn"><a href="#fn14">14</a></sup></p>
+
+  <p><em>2030.</em> Global data-center electricity consumption hits ~945 TWh, roughly double 2024.<sup class="fn"><a href="#fn15">15</a></sup> Kubernetes still runs, but it has been demoted from the platform to the scheduler for the agent fleet underneath the platform.</p>
 </section>
 
+<!-- §09 bill-2030 -->
 <section id="bill-2030">
-<h2><a href="#bill-2030" class="copy" aria-label="Copy link">#</a><span class="num">§ 09 · The destination</span>The cloud bill, 2030 edition.</h2>
+  <h2><span class="num">09</span> The 2030 bill <a class="copy" href="#bill-2030" aria-label="Link to this section">¶</a></h2>
 
-<div class="callout">The container era is not over. It just got demoted.</div>
+  <p>The shape of a cloud invoice is the most honest forward indicator we have. Money goes where the workload is, and the workload is moving.</p>
 
-<p>The cloud bill in 2030 doesn't look like the cloud bill in 2024. Not even close.</p>
-<p>The top of the invoice — the line that was once <em>EC2 / Compute</em> at 60% of the total — drops to a fifth of what it was. Stateless compute didn't disappear. It got demoted. It runs the request paths. It runs the gateways. It does not run the agents.</p>
-<p>Here's the shape, by share of total bill, for an AI-native company in 2030:</p>
+  <p>The 2030 split, for a large engineering org running agent-heavy workflows, lands roughly here. Inference: 40%. Agent-hours, billed separately from raw inference because the coordination surface is its own product: 25%. Snapshot and cache infrastructure, including the two-level cache: 15%. Eval compute, which has eaten the role CI used to play: 10%. Egress: 5%. Legacy compute — the EC2 instances, the RDS, the old shape: 5%.</p>
 
-<div class="bill">
-<div><span>Inference tokens (model API)</span><span>40 %</span></div>
-<div><span>Agent-hours (persistent fleets)</span><span>25 %</span></div>
-<div><span>Snapshot &amp; cache storage (GB-mo)</span><span>15 %</span></div>
-<div><span>Eval compute (offline + online)</span><span>10 %</span></div>
-<div><span>Egress &amp; networking</span><span>5 %</span></div>
-<div><span>Legacy stateless compute</span><span>5 %</span></div>
-</div>
+  <figure class="svg-fig" data-anim="none">
+    <svg viewBox="0 0 720 220" width="100%" role="img"
+         aria-label="Where the money goes. Estimated share of cloud bill for an AI-native company in 2030. Inference tokens forty percent. Agent-hours twenty-five percent. Snapshot and cache storage fifteen percent. Eval compute ten percent. Egress five percent. Legacy stateless five percent."
+         style="font-family:'Source Serif 4','Source Serif Pro',Charter,Georgia,serif;display:block">
+      <style>
+        .head    { font: 600 16px 'Source Serif 4', serif; fill: #1A1A1A; letter-spacing: 0.005em; }
+        .in-bar  { font: 600 13px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #FAF7F2; }
+        .in-bar-dark { font: 600 13px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #1A1A1A; }
+        .leg-label { font: 12px 'Source Serif 4', serif; fill: #1A1A1A; }
+        .leg-pct   { font: 12px 'JetBrains Mono', ui-monospace, Menlo, monospace; fill: #6B6259; }
+        .caption   { font: italic 11px 'Source Serif 4', serif; fill: #6B6259; }
+      </style>
+      <text class="head" x="0" y="16">Where the money goes.</text>
+      <g>
+        <rect x="0"   y="32" width="288" height="56" fill="#8C3309"/>
+        <text class="in-bar" x="144" y="66" text-anchor="middle">Inference · 40%</text>
+        <rect x="288" y="32" width="180" height="56" fill="#B8430F"/>
+        <text class="in-bar" x="378" y="66" text-anchor="middle">Agent-hours · 25%</text>
+        <rect x="468" y="32" width="108" height="56" fill="#D86A36"/>
+        <text class="in-bar" x="522" y="66" text-anchor="middle">Snapshots · 15%</text>
+        <rect x="576" y="32" width="72"  height="56" fill="#E89B72"/>
+        <text class="in-bar-dark" x="612" y="66" text-anchor="middle">10%</text>
+        <rect x="648" y="32" width="36"  height="56" fill="#F0C2A8"/>
+        <rect x="684" y="32" width="36"  height="56" fill="#E8DACA"/>
+      </g>
+      <text class="caption" x="0" y="106">Estimated share of cloud bill for an AI-native company, 2030.</text>
+      <g transform="translate(0, 128)">
+        <g transform="translate(0, 0)">
+          <rect x="0" y="0" width="14" height="14" fill="#8C3309"/>
+          <text class="leg-label" x="22" y="11">Inference tokens</text>
+          <text class="leg-pct"   x="22" y="28">40%</text>
+        </g>
+        <g transform="translate(240, 0)">
+          <rect x="0" y="0" width="14" height="14" fill="#B8430F"/>
+          <text class="leg-label" x="22" y="11">Agent-hours</text>
+          <text class="leg-pct"   x="22" y="28">25%</text>
+        </g>
+        <g transform="translate(480, 0)">
+          <rect x="0" y="0" width="14" height="14" fill="#D86A36"/>
+          <text class="leg-label" x="22" y="11">Snapshot &amp; cache storage</text>
+          <text class="leg-pct"   x="22" y="28">15%</text>
+        </g>
+        <g transform="translate(0, 44)">
+          <rect x="0" y="0" width="14" height="14" fill="#E89B72"/>
+          <text class="leg-label" x="22" y="11">Eval compute</text>
+          <text class="leg-pct"   x="22" y="28">10%</text>
+        </g>
+        <g transform="translate(240, 44)">
+          <rect x="0" y="0" width="14" height="14" fill="#F0C2A8"/>
+          <text class="leg-label" x="22" y="11">Egress</text>
+          <text class="leg-pct"   x="22" y="28">5%</text>
+        </g>
+        <g transform="translate(480, 44)">
+          <rect x="0" y="0" width="14" height="14" fill="#E8DACA" stroke="#D9D2C7"/>
+          <text class="leg-label" x="22" y="11">Legacy stateless</text>
+          <text class="leg-pct"   x="22" y="28">5%</text>
+        </g>
+      </g>
+    </svg>
+    <figcaption>Estimated share of cloud bill for an AI-native company, 2030.</figcaption>
+  </figure>
 
-<p>Two things to notice.</p>
-<p>First, the bill is no longer dominated by what the cloud does for you. It is dominated by what the agents <em>cost to keep running</em>. Inference is the labor cost. Agent-hours are the rent. Cache and snapshot are the warehouse. The proportions look more like a manufacturing P&amp;L than a SaaS one.</p>
-<p>Second, eval compute is a published line item. By 2030, eval-time spending is on the same page as serve-time spending. You don't get to ship the model without the evals running every hour, and the evals run on your bill.</p>
-<p>Kubernetes is still there. It survived. It just stopped being the load-bearing wall. It became the agent-fleet scheduler — the layer that decides which microVM holds which agent's snapshot, which evals run when, which background tasks defer until off-peak. That's a real job. It's a smaller job than running the whole internet.</p>
-<p>The container era isn't over. It just got demoted.</p>
+  <p>Compare that to 2023, where roughly 70% of a comparable bill was the legacy shape and inference barely cleared single digits. The reallocation is not gradual. It is the kind of shift that happens once a workload crosses a threshold, and the agent workload has crossed it.</p>
+
+  <p>Kubernetes survives. It just gets demoted. The control plane that schedules pods becomes the control plane that schedules agent runtimes — and the things it schedules are not stateless. They have warm KV caches, prompt-prefix locality, model affinity to specific GPU pools. The scheduler that wins this round will look more like a database query planner than the round-robin we have today.</p>
+
+  <p>Power is the limit. The IEA projects global data-center consumption rising from 415 TWh in 2024 to ~945 TWh by 2030, with AI taking the dominant share of the growth.<sup class="fn"><a href="#fn15">15</a></sup> Frontier inference clusters in 2028 will be sited around the megawatt, not the rack. The bill will reflect that, too.</p>
+
+  <p>This is the most consequential infrastructure shift since virtualization, and most of the people building it have never written a CUDA kernel.</p>
 </section>
 
+<!-- §10 closing -->
 <section id="closing">
-<h2><a href="#closing" class="copy" aria-label="Copy link">#</a><span class="num">§ 10 · One more thing</span>The substrate.</h2>
-<p>Software 1.0 was written by humans for machines.</p>
-<p>Software 2.0 was written by data for weights.</p>
-<p>Software 3.0 is written by humans for models that write for machines.</p>
-<p>The thing underneath has to change. The substrate has to change.</p>
-<p>It already is.</p>
-<p>The agent-hour is being named. The bill is being split. The cache is being rebuilt with two keys. The microVM is replacing the container for the workloads that mutate. The signatures are being attached. The eval line item is appearing on the invoice. Each of these is happening in a different shop, on a different timeline, with a different vendor pitching a different SKU.</p>
-<p>None of them are the whole answer. All of them are the same answer, told from different sides of the same room.</p>
-<p>If you're building anything where an agent is the producer and the cloud is the substrate — and that's an expanding set, not a shrinking one — the next eighteen months decide whether you're early or late.</p>
-<p>The substrate is shifting. It's already shifted. You're standing on it.</p>
-<p style="margin-top:36px;font-size:14px;color:var(--muted);font-style:italic">— Yossi · Tel Aviv · 2026 · <a href="https://islo.dev">islo.dev</a></p>
+  <h2><span class="num">10</span> Closing <a class="copy" href="#closing" aria-label="Link to this section">¶</a></h2>
+
+  <p>Software 1.0 was humans writing for machines. Software 2.0 was data writing weights. Software 3.0 is humans writing for a model that writes for the machine, and the model in the middle is a stochastic CPU.</p>
+
+  <p>Every layer above that CPU was built on a guarantee the new CPU does not provide. The cache misses. The test flakes. The build is no longer reproducible by the binary; it's reproducible by the invocation. The commit needs three signatures, not one. The invoice grows a line item with a unit nobody priced in 2023. None of this is because the model got smarter. All of it is because the model is stochastic, and the substrate underneath it was not.</p>
+
+  <p>What you are watching is not a tooling refresh. It is the rewriting of a sixty-year stack against a property change in its lowest layer. The container, the cache, the test runner, the build system, the scheduler, the bill — each one is being reformed around the same observation, and most teams are still writing CI files as if the answer were a boolean.</p>
+
+  <p>The substrate is shifting. It's already shifted. You're standing on it.</p>
 </section>
+
+<div class="share-row" aria-label="Share this essay">
+  <a class="share-btn" id="share-x" target="_blank" rel="noopener" href="#">
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M18.244 2H21l-6.52 7.45L22 22h-6.86l-4.78-6.24L4.8 22H2.04l6.98-7.98L2 2h7.02l4.33 5.72L18.244 2Zm-1.2 18h1.86L7.04 4H5.1l11.944 16Z"/></svg>
+    <span>Post on X</span>
+  </a>
+  <a class="share-btn" id="share-li" target="_blank" rel="noopener" href="#">
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28ZM5.34 7.43A2.06 2.06 0 1 1 5.34 3.3a2.06 2.06 0 0 1 0 4.13Zm1.78 13.02H3.56V9h3.56v11.45ZM22.23 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.46c.98 0 1.77-.77 1.77-1.73V1.73C24 .77 23.21 0 22.23 0Z"/></svg>
+    <span>Share on LinkedIn</span>
+  </a>
+  <button class="share-btn" id="share-copy" type="button">
+    <svg viewBox="0 0 24 24" width="14" height="14" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" d="M10 14a4 4 0 0 0 5.66 0l3-3a4 4 0 0 0-5.66-5.66l-1 1M14 10a4 4 0 0 0-5.66 0l-3 3a4 4 0 0 0 5.66 5.66l1-1"/></svg>
+    <span data-label-default="Copy link" data-label-done="Copied">Copy link</span>
+  </button>
+</div>
 
 </main>
 
@@ -457,19 +1166,43 @@ footer ol li{padding:2px 0}
   <h4>In this essay</h4>
   <ol id="toc">
     <li><a href="#prelude">Prelude</a></li>
-    <li><a href="#software-three">Software 3.0, plainly</a></li>
+    <li><a href="#software-three">Software 3.0</a></li>
+    <li><a href="#stochastic-cpu">Stochastic CPU</a></li>
     <li><a href="#the-break">What broke</a></li>
-    <li><a href="#agent-hour">The agent-hour</a></li>
+    <li><a href="#agent-hour">Agent-hour</a></li>
     <li><a href="#two-level-cache">Two-level cache</a></li>
-    <li><a href="#tokio">A number, carefully</a></li>
-    <li><a href="#provenance">Who signed the code</a></li>
-    <li><a href="#timeline">Six milestones</a></li>
+    <li><a href="#tokio">Tokio benchmark</a></li>
+    <li><a href="#provenance">Provenance</a></li>
+    <li><a href="#timeline">Timeline</a></li>
     <li><a href="#bill-2030">2030 bill</a></li>
-    <li><a href="#closing">One more thing</a></li>
+    <li><a href="#closing">Closing</a></li>
   </ol>
   <h4>Reference</h4>
   <a href="#sources" class="jumptop">Sources →</a><br>
   <a href="#" class="jumptop" id="top">Back to top ↑</a>
+
+  <aside class="rail-glossary" id="rail-glossary">
+    <button class="rail-glossary-toggle" type="button" aria-expanded="false" aria-controls="rail-glossary-list">
+      <span>Glossary</span>
+      <span class="rail-glossary-caret" aria-hidden="true">+</span>
+    </button>
+    <dl class="rail-glossary-list" id="rail-glossary-list" hidden>
+      <dt>Software 1.0 / 2.0 / 3.0</dt>
+      <dd>Hand-written code; learned weights; prompted agents that compose tools at runtime.</dd>
+      <dt>Agent-hour</dt>
+      <dd>The metered unit of an autonomous worker's wall-clock time, including idle thinking.</dd>
+      <dt>MicroVM</dt>
+      <dd>A hardware-isolated VM that boots in milliseconds; the unit of agent sandboxing.</dd>
+      <dt>Prompt-prefix cache</dt>
+      <dd>Server-side reuse of attention state for shared prompt heads across calls.</dd>
+      <dt>SLSA / Sigstore</dt>
+      <dd>Supply-chain provenance levels and the keyless signing infrastructure that proves them.</dd>
+      <dt>Trajectory</dt>
+      <dd>The full record of an agent run: prompts, tool calls, outputs, and intermediate state.</dd>
+      <dt>Snapshot-restore</dt>
+      <dd>Freezing a microVM's full memory and resuming it elsewhere in under a second.</dd>
+    </dl>
+  </aside>
 </aside>
 
 </div>
@@ -480,7 +1213,7 @@ footer ol li{padding:2px 0}
 <div class="wrap">
 <p id="sources"><strong>Sources &amp; footnotes</strong></p>
 <ol id="footnotes"></ol>
-<p style="margin-top:24px">Written by Yossi Eliaz · Principal Engineer at Incredibuild · Founder, <a href="https://islo.dev">islo.dev</a> · Tel Aviv, 2026.<br>
+<p style="margin-top:24px">Written by Yossi Eliaz · at incredibuild and <a href="https://islo.dev">islo.dev</a> · Tel Aviv, 2026.<br>
 Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo123/inference-substrate</a> · CC BY 4.0.</p>
 </div>
 </footer>
@@ -500,21 +1233,23 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
 
   // ---- Footnotes ----
   const footnotes = [
-    {id:"fn1", text:"Karpathy, \"Software 2.0,\" Medium, Nov 11 2017", url:"https://karpathy.medium.com/software-2-0-a64152b37c35"},
-    {id:"fn2", text:"Karpathy, \"Software Is Changing (Again),\" YC AI Startup School, June 17 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
-    {id:"fn3", text:"Latent Space, \"Andrej Karpathy on Software 3.0\" — slides + transcript, June 2025", url:"https://www.latent.space/p/s3"},
-    {id:"fn4", text:"Karpathy, \"vibe coding\" tweet, February 2025", url:"https://x.com/karpathy/status/1886192184808149383"},
-    {id:"fn5", text:"AgentMarketCap, \"AI Agent Sandbox Infrastructure 2026,\" April 7 2026", url:"https://agentmarketcap.ai/blog/2026/04/07/ai-agent-sandbox-infrastructure-e2b-modal-daytona-fly-machines-secure-code-execution"},
-    {id:"fn6", text:"Cognition, \"SWE-bench Verified technical report,\" 2024", url:"https://cognition.ai/blog/swe-bench-technical-report"},
-    {id:"fn7", text:"Anthropic, \"Prompt caching with Claude,\" 2024", url:"https://www.anthropic.com/news/prompt-caching"},
-    {id:"fn8", text:"OpenAI, \"Introducing Operator,\" Jan 23 2025", url:"https://openai.com/index/introducing-operator/"},
-    {id:"fn9", text:"Shopify Engineering, \"Under the River,\" 2026", url:"https://shopify.engineering/under-the-river"},
-    {id:"fn10", text:"Latent Space, \"Shopify's AI Phase Transition with Mikhail Parakhin,\" 2026", url:"https://www.latent.space/p/shopify"},
-    {id:"fn11", text:"Fast Company, \"Sundar Pichai: 75% of Google's code is AI-generated,\" late 2025", url:"https://www.fastcompany.com/91531519/google-ceo-says-75-of-the-companys-code-is-ai-generated"},
-    {id:"fn12", text:"Incredibuild, \"AI Platform\" press release, September 2025", url:"https://www.prnewswire.com/news-releases/incredibuild-unveils-state-of-the-art-ai-platform-to-accelerate-the-entire-software-development-lifecycle-302560614.html"},
-    {id:"fn13", text:"IEA, data-center energy projection to 2030", url:"https://www.datacenterfrontier.com/energy/article/33038469/iea-study-sees-ai-cryptocurrency-doubling-data-center-energy-consumption-by-2026"},
-    {id:"fn14", text:"Cursor Docs, \"Background Agent,\" 2026", url:"https://docs.cursor.com/background-agent"},
-    {id:"fn15", text:"Legit Security, \"SLSA Provenance Series,\" 2025–26", url:"https://www.legitsecurity.com/blog/slsa-provenance-blog-series-part-1-what-is-software-attestation"}
+    {id:"fn1", text:"Karpathy, \"Software 2.0,\" Medium, Nov 2017", url:"https://karpathy.medium.com/software-2-0-a64152b37c35"},
+    {id:"fn2", text:"SWE-bench Verified leaderboard (Fable 5 95%, Sonnet 4.5 77.2%); see also Anthropic Sonnet 4.5 announcement", url:"https://www.morphllm.com/claude-benchmarks"},
+    {id:"fn3", text:"a16z, \"Welcome to LLMflation\" — inference cost decline", url:"https://a16z.com/llmflation-llm-inference-cost/"},
+    {id:"fn4", text:"Karpathy, \"Software Is Changing (Again),\" YC AI Startup School, Jun 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
+    {id:"fn5", text:"Epoch AI, training-compute trends", url:"https://epoch.ai/trends"},
+    {id:"fn6", text:"AI Code Sandbox Benchmark 2026 (Modal / E2B sandbox pricing)", url:"https://www.superagent.sh/blog/ai-code-sandbox-benchmark-2026"},
+    {id:"fn7", text:"Anthropic prompt caching docs (90% cache read discount)", url:"https://platform.claude.com/docs/en/build-with-claude/prompt-caching"},
+    {id:"fn8", text:"Shopify Engineering, \"Under the River\"", url:"https://shopify.engineering/under-the-river"},
+    {id:"fn9", text:"Fortune, \"Over 25% of Google's code is written by AI\" (Pichai, Q3 2024)", url:"https://fortune.com/2024/10/30/googles-code-ai-sundar-pichai/"},
+    {id:"fn10", text:"Cognition, \"SWE-bench technical report\" (Devin 13.86%)", url:"https://cognition.ai/blog/swe-bench-technical-report"},
+    {id:"fn11", text:"Cognition blog (Devin 2.0 45.8%)", url:"https://cognition.ai/blog"},
+    {id:"fn12", text:"Anthropic, \"Raising the bar on SWE-bench Verified with Claude 3.5 Sonnet\"", url:"https://www.anthropic.com/news/swe-bench-sonnet"},
+    {id:"fn13", text:"Incredibuild, \"AI Platform\" press release, Sep 2025", url:"https://www.prnewswire.com/news-releases/incredibuild-unveils-state-of-the-art-ai-platform-to-accelerate-the-entire-software-development-lifecycle-302560614.html"},
+    {id:"fn14", text:"Legit Security, \"SLSA Provenance Series\"", url:"https://www.legitsecurity.com/blog/slsa-provenance-blog-series-part-1-what-is-software-attestation"},
+    {id:"fn15", text:"IEA, \"Energy and AI\" — data-center power to 2030, ~945 TWh", url:"https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai"},
+    {id:"fn16", text:"Karpathy, \"LLM OS\" / \"LLMs are stochastic simulations of people\" — YC AI Startup School, 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
+    {id:"fn17", text:"He et al., \"Non-determinism in LLM inference at temperature 0\" — floating-point non-associativity in batched GPU reductions", url:"https://152334h.github.io/blog/non-determinism-in-gpt-4/"}
   ];
   const fnList = document.getElementById('footnotes');
   footnotes.forEach(fn => {
@@ -524,33 +1259,6 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
     fnList.appendChild(li);
   });
 
-  // Footnote hover/click reveal
-  let activeCard = null;
-  document.querySelectorAll('sup.fn').forEach(sup => {
-    sup.addEventListener('mouseenter', e => showFn(sup));
-    sup.addEventListener('mouseleave', e => setTimeout(hideFn, 150));
-    sup.addEventListener('click', e => { /* allow default jump to footnotes */ });
-  });
-  function showFn(sup){
-    hideFn();
-    const id = sup.querySelector('a').getAttribute('href').slice(1);
-    const fn = footnotes.find(f => f.id === id);
-    if(!fn) return;
-    const card = document.createElement('div');
-    card.className = 'fn-card show';
-    card.innerHTML = `${fn.text}<br><a href="${fn.url}" rel="noopener">${fn.url}</a>`;
-    document.body.appendChild(card);
-    const r = sup.getBoundingClientRect();
-    card.style.top = (window.scrollY + r.bottom + 6) + 'px';
-    card.style.left = Math.min(window.innerWidth - 320, Math.max(12, r.left - 60)) + 'px';
-    card.addEventListener('mouseenter', () => clearTimeout(card._hide));
-    card.addEventListener('mouseleave', hideFn);
-    activeCard = card;
-  }
-  function hideFn(){
-    if(activeCard){ activeCard.remove(); activeCard = null; }
-  }
-
   // ---- Section indicator (rail + mobile pill) ----
   const sections = Array.from(document.querySelectorAll('main section'));
   const tocLinks = Array.from(document.querySelectorAll('#toc a'));
@@ -559,7 +1267,6 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
     entries.forEach(e => {
       if(e.isIntersecting){
         const id = e.target.id;
-        const idx = sections.findIndex(s => s.id === id);
         tocLinks.forEach(a => a.parentElement.classList.remove('active'));
         const link = tocLinks.find(a => a.getAttribute('href') === '#' + id);
         if(link) link.parentElement.classList.add('active');
@@ -567,9 +1274,14 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
           const h = e.target.querySelector('h2');
           if(h){
             const num = h.querySelector('.num');
-            const numText = num ? num.textContent.split('·')[0].trim() : '§';
-            const title = h.childNodes[h.childNodes.length-1].textContent.trim();
-            pill.textContent = `${numText} · ${title}`;
+            const numText = num ? num.textContent.trim() : '§';
+            // h2 text after num + before <a class="copy">
+            let title = '';
+            h.childNodes.forEach(n => {
+              if (n.nodeType === Node.TEXT_NODE) title += n.textContent;
+            });
+            title = title.trim();
+            pill.textContent = `§${numText} · ${title}`;
           }
         }
       }
@@ -581,7 +1293,7 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
   document.querySelectorAll('h2 .copy').forEach(a => {
     a.addEventListener('click', e => {
       e.preventDefault();
-      const id = a.parentElement.parentElement.id;
+      const id = a.parentElement.parentElement.id || a.getAttribute('href').slice(1);
       const url = location.origin + location.pathname + '#' + id;
       navigator.clipboard?.writeText(url);
       const orig = a.textContent;
@@ -595,6 +1307,232 @@ Repo: <a href="https://github.com/zozo123/inference-substrate">github.com/zozo12
   document.getElementById('top')?.addEventListener('click', e => {
     e.preventDefault();
     window.scrollTo({top:0, behavior:'smooth'});
+  });
+})();
+</script>
+
+<script>
+(function () {
+  // --- Footnote popover (adapted for sup.fn > a markup) ---
+  (function initFootnotes() {
+    const refs = document.querySelectorAll('sup.fn > a');
+    if (!refs.length) return;
+
+    const pop = document.createElement('div');
+    pop.className = 'fn-popover';
+    pop.setAttribute('role', 'tooltip');
+    pop.innerHTML = '<button class="fn-popover-close" aria-label="Close">×</button><div class="fn-popover-body"></div>';
+    document.body.appendChild(pop);
+    const body = pop.querySelector('.fn-popover-body');
+    const closeBtn = pop.querySelector('.fn-popover-close');
+
+    const isTouch = window.matchMedia('(hover: none)').matches;
+    let activeRef = null;
+    let hoverTimer = null;
+    let openedByClick = false;
+
+    function getFootnoteContent(num) {
+      const li = document.getElementById('fn' + num);
+      if (!li) return null;
+      const clone = li.cloneNode(true);
+      const back = clone.querySelector('.fn-back, a[href^="#fnref"]');
+      if (back) back.remove();
+      return clone.innerHTML;
+    }
+    function place(ref) {
+      const rect = ref.getBoundingClientRect();
+      const scrollY = window.scrollY || window.pageYOffset;
+      const scrollX = window.scrollX || window.pageXOffset;
+      pop.style.left = '0px'; pop.style.top = '0px'; pop.style.visibility = 'hidden';
+      pop.classList.add('is-open');
+      const pw = pop.offsetWidth, ph = pop.offsetHeight;
+      const vw = document.documentElement.clientWidth, vh = window.innerHeight;
+      let left = rect.left + scrollX;
+      if (left + pw > scrollX + vw - 16) left = scrollX + vw - pw - 16;
+      if (left < scrollX + 12) left = scrollX + 12;
+      let top = rect.bottom + scrollY + 6;
+      if (rect.bottom + ph + 24 > vh) top = rect.top + scrollY - ph - 6;
+      pop.style.left = left + 'px'; pop.style.top = top + 'px'; pop.style.visibility = '';
+    }
+    function open(ref, byClick) {
+      const num = ref.textContent.trim();
+      const content = getFootnoteContent(num);
+      if (!content) return;
+      body.innerHTML = '<span class="fn-popover-num">[' + num + ']</span>' + content;
+      activeRef = ref; openedByClick = !!byClick;
+      place(ref); pop.classList.add('is-open');
+    }
+    function close() { pop.classList.remove('is-open'); activeRef = null; openedByClick = false; }
+
+    refs.forEach(ref => {
+      ref.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (activeRef === ref && openedByClick) { close(); return; }
+        open(ref, true);
+      });
+      if (!isTouch) {
+        ref.addEventListener('mouseenter', () => {
+          if (openedByClick) return;
+          clearTimeout(hoverTimer);
+          hoverTimer = setTimeout(() => open(ref, false), 180);
+        });
+        ref.addEventListener('mouseleave', () => {
+          clearTimeout(hoverTimer);
+          if (!openedByClick) setTimeout(() => { if (!openedByClick) close(); }, 120);
+        });
+      }
+    });
+    pop.addEventListener('mouseenter', () => { clearTimeout(hoverTimer); });
+    pop.addEventListener('mouseleave', () => { if (!openedByClick) close(); });
+    closeBtn.addEventListener('click', close);
+    document.addEventListener('click', (e) => {
+      if (!activeRef) return;
+      if (pop.contains(e.target) || e.target === activeRef) return;
+      close();
+    });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && activeRef) close(); });
+    window.addEventListener('resize', () => { if (activeRef) place(activeRef); });
+    window.addEventListener('scroll', () => { if (activeRef) place(activeRef); }, { passive: true });
+  })();
+
+  // --- Reading time ---
+  (function initReadingTime() {
+    const target = document.getElementById('reading-meta');
+    const main = document.querySelector('main');
+    if (!target || !main) return;
+    const clone = main.cloneNode(true);
+    clone.querySelectorAll('script, style, #footnotes, .fn-popover').forEach(n => n.remove());
+    const text = (clone.textContent || '').replace(/\s+/g, ' ').trim();
+    const words = text ? text.split(' ').length : 0;
+    const minutes = Math.max(1, Math.round(words / 230));
+    target.textContent = '≈ ' + minutes + ' min read · ' + words.toLocaleString('en-US') + ' words';
+  })();
+
+  // --- Glossary toggle ---
+  (function initGlossary() {
+    const toggle = document.querySelector('.rail-glossary-toggle');
+    const list = document.getElementById('rail-glossary-list');
+    if (!toggle || !list) return;
+    toggle.addEventListener('click', () => {
+      const open = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!open));
+      if (open) list.setAttribute('hidden', '');
+      else list.removeAttribute('hidden');
+    });
+  })();
+
+  // --- Share buttons ---
+  (function initShare() {
+    const url = window.location.href.split('#')[0];
+    const text = 'The Inference Substrate — by Yossi Eliaz. The cloud built underneath Software 3.0. ';
+    const xBtn = document.getElementById('share-x');
+    const liBtn = document.getElementById('share-li');
+    const copyBtn = document.getElementById('share-copy');
+    if (xBtn) xBtn.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text + url);
+    if (liBtn) liBtn.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + encodeURIComponent(url);
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const label = copyBtn.querySelector('span');
+        try { await navigator.clipboard.writeText(url); }
+        catch (e) {
+          const ta = document.createElement('textarea');
+          ta.value = url; document.body.appendChild(ta); ta.select();
+          try { document.execCommand('copy'); } catch (_) {}
+          document.body.removeChild(ta);
+        }
+        copyBtn.classList.add('is-copied');
+        if (label) label.textContent = label.getAttribute('data-label-done');
+        setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          if (label) label.textContent = label.getAttribute('data-label-default');
+        }, 1600);
+      });
+    }
+  })();
+})();
+</script>
+
+<script>
+// v3 chart-glue: IntersectionObserver for [data-anim^="chart-"]
+(function () {
+  if (typeof window === 'undefined') return;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var nodes = document.querySelectorAll('[data-anim^="chart-"]');
+  if (!nodes.length) return;
+  if (reduce || !('IntersectionObserver' in window)) {
+    nodes.forEach(function (n) { n.classList.add('anim-on'); });
+    return;
+  }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('anim-on');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.25, rootMargin: '0px 0px -10% 0px' });
+  nodes.forEach(function (n) { io.observe(n); });
+})();
+</script>
+
+<script>
+// v2 figure-glue: fade-up + tokio-bars for figure.svg-fig[data-anim]
+(function () {
+  var prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var figs = document.querySelectorAll('figure.svg-fig[data-anim]');
+  if (!figs.length) return;
+
+  figs.forEach(function (fig) {
+    var kind = fig.getAttribute('data-anim');
+    if (kind === 'none' || prefersReduced) return;
+
+    if (kind === 'fade-up') {
+      fig.style.opacity = '0';
+      fig.style.transform = 'translateY(8px)';
+      fig.style.transition = 'opacity 600ms ease-out, transform 600ms ease-out';
+    }
+
+    if (kind === 'tokio-bars') {
+      fig.querySelectorAll('rect[data-final-w]').forEach(function (r) {
+        r.setAttribute('data-pending', '1');
+        r.setAttribute('width', '0');
+        r.style.transition = 'width 600ms cubic-bezier(0.22, 0.61, 0.36, 1)';
+      });
+    }
+  });
+
+  function playFinal(fig) {
+    var kind = fig.getAttribute('data-anim');
+    if (kind === 'fade-up') {
+      fig.style.opacity = '1';
+      fig.style.transform = 'translateY(0)';
+    }
+    if (kind === 'tokio-bars') {
+      var bars = fig.querySelectorAll('rect[data-final-w]');
+      bars.forEach(function (r, i) {
+        var finalW = r.getAttribute('data-final-w');
+        setTimeout(function () { r.setAttribute('width', finalW); }, i * 100);
+      });
+    }
+  }
+
+  if (!('IntersectionObserver' in window) || prefersReduced) {
+    figs.forEach(function (fig) { playFinal(fig); });
+    return;
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      playFinal(entry.target);
+      io.unobserve(entry.target);
+    });
+  }, { rootMargin: '0px 0px -10% 0px', threshold: 0.15 });
+
+  figs.forEach(function (fig) {
+    var kind = fig.getAttribute('data-anim');
+    if (kind === 'none') return;
+    io.observe(fig);
   });
 })();
 </script>
