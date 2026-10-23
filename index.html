@@ -145,7 +145,7 @@ header nav a:hover{color:var(--accent)}
 /* layout */
 .grid{
   display:grid;
-  grid-template-columns:1fr min(68ch,720px) 260px 1fr;
+  grid-template-columns:1fr minmax(0,min(68ch,720px)) 260px 1fr;
   column-gap:48px;
   padding:64px 24px 80px;
 }
@@ -1120,7 +1120,8 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
       <line class="lc-arrow" x1="590" y1="102" x2="618" y2="102" marker-end="url(#lc-tip)"/>
       <text x="604" y="94" text-anchor="middle" class="lc-time">30 days</text>
 
-      <text x="20" y="172" class="lc-meta">filesystem survives cold→warm (image pull) · memory survives warm↔paused (snapshot) · filesystem survives paused→archived · nothing survives evicted</text>
+      <text x="20" y="164" class="lc-meta">filesystem survives cold→warm (image pull) · memory survives warm↔paused (snapshot)</text>
+      <text x="20" y="180" class="lc-meta">filesystem survives paused→archived · nothing survives evicted</text>
     </svg>
     <figcaption><strong>The sandbox lifecycle.</strong> Cold boots to warm in around 125 ms. Idle pauses to a memory snapshot at roughly 4 seconds per gigabyte of RAM. Paused resumes to warm in 5 to 30 ms anywhere on the fleet, which is the move that makes the whole thing work. Archive and eviction are Daytona's defaults (per Daytona docs, 2026). Boot and resume numbers from Firecracker and E2B docs, 2026.</figcaption>
   </figure>
