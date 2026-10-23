@@ -1,10 +1,10 @@
-# The Inference Substrate
+# The Stochastic CPU
 
-A field report on the cloud being built underneath Software 3.0.
+An essay (June 2026) on the cloud being built underneath Software 3.0: agent-hour billing, two-level caches, sandboxes, provenance, and a 2030 forecast. Figures are sourced; anything dated 2027 or later is the author's forecast.
 
-By [Yossi Eliaz](https://islo.dev) · Principal Engineer at Incredibuild · Founder, islo.dev.
+By [Yossi Eliaz](https://yossieliaz.netlify.app/) · Principal Engineer, AI Systems at Incredibuild / islo.dev.
 
-Live: https://zozo123.github.io/inference-substrate/
+Live: https://zozo123.github.io/stochastic-cpu/
 
 ---
 
@@ -14,4 +14,4 @@ Topics: Software 3.0 (Karpathy), the agent-hour as a new cloud SKU, prompt-keyed
 
 Inspired by [ai-2027.com](https://ai-2027.com/) (Kokotajlo et al.) and [infinite.pm](https://infinite.pm/).
 
-License: CC BY 4.0.
+License: [CC BY 4.0](LICENSE). More writing: https://zozo123.github.io/

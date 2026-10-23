@@ -4,9 +4,9 @@
 <!-- Primary meta -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Stochastic CPU. A field report on the cloud underneath Software 3.0</title>
-<meta name="description" content="How the cloud is being rebuilt for agents: the agent hour, the cache stacked in two layers, snapshot provenance, and a 2030 cloud bill. A field report by Yossi Eliaz.">
-<meta name="author" content="Yossi Eliaz · at incredibuild and islo.dev">
+<title>The Stochastic CPU: a field report · Yossi Eliaz</title>
+<meta name="description" content="Essay by Yossi Eliaz on how cloud infrastructure is changing for AI agents: agent-hour billing, two-level caches, provenance, and a 2030 forecast.">
+<meta name="author" content="Yossi Eliaz">
 <meta name="theme-color" content="#FAF7F2">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
 <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1">
@@ -42,8 +42,6 @@
 <meta name="twitter:description" content="A field report on the cloud being built underneath Software 3.0. The agent hour, the cache stacked in two layers, snapshot provenance, and a 2030 cloud bill.">
 <meta name="twitter:image" content="https://zozo123.github.io/stochastic-cpu/og-image.png">
 <meta name="twitter:image:alt" content="The Stochastic CPU. Essay cover card.">
-<meta name="twitter:creator" content="">
-<meta name="twitter:site" content="">
 
 <!-- JSON-LD: Article -->
 <script type="application/ld+json">
@@ -62,27 +60,26 @@
   "author": {
     "@type": "Person",
     "name": "Yossi Eliaz",
+    "url": "https://yossieliaz.netlify.app/",
+    "jobTitle": "Principal Engineer, AI Systems",
     "affiliation": [
       {
         "@type": "Organization",
-        "name": "incredibuild",
+        "name": "Incredibuild",
         "url": "https://www.incredibuild.com"
       },
       {
         "@type": "Organization",
-        "name": "islo.dev"
+        "name": "islo.dev",
+        "url": "https://islo.dev"
       }
     ],
-    "url": "https://islo.dev",
-    "sameAs": ["https://www.linkedin.com/in/yossi-eliaz/"]
+    "sameAs": ["https://github.com/zozo123", "https://www.linkedin.com/in/yossi-eliaz/"]
   },
   "publisher": {
-    "@type": "Organization",
-    "name": "The Stochastic CPU",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://zozo123.github.io/stochastic-cpu/og-image.png"
-    }
+    "@type": "Person",
+    "name": "Yossi Eliaz",
+    "url": "https://yossieliaz.netlify.app/"
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
@@ -95,7 +92,7 @@
 <link rel="icon" href="data:image/svg+xml;utf8,&lt;svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'&gt;&lt;rect width='32' height='32' fill='%23FAF7F2'/&gt;&lt;circle cx='16' cy='16' r='8' fill='%23B8430F'/&gt;&lt;/svg&gt;">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,400i;8..60,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#FAF7F2;
@@ -300,12 +297,12 @@ footer{
 footer .wrap{max-width:68ch;margin:0 auto}
 footer a{color:var(--muted);border-bottom:1px solid var(--rule)}
 footer a:hover{color:var(--accent);border-bottom-color:var(--accent)}
-footer ol{font-family:var(--mono);font-size:12px;line-height:1.7;padding-left:28px;margin-top:14px}
+footer ol{font-family:var(--mono);font-size:12px;line-height:1.7;padding-left:28px;margin-top:14px;overflow-wrap:anywhere}
 footer ol li{padding:2px 0}
 
 /* responsive */
 @media (max-width:1023px){
-  .grid{grid-template-columns:1fr min(68ch,720px) 1fr;column-gap:0;padding:48px 20px 64px}
+  .grid{grid-template-columns:minmax(0,1fr) minmax(0,68ch) minmax(0,1fr);column-gap:0;padding:48px 20px 64px}
   .content{grid-column:2}
   .rail{display:none}
   #mobile-pill{display:block}
@@ -315,7 +312,8 @@ footer ol li{padding:2px 0}
   .hero h1{font-size:44px}
   .hero .sub{font-size:18px}
   h2{font-size:26px}
-  .grid{padding:36px 16px 56px}
+  .grid{grid-template-columns:minmax(0,1fr);padding:36px 16px 56px}
+  .content{grid-column:1}
   header{padding:12px 16px}
   header nav a{margin-left:12px}
   .callout{font-size:18px;padding:18px 20px}
@@ -418,7 +416,7 @@ footer ol li{padding:2px 0}
   @page {
     margin: 22mm 18mm 24mm 18mm;
     @bottom-left { content: "Yossi Eliaz \2014 The Stochastic CPU"; font-family: 'Source Serif 4', Georgia, serif; font-size: 9pt; color: #6B6259; }
-    @bottom-right { content: "incredibuild.com/stochastic-cpu"; font-family: 'JetBrains Mono', Menlo, monospace; font-size: 9pt; color: #6B6259; }
+    @bottom-right { content: "zozo123.github.io/stochastic-cpu"; font-family: 'JetBrains Mono', Menlo, monospace; font-size: 9pt; color: #6B6259; }
   }
   html, body {
     background: #fff !important; color: #000 !important;
@@ -529,6 +527,14 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
   border-bottom: 1px solid var(--rule);
   scroll-margin-top: 80px;
 }
+#tldr-points .tldr-context {
+  font-family: var(--serif);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0 0 20px 0;
+  max-width: 64ch;
+}
 #tldr-points .tldr-marker {
   font-family: var(--mono);
   font-size: 11px;
@@ -613,22 +619,22 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 <div class="hero">
   <h1>The Stochastic CPU.</h1>
   <p class="sub">A field report on the cloud that's being built underneath Software 3.0. From the agent hour, to the cache keyed on the prompt, to the three signatures on every 2030 merge.</p>
-  <p class="byline">By <a href="https://www.linkedin.com/in/yossi-eliaz/">Yossi Eliaz</a> · at <a href="https://www.incredibuild.com">incredibuild</a> and <a href="https://islo.dev">islo.dev</a> · Tel Aviv · 2026</p>
+  <p class="byline">By <a href="https://zozo123.github.io/">Yossi Eliaz</a> · Principal Engineer, AI Systems at <a href="https://www.incredibuild.com">Incredibuild</a> / <a href="https://islo.dev">islo.dev</a> · <time datetime="2026-06-21">21 June 2026</time></p>
   <p class="hero-meta" id="reading-meta"></p>
 </div>
 
 <section id="tldr-points" aria-labelledby="tldr-marker">
+  <p class="tldr-context">An essay by Yossi Eliaz (June 2026) arguing that because LLM output is nondeterministic, cloud infrastructure for agents (billing, caching, sandboxes, provenance) has to change. Figures are sourced; anything dated 2027 or later is a forecast.</p>
   <p id="tldr-marker" class="tldr-marker">In one sentence, then seven beats.</p>
   <p class="tldr-lede">The LLM is the first nondeterministic computer in production, and every layer of the cloud above it has to be rebuilt.</p>
   <ul class="tldr-list">
     <li>Frontier quality answers cost <strong>more than 1,000×</strong> less than they did in 2023.</li>
     <li>Coding agents on SWE-bench Verified went from <strong>14% to 95%</strong> in 27 months, crossing the <strong>85%</strong> human baseline in Q1 2026.</li>
     <li>Agents now coauthor <strong>12.5%</strong> of merged PRs at Shopify and (!) about <strong>75%</strong> of new code at Google, per Pichai in Q1 2026.</li>
-    <li>The agent hour becomes a billing line item at all <strong>three</strong> hyperscalers by 2027.</li>
-    <li>By 2030 the AI native cloud bill splits roughly <strong>40 / 25 / 15 / 10 / 5</strong> across inference, agent runtime, snapshots, eval, and legacy compute.</li>
-    <li>Regulated merges carry <strong>three signatures</strong> by 2030: human, agent, platform.</li>
+    <li>Forecast: the agent hour becomes a billing line item at all <strong>three</strong> hyperscalers by 2027.</li>
+    <li>Forecast: by 2030 the AI native cloud bill splits roughly <strong>40 / 25 / 15 / 10 / 5</strong> across inference, agent runtime, snapshots, eval, and legacy compute.</li>
+    <li>Forecast: regulated merges carry <strong>three signatures</strong> by 2030: human, agent, platform.</li>
     <li>The direction is clear, the dates are not, and the substrate is being poured underneath teams that still think they ship software.</li>
-    <li>This may be the most consequential rewrite of computing in <strong>60</strong> years.</li>
   </ul>
 </section>
 
@@ -643,7 +649,7 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
     <div class="keynum" data-anim="count-up">
       <div class="big">14% &rarr; 95%</div>
       <div class="label">Agent coding skill</div>
-      <p class="plain">Coding agents went from undergrad clumsy to better than most engineers in 27 months.</p>
+      <p class="plain">Coding agents went from 14% to 95% on SWE-bench Verified in 27 months.</p>
     </div>
     <div class="keynum" data-anim="count-up">
       <div class="big">3 seconds</div>
@@ -1363,8 +1369,8 @@ figure.chart figcaption strong, figure.svg-fig figcaption strong { font-family: 
 
 <figure class="sfs" id="sfs-widget" aria-labelledby="sfs-title">
   <figcaption class="sfs__cap">
-    <h3 id="sfs-title" class="sfs__title">Sandbox fleet, live</h3>
-    <p class="sfs__sub">Prompts enter on the left, the model fans work out to sandboxes on the right. Cached prefixes take the green shortcut.</p>
+    <h3 id="sfs-title" class="sfs__title">Sandbox fleet (simulation)</h3>
+    <p class="sfs__sub">Illustrative simulation running in your browser; not live data. Prompts enter on the left, the model fans work out to sandboxes on the right. Cached prefixes take the green shortcut.</p>
   </figcaption>
 
   <div class="sfs__grid">
@@ -2521,7 +2527,7 @@ Sandbox: $0.10.</p>
 
   <p>Power is the binding constraint. The IEA projects global data center consumption rising from 415 TWh in 2024 to about 945 TWh by 2030, with AI taking the dominant share of the growth and the US plus China responsible for about 80% of it.<sup class="fn"><a href="#fn15">15</a></sup> Frontier inference clusters in 2028 will be sited around the megawatt, not the rack.</p>
 
-  <p>This is the most consequential infrastructure shift since virtualization, and most of the people building it have never written a CUDA kernel.</p>
+  <p>This is a large infrastructure shift, and many of the people building it have never written a CUDA kernel.</p>
 </section>
 
 <!-- §10 closing -->
@@ -2565,7 +2571,7 @@ Sandbox: $0.10.</p>
     <li><a href="#the-break">What broke</a></li>
     <li><a href="#sandbox-primitive">The sandbox</a></li>
     <li><a href="#agent-hour">Agent hour</a></li>
-    <li><a href="#sandbox-fleet">Sandbox fleet · live</a></li>
+    <li><a href="#sandbox-fleet">Sandbox fleet (simulation)</a></li>
     <li><a href="#two-level-cache">Two level cache</a></li>
     <li><a href="#tokio">Tokio benchmark</a></li>
     <li><a href="#neo-sdlc">Dev, test, eval, prod</a></li>
@@ -2610,8 +2616,8 @@ Sandbox: $0.10.</p>
 <div class="wrap">
 <p id="sources"><strong>Sources &amp; footnotes</strong></p>
 <ol id="footnotes"></ol>
-<p style="margin-top:24px">Written by <a href="https://www.linkedin.com/in/yossi-eliaz/">Yossi Eliaz</a> · at <a href="https://www.incredibuild.com">incredibuild</a> and <a href="https://islo.dev">islo.dev</a> · Tel Aviv · 2026.<br>
-Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/stochastic-cpu</a> · CC BY 4.0.</p>
+<p style="margin-top:24px">Written by <a href="https://yossieliaz.netlify.app/">Yossi Eliaz</a> · Principal Engineer, AI Systems at <a href="https://www.incredibuild.com">Incredibuild</a> / <a href="https://islo.dev">islo.dev</a> · <time datetime="2026-06-21">21 June 2026</time>.<br>
+<a href="https://zozo123.github.io/">More writing by Yossi Eliaz</a> · Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/stochastic-cpu</a> · <a href="https://creativecommons.org/licenses/by/4.0/" rel="license">CC BY 4.0</a>.</p>
 </div>
 </footer>
 
@@ -2646,7 +2652,7 @@ Repo: <a href="https://github.com/zozo123/stochastic-cpu">github.com/zozo123/sto
     {id:"fn14", text:"Legit Security, \"SLSA Provenance Series\"", url:"https://www.legitsecurity.com/blog/slsa-provenance-blog-series-part-1-what-is-software-attestation"},
     {id:"fn15", text:"IEA, \"Energy and AI\", data center power to 2030, ~945 TWh", url:"https://www.iea.org/reports/energy-and-ai/energy-demand-from-ai"},
     {id:"fn16", text:"Karpathy, \"LLM OS\" / \"LLMs are stochastic simulations of people\", YC AI Startup School, 2025", url:"https://www.ycombinator.com/library/MW-andrej-karpathy-software-is-changing-again"},
-    {id:"fn17", text:"He et al., \"Nondeterminism in LLM inference at temperature 0\", floating point non-associativity in batched GPU reductions", url:"https://152334h.github.io/blog/nondeterminism-in-gpt-4/"}
+    {id:"fn17", text:"Horace He / Thinking Machines Lab, \"Defeating Nondeterminism in LLM Inference\"", url:"https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/"}
   ];
   const fnList = document.getElementById('footnotes');
   footnotes.forEach(fn => {
